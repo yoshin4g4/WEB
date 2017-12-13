@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	
+	<!-- wishlist icon in carousel-->
+	<template id="clarico_wishlist_product_carousel_icon" inherit_id="clarico_product_carousel.product_carousel_snippet_product" name="Clarico Carousel Wishlist">
+	  	<xpath expr="//div[@id='pc_wishlist']" position="inside">
+			<t t-set="in_wish" t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+			<t t-if="product.product_variant_ids">
+				<a class="o_add_wishlist" t-att-disabled='in_wish or None' t-att-style="'display:none' if in_wish else 'display:block'" title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				<a class="o_add_wishlist_inwish" t-att-disabled='in_wish or None' t-att-style="'display:block' if in_wish else 'display:none'" title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
+			</t>
+	  </xpath>
+	</template>
+	
+	<!-- Wishlist icon in multi carousel  -->
+	<template id="clarico_product_carousel_wishlist_in_multi_carousel" inherit_id="clarico_product_multi_carousel.clarico_product_multi_carousel_static_carousel_snippet_product">
+		<xpath expr="//div[@id='pc_wishlist']" position="inside">
+            <t t-set="in_wish" t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+			<t t-if="product.product_variant_ids">
+				<a class="o_add_wishlist" t-att-disabled='in_wish or None' t-att-style="'display:none' if in_wish else 'display:block'" title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				<a class="o_add_wishlist_inwish" t-att-disabled='in_wish or None' t-att-style="'display:block' if in_wish else 'display:none'" title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
+			</t>
+	    </xpath>
+	</template>
+</odoo>

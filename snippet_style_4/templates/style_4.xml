@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_4" inherit_id="clarico_snippets.clarico_snippets"
+		name="Heading Snippet" priority="4">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_4.snippet_style_4_template" t-thumbnail="/snippet_style_4/static/src/img/style_4.jpg" />
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_4_template" name="Style 4">
+		<section>
+			<div class="home_big_image_container">
+				<div class="home_big_image">
+					<a href="#">
+					<img src="/snippet_style_4/static/src/img/style_4_img_1.jpeg"></img>
+					</a>
+				</div>
+
+			</div>
+		</section>
+	</template>
+
+</odoo>

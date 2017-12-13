@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="clarico_latest_blog_template"
+		name="Latest Blogs">
+			<div class="oe_structure" />
+			<div class="oe_structure">
+				<section class="container">
+					<t t-set="count" t-value="0" />
+					<t t-set="lblogs" t-value="website.get_latest_blogs()"></t>
+					<section class="container" t-if="lblogs">
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<h1 class="latest-post-heading">Latest Posts</h1>
+							</div>
+						</div>
+					</section>
+					<t t-foreach="lblogs" t-as="blog">
+						<div id="latest_post_img_div">
+							<div
+								t-attf-style="background-image: #{json.loads(blog.cover_properties).get('background-image', 'none')}"
+								class="image_blog_homepage">
+							</div>
+							<div class="col-md-4 l_Blog_detail">
+								<h4 class="l-blog-name">
+									<a t-field="blog.name"
+										t-attf-href="/blog/#{ slug(blog.blog_id) }/post/#{ slug(blog) }"></a>
+									<span t-if="not blog.website_published" class="text-warning">
+										<span class="fa fa-exclamation-triangle ml8" title="Unpublished" />
+									</span>
+								</h4>
+								<div class="text-muted">
+									<span t-field="blog.post_date" t-options='{"format": "MMMM dd, yyyy"}'
+										class="l-blog-date"></span>
+									<p class="l_before_hr"></p>
+									<p t-field="blog.teaser" class="mb12 mt12 o_blog_post_teaser"
+										id="l_blog_teaser_style" />
+								</div>
+								<a t-attf-href="/blog/#{ slug(blog.blog_id) }/post/#{ slug(blog) }">
+									<a class="readmore_arrow" href="">
+										<h6 id="l_blog_readmore">
+											Read More
+											<i class="fa fa-long-arrow-right"></i>
+										</h6>
+									</a>
+								</a>
+							</div>
+						</div>
+					</t>
+				</section>
+			</div>
+			<div class="oe_structure" />
+	</template>
+</odoo>

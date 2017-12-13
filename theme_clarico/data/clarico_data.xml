@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="website.homepage" model="ir.ui.view">
+			<field name="website_meta_title">Clarico - Fully Responsive Odoo eCommerce Theme for Furniture</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+<!--
+		<record id="clarico_layout1.clarico_layout1_homepage" model="ir.ui.view">
+			<field name="website_meta_title">Clarico - Fully Responsive Odoo eCommerce Theme for Furniture</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+-->
+		
+		<record id="clarico_product.clarico_product_product" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Product</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="clarico_shop.clarico_shop_products" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Shop</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="website.contactus" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Contact Us</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<record id="clarico_cart.clarico_cart" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Cart</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>
+		
+		<!--  <record id="clarico_wishlist.clarico_wishlist_wishlist_template" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Wishlist</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record> 
+		
+		<record id="clarico_compare.clarico_compare_page_template" model="ir.ui.view">
+			<field name="website_meta_title">Clarico Compare</field>
+			<field name="website_meta_description"></field>
+			<field name="website_meta_keywords"></field>
+		</record>  -->
+	</data>
+</odoo>

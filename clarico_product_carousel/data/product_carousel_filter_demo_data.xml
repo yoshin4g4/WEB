@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+
+		<record id="ir_filter_service_product" model="ir.filters">
+			<field name="name">Service Products</field>
+			<field name="model_id">product.template</field>
+			<field name="domain">[[u'type', u'=', 'service']]</field>
+			<field name="user_id" eval="False" />
+			<field name="context">{}</field>
+		</record>
+
+		<record id="ir_filter_sellable_product" model="ir.filters">
+			<field name="name">Sellable Products</field>
+			<field name="model_id">product.template</field>
+			<field name="domain">[[u'sale_ok', u'=', 1]]</field>
+			<field name="user_id" eval="False" />
+			<field name="context">{}</field>
+		</record>
+		
+
+		<record id="ir_filter_featured_product" model="ir.filters">
+			<field name="name">Featured Products</field>
+			<field name="model_id">product.template</field>
+			<field name="domain">[[u'sale_ok', u'=', 1]]</field>
+			<field name="user_id" eval="False" />
+			<field name="context">{}</field>
+		</record>
+		
+		<record id="ept_filter_service_product" model="website.filter.ept">
+			<field name="name">service</field>
+			<field name="filter_id" ref="clarico_product_carousel.ir_filter_service_product"></field>
+			<field name="website_published" eval="True"></field>
+		</record>
+		
+		<record id="ept_filter_sellable_product" model="website.filter.ept">
+			<field name="name">Sellable</field>
+			<field name="filter_id" ref="clarico_product_carousel.ir_filter_sellable_product"></field>
+			<field name="website_published" eval="True"></field>
+		</record>
+		
+		<record id="ept_filter_featured_product" model="website.filter.ept">
+			<field name="name">Featured Products</field>
+			<field name="filter_id" ref="clarico_product_carousel.ir_filter_featured_product"></field>
+			<field name="website_published" eval="True"></field>
+		</record>
+	</data>
+</openerp>

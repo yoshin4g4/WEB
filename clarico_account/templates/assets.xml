@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+	<template id="account_assets_frontend" inherit_id="website.assets_frontend" name="eCommerce Portal Sale">
+      <xpath expr="." position="inside">
+          <link rel='stylesheet' href='/clarico_account/static/src/less/account.less'/>
+          <link rel='stylesheet' href='/clarico_account/static/src/less/account_responsive.less'/>
+      </xpath>
+    </template>
+</odoo>

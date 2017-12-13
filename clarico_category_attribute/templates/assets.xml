@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="category_attribute_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_category_attribute/static/src/less/attribute_select.less" />
+		</xpath>
+	</template>
+</odoo>

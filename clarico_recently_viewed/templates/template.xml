@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="clarico_recently_viewed_recent_products" inherit_id="website_sale.product" customize_show="True" name="Recently Viewed Item"> 
+		<xpath expr="//div[hasclass('js_sale')]/div[last()]" position="after">
+			<t t-if="recently_viewed_product">
+				<t t-if="len(recently_viewed_product) > 1">
+					<span style="display:none;" class="recent_count"
+						t-esc="len(recently_viewed_product)" />
+					<t t-if="not active_id == recently_viewed_product[0]">
+						<div class="div_class_whole_recent_view_product">
+
+							<div class="div_class_recent_view_product">
+
+								<div class="div_sub_class_recent_view_product">
+									<div class="recently_viewed_header">
+										<h3 class="recently_viewed_lbl">Recently Viewed items</h3>
+									</div>
+									<div class="recently_viewed_container recently_viewed_for_products">
+										<div class="owl-carousel recentbx">
+											<t t-foreach="recently_viewed_product" t-as="rproduct">
+											<t t-if="not active_id == rproduct.id">
+												<div class="recently_viwed_common">
+													<div class="parent">
+														<div class="recently_viewed_img_div">
+																<a t-attf-href="/shop/product/#{ slug(rproduct) }">
+																		<div t-field="rproduct.image_medium" class=""
+																			t-options="{'widget': 'image', 'class': 'img img-responsive' }" />
+																</a>
+														</div>
+														<div class="recently_viwed_details">
+															<div class="recently_view_product_name">
+																<a t-attf-href="/shop/product/#{ slug(rproduct) }"
+																	style="display: block">
+																	<p t-field="rproduct.name" />
+																</a>
+															</div>
+															<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price recently_view_product_price" t-if="rproduct.product_variant_ids">
+		                        <b>
+		                            <t t-if="rproduct.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+		                                <del class="strike-through mr8" style="white-space: nowrap;" t-esc="compute_currency(rproduct.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+		                            </t>
+		
+		                            <span t-esc="rproduct.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+		                            <span itemprop="price" style="display:none;" t-esc="rproduct.website_price"/>
+		                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+		                        </b>
+		                    </div>
+															<hr class="r_v_deatil_hr" />
+														</div>
+													</div>
+												</div>
+												</t>
+											</t>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+		</xpath>
+	</template>
+
+
+	<template id="recent_cart_product" inherit_id="clarico_cart.clarico_cart_recently_viewed">
+		<xpath expr="//div[@id='recently_viewed_for_cart']" position="inside">
+			<t t-if="recently_viewed_product">
+				<t t-if="len(recently_viewed_product) > 0">
+					<span style="display:none;" class="recent_count"
+						t-esc="len(recently_viewed_product)" />
+					<hr class="hr_class_Sep" />
+					<div class="div_class_whole_recent_view_product">
+							<div class="div_sub_class_recent_view_product">
+								<div class="recently_viewed_header">
+									<h3 class="recently_viewed_lbl">Recently Viewed items</h3>
+								</div>
+								<div class="recently_viewed_container recently_viewed_for_products">
+									<div class="owl-carousel recentbx">
+
+										<t t-foreach="recently_viewed_product" t-as="rproduct">
+											<div class="recently_viwed_common">
+												<div class="parent">
+													<div class="recently_viewed_img_div">
+														<a t-attf-href="/shop/product/#{ slug(rproduct) }">
+														<div t-field="rproduct.image_medium" class=""
+																			t-options="{'widget': 'image', 'class': 'img img-responsive' }" />
+														</a>
+														</div>
+													<div class="recently_viwed_details">
+														<div class="recently_view_product_name">
+															<a t-attf-href="/shop/product/#{ slug(rproduct) }"
+																style="display: block">
+																<p t-field="rproduct.name" />
+															</a>
+														</div>
+															<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price recently_view_product_price" t-if="rproduct.product_variant_ids">
+		                        <b>
+		                            <t t-if="rproduct.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+		                                <del class="strike-through mr8" style="white-space: nowrap;" t-esc="compute_currency(rproduct.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+		                            </t>
+		
+		                            <span t-esc="rproduct.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+		                            <span itemprop="price" style="display:none;" t-esc="rproduct.website_price"/>
+		                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+		                        </b>
+		                    </div>
+														<hr class="r_v_deatil_hr" />
+													</div>
+												</div>
+											</div>
+										</t>
+									</div>
+							</div>
+						</div>
+					</div>
+				</t>
+			</t>
+		</xpath>
+	</template>
+ 	<template id="recent_wish_product" inherit_id="clarico_wishlist.clarico_wishlist">
+		<xpath expr="//div[hasclass('wish_recent_view')]" position="inside">
+			<t t-if="recently_viewed_product">
+				<t t-if="len(recently_viewed_product) > 0">
+					<span style="display:none;" class="recent_count"
+						t-esc="len(recently_viewed_product)" />
+					<hr class="hr_class_Sep" />
+					<div class="div_class_whole_recent_view_product">
+							<div class="div_sub_class_recent_view_product">
+								<div class="recently_viewed_header">
+									<h3 class="recently_viewed_lbl">Recently Viewed items</h3>
+								</div>
+								<div class="recently_viewed_container recently_viewed_for_products">
+									<div class="owl-carousel recentbx">
+
+										<t t-foreach="recently_viewed_product" t-as="rproduct">
+											<div class="recently_viwed_common">
+												<div class="parent">
+													<div class="recently_viewed_img_div">
+														<a t-attf-href="/shop/product/#{ slug(rproduct) }">
+														<div t-field="rproduct.image_medium" class=""
+																			t-options="{'widget': 'image', 'class': 'img img-responsive' }" />
+														</a>
+													</div>
+													<div class="recently_viwed_details">
+														<div class="recently_view_product_name">
+															<a t-attf-href="/shop/product/#{ slug(rproduct) }"
+																style="display: block">
+																<p t-field="rproduct.name" />
+															</a>
+														</div>
+															<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price recently_view_product_price" t-if="rproduct.product_variant_ids">
+		                        <b>
+		                            <t t-if="rproduct.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+		                                <del class="strike-through mr8" style="white-space: nowrap;" t-esc="compute_currency(rproduct.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+		                            </t>
+		
+		                            <span t-esc="rproduct.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+		                            <span itemprop="price" style="display:none;" t-esc="rproduct.website_price"/>
+		                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+		                        </b>
+														</div>
+														<hr class="r_v_deatil_hr" />
+													</div>
+												</div>
+											</div>
+										</t>
+									</div>
+							</div>
+						</div>
+					</div>
+				</t>
+			</t>
+		</xpath>
+	</template>
+</odoo>

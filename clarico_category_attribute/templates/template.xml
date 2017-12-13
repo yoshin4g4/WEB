@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_category_attribute_shop_products_item" inherit_id="clarico_shop.clarico_shop_products_item">
+		<xpath expr="//div[hasclass('product_price')]" position="after">
+			<t t-if="category and category.attribute_select">
+				<div class="div_class_categ_attribute_main_class">
+					<div class="div_class_categ_attrib_class_sub_class">
+						<t t-foreach="product.attribute_line_ids" t-as="attrib">
+							<t t-if="category.attribute_select.id == attrib.attribute_id.id">
+								<div class="border-color-top"></div>
+								<div class="div_class_categ_attribute_name">
+									<a class="a_class_categ_attribute_name" t-field="category.attribute_select.name"></a>
+								</div>
+								  <div class="div_class_attr_value_div">
+									<t t-set="count" t-value="len(attrib.value_ids)" />
+									<t t-foreach="attrib.value_ids" t-as="attrib_val">
+										<t t-if="not attrib_val.attribute_id.type == 'color'">
+											<span class="para_class_attr_value_name" t-esc="attrib_val.name"></span>
+											<span t-if="count &gt; 1">,</span>
+											 <t t-set="count" t-value="count - 1"></t>
+										</t>
+										 
+										<t t-if="attrib_val.attribute_id.type == 'color'">
+											<label class="label_class_attr_color_div" t-attf-style="background-color:#{attrib_val.html_color or attrib_val.name}" t-attf-class="css_attribute_color #{'active' if attrib_val.id in attrib_set else ''}">
+		                                           <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (attrib.id,attrib_val.id)" t-att-checked="'checked' if attrib_val.id in attrib_set else None" t-att-title="attrib_val.name" />
+		                                       </label>
+										</t>
+									</t>
+								</div>
+							</t>
+						</t>
+					</div>
+				</div>
+			</t>
+		</xpath>
+	</template>
+</odoo>

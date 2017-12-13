@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+		<record id="brand_tree_view" model="ir.ui.view">
+			<field name="name">brand.tree.view</field>
+			<field name="model">brand</field>
+			<field name="arch" type="xml">
+				<tree string="Brand">
+					<field name="name" string="Name" />
+					<field name="is_website_publish" string="Active" />
+				</tree>
+			</field>
+		</record>
+		
+		<record id="brand_from_view" model="ir.ui.view">
+			<field name="name">brand.from.view</field>
+			<field name="model">brand</field>
+			<field name="arch" type="xml">
+				<form string="Brand">
+				<sheet>
+				<group>
+					<field name="name" string="Name" />
+					<field name="brand_image" string="Image" widget="image" class="oe_avatar" options="{'preview_image': 'image_medium', 'size': [150,150]}" />
+					<field name="is_website_publish" string="Active" />
+				</group>
+				</sheet>
+				</form>
+			</field>
+		</record>
+		
+		
+		<record id="brand_action" model="ir.actions.act_window">
+			<field name="name">Brand</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">brand</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+		</record>
+
+		<menuitem action="brand_action" id="brand_menu" parent="website.menu_website_global_configuration"
+			sequence="0" />
+	</data>
+</odoo>

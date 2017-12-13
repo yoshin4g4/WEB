@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_wishlist_popover" inherit_id="website.layout">
+		<xpath expr="//div[@id='wrapwrap']" position="after">
+		<div class="common-main-div" style="display:none">
+			<div class="filter-div-maxW">
+        		<p class="common-close-btn">X</p>
+        		<div class="common-continer"></div> 
+									
+        	</div>
+        	
+    	</div>
+    	</xpath>
+	</template>
+	<template id="clarico_wishlist_popover_data">
+		<div class="popover_common_wrap">
+			<div class="popover_common_container">
+			<t t-foreach="object" t-as="p">
+					<div class="popover_each_product_div">
+						<div class="product_img_popover">
+							<a t-att-href="'/shop/product/%s' %slug(p.product_id)">
+								<img t-att-src="'data:image/png;base64,%s' % to_text(p.product_id.image_small)"></img>
+							</a>
+						</div>
+						<div class="name_price_comb_popover">
+							<div class="product_name_popover">
+								<a t-att-href="'/shop/product/%s' %slug(p.product_id)" t-esc="p.product_id.name"></a>
+							</div>
+							<div class="product_price_popover">
+								<!-- <p t-esc="p.product_id.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"></p>
+								<strike class="wishlist-price-p strike-price" t-field="p.product_id.website_public_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+					 -->		
+					 			
+                           <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="p.product_id.product_variant_ids">
+                            	<p class="" style="white-space: nowrap;" t-esc="p.product_id.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+		                          <h4 class="css_non_editable_mode_hidden decimal_precision" t-att-data-precision="p.product_id.currency_id.decimal_places">
+					            <span t-field="p.product_id.lst_price"
+					                t-options='{
+					                   "widget": "monetary",
+					                   "display_currency": p.product_id.currency_id,
+					               }'/>
+					          </h4>
+					          <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
+					    
+		                    </div>  
+		                   
+					 
+					 
+					 </div>
+						</div>
+					</div>
+			</t>
+			
+			</div>
+			<div class="view_common">
+				<a class="btn common-btn" href="/shop/wishlist">View Wishlist</a>
+			</div>
+		</div>				
+	</template>
+</odoo>

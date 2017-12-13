@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>	
+	<!-- quickview in carouse -->
+	<template id="clarico_quick_view_product_carousel_icon" inherit_id="clarico_product_carousel.product_carousel_snippet_product" name="Clarico Carousel Wishlist">
+	  	<xpath expr="//div[@id='pc_quick_view']" position="inside">
+			<a title="Quick View" class="quick-view-a" t-att-data-id="'%s' % product.id">
+				<i class="fa fa-eye" aria-hidden="true"></i>
+			</a>
+	  </xpath>
+	</template>
+	
+	<!-- quickview in Multi carouse -->
+	<template id="clarico_quick_view_product_multi_carousel_icon" inherit_id="clarico_product_multi_carousel.clarico_product_multi_carousel_static_carousel_snippet_product" name="Clarico Carousel Wishlist">
+	  	<xpath expr="//div[@id='pc_quick_view']" position="inside">
+			<a title="Quick View" class="quick-view-a" t-att-data-id="'%s' % product.id">
+				<i class="fa fa-eye" aria-hidden="true"></i>
+			</a>
+	  </xpath>
+	</template>
+</odoo>

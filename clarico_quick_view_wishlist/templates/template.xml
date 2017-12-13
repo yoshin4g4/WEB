@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<!-- Add wishlist into quick view -->
+	<template id="clarico_quick_view_wishlist_quick_view_popup" inherit_id="clarico_quick_view.clarico_quick_view_fetch-record">		
+		<xpath expr="//div[hasclass('quick_product_quantity')]" position="after">			
+			 <t t-set="in_wish" t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+               <t t-if="product.product_variant_ids">
+            	<t t-set="in_wish" t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')"/>
+                <a class="o_add_wishlist_dyn" t-att-disabled='in_wish or None' title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_wishlist"><span class="fa fa-heart"></span></a>
+            </t>
+		</xpath>	
+	</template>			             	
+</odoo>

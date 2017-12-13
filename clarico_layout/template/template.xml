@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="clarico_submenu" inherit_id="website.submenu">
+    	<xpath expr="//li[@t-if='not submenu.child_id']" position="inside">
+    		<t t-if="submenu.dynamic_menu">
+				<t t-call="clarico_layout.dynamic_category"></t>
+			</t>
+			<div class="custom-menu-inside-div dropdown-menu" t-field="submenu.menu_html" />
+			<span class="dynamic_active_inactive" t-esc="submenu.dynamic_menu" style="display:none;"></span>
+    	</xpath>
+    </template>
+	<template id="clarico_header_main" inherit_id="portal.frontend_layout">
+		<xpath expr="//header" position="before">
+			<div class="main-header">
+				<div class="main-header-maxW">
+					<div class="main-header-left">
+						<t t-call="website_sale.pricelist_list"></t>
+					</div>
+					<div class="offer-center">
+						<p class="offer-p">
+							<label t-field="website.clarico_header_style_one" class="header_pera_offer"></label>
+							<label t-field="website.clarico_header_style_two" class="header_pera_offer header_pera_offer_pipe"></label>
+							<label t-field="website.clarico_header_style_three" class="header_pera_offer header_pera_offer_pipe"></label>
+						</p>
+					</div>
+
+					<div class="main-header-right">
+						<div class="company-phone-div">
+							<ul id="logout_ul" class="sign_in_and_administrtor_link header-main-signin">
+								<li groups="base.group_public">
+									<a t-attf-href="/web/login">
+										<b>Sign in</b>
+									</a>
+								</li>
+								<li class="dropdown" id="login_user_name" t-ignore="true"
+									t-if="website.user_id != user_id">
+									<a href="#" class="dropdown-toggle header_admin_border"
+										data-toggle="dropdown">
+										<b>
+											<span>My Account</span>
+											<span class="caret"></span>
+										</b>
+									</a>
+									<ul class="dropdown-menu js_usermenu account-ul" role="menu">
+										<li>
+											<p class="ul_class_admin_name">
+												<i class="fa fa-user fa_common_style_header" style="padding-right: 9px;"></i>
+												<a href="/my/home">
+													<span class="span_logout"
+														t-esc="(len(user_id.name)&gt;25) and (user_id.name[:23]+'...') or user_id.name" />
+												</a>
+											</p>
+										</li>
+										<li id="o_logout">
+											<a t-attf-href="/web/session/logout?redirect=/" role="menuitem">Logout
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+
+							<div id="header-social">
+								<li id="header-compare" class="mr-common compare-menu"></li>
+								<li id="header-wishlist" class="mr-common"></li>
+								<li id="header-cart" class="mr-common"></li>
+							</div>
+						</div>
+					</div>
+					<div class="anim-search clarico_popup">
+						<form action="/shop" method="get" t-att-class="search_class">
+							<div class="input-group">
+								<div class="oe_search">
+									<input type="text" name="search"
+										class="search-query form-control oe_search_box clarico_search_border"
+										placeholder="Search..." t-att-value="search" required="required" />
+								</div>
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default oe_search_button">
+										<i class="fa fa-search" />
+									</button>
+								</span>
+								<a class="clarico_close">
+									<span>x</span>
+								</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</xpath>
+
+		<!-- Replace Administrator -->
+		<xpath expr="//ul[@id='top_menu']/li[hasclass('dropdown')]"
+			position="replace">
+		</xpath>
+		<xpath expr="//ul[@id='top_menu']//li" position="after">
+			<!--<li class="top-custom-menu dropdown">
+				<a class="custom-menu-a dropdown-toggle" data-toggle="dropdown">
+					Categories
+					<span class="caret" />
+				</a>
+			
+				
+			</li>-->
+
+			<li class="top-custom-menu">
+				<a href="#" class="search_link">
+					<i class="fa fa-search" aria-hidden="true"></i>
+				</a>
+			</li>
+
+		</xpath>
+	</template>
+	
+	<template id="dynamic_category">
+		<ul class="custom-menu-inside-div custom-menu-inside-div-nth dropdown-menu">
+					<div class="custom-menu-inside-maxW">
+						<div class="fisrt_li">
+							<t t-set="category_fetch" t-value="website.category_check()"></t>
+							<t t-foreach="category_fetch" t-as="category_individual">
+								<t t-if="not category_individual.parent_id">
+									<li class="first-level-category-li dropdown-submenu" t-att-id="'genrate_categ_id-%s' % category_individual.id">
+										<div class="first-level-left-div">
+											<div class="first-level-category-image" itemprop="image"
+												t-field="category_individual.image" t-options='{"widget": "image", "alt-field": "name"}' />
+											<a class="first-level-category-a " t-att-href="'/shop/category/%s' %slug(category_individual)"
+												t-field="category_individual.display_name" ></a>
+										</div>
+										<span tabindex="-1" class="submenu-a first-level-category-caret fa fa-chevron-right" />
+										<div class="toggel_div toggel-div-effect" t-att-id="category_individual.id">
+											<div class="toggel-inside-div">
+												<div class="menu_expand menu_1_div">
+													<div class="menu_expand_overflow menu_1_column_div">
+														<ul class="submenu_expand second_level-ul sub_menu dropdown-menu">
+															<t t-if="category_individual.child_id">
+																<t t-foreach="category_individual.child_id" t-as="c">
+																	<li class="dropdown-submenu sub-menu-ul-heading">
+																		<a class="second-level-a menu_heading " t-att-href="'/shop/category/%s' %slug(c)"
+																			t-field="c.name" ></a>
+																		<span tabindex="-1" class="submenu-a second-level-category-caret fa fa-chevron-right" />
+																		<ul class="third-level-ul dropdown-menu">
+																			<t t-foreach="c.child_id" t-as="child">
+																				<li class="third-level-li">
+																					<a class="sub_menu_list" t-att-href="'/shop/category/%s' %slug(child)"
+																						t-field="child.name" />
+																				</li>
+																			</t>
+																		</ul>
+																	</li>
+																</t>
+															</t>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</t>
+							</t>
+						</div>
+					</div>
+				</ul>
+	</template>
+	
+	<!-- Replace My Cart -->
+	<template id="clarico_header_header" inherit_id="website_sale.header"
+		name="Header Shop My Cart Link">
+		<xpath expr="//header//ul[@id='top_menu']/li" position="replace">
+		<li id="my_cart"></li>
+		</xpath>
+	</template>
+	
+	<!-- Replace Top Menu Signup -->
+ 	<template id="clarico_header_show_sign_in" customize_show="True"
+		inherit_id="portal.portal_show_sign_in" name="Show Sign In">
+		<xpath expr="//ul[@id='top_menu']/li[last()]" position="replace">
+		</xpath>
+	</template>
+	
+	<template id="website_sale.pricelist_list" name="Dropdown">
+		<t t-set="website_sale_pricelists" t-value="website.get_pricelist_available(show_visible=True)" />
+		<div
+			t-attf-class="header_curency_selector #{website_sale_pricelists and len(website_sale_pricelists)&gt;1 and 'dropdown'} btn-group">
+			<t t-set="curr_pl" t-value="website.get_current_pricelist()" />
+			<a href="#" class="dropdown-toggle btn btn-default header_btn_style"
+				data-toggle="dropdown">
+				<t t-esc="curr_pl and curr_pl.name or ' - '" />
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" role="menu">
+				<li t-foreach="website_sale_pricelists" t-as="pl">
+					<a t-att-href="'/shop/change_pricelist/%s' % pl.id">
+						<span class="switcher_pricelist" t-att-data-pl_id="pl.id"
+							t-esc="pl.name" />
+					</a>
+				</li>
+			</ul>
+		</div>
+	</template>
+	<template id="clarico_layout_footer_default" inherit_id="website.footer_default">
+		<xpath expr="//div[@id='footer']" position="replace">
+		<section>
+			
+			<section class="three_Column_snippet_wrap">
+				<div class="three_column_snippet_container">
+					<div class="tcs_column1">
+						<div class="tcs_icon_wrap">
+							<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img1.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+						<a href="#">FREE SHIPPING WORLDWIDE</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							On All Orders Of USD 250,00+
+						</div>
+					</div>				
+					<div class="tcs_column2">
+						<div class="tcs_icon_wrap">
+						<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img2.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+							<a href="#">24/7 CUSTOMER SERVICE</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							Get Help When You Need It.
+						</div>
+					</div>
+					<div class="tcs_column3">
+						<div class="tcs_icon_wrap">
+						<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img3.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+							<a href="#">100% MONEY BACK</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							30 Day Money Back Guarantee.
+						</div>
+					</div>
+				</div>	
+			</section>
+		</section>
+		<div class="ftr_main">
+			<div id="footer" class="container hidden-print">
+				<div class="row">
+					<div class="theme_icon_and_social_container">
+						<div class="clarico_logo_footer">
+							<div class="logo_name_container">
+								<span t-field="res_company.name" itemprop="name">Company name
+								</span>
+							</div>
+						</div>
+						<div class="search_bar_footer">
+							<div class="lbl_div_container">
+								<p class="newsltr_lbl">sign up for our newsletter!</p>
+							</div>
+						</div>
+					</div>
+					<div class="common_footer_content_details_div">
+						<div class="company_details_footer">
+							<ul class="customer-contact-ul">
+								<li>
+									<div class="contact_detail_para">
+										<p class="span_lbl">Add</p>
+										:
+										<p class="field_padding" t-field="res_company.street" />
+									</div>
+								</li>
+								<li>
+									<div class="contact_detail_para">
+										<p class="span_lbl">Tel</p>
+										:
+										<p class="field_padding" t-field="res_company.phone" />
+									</div>
+								</li>
+								<li>
+									<div class="contact_detail_para">
+										<p class="span_lbl">Email</p>
+										:
+										<p class="field_padding" t-field="res_company.email" />
+									</div>
+								</li>
+							</ul>
+							 
+							<div class="social_icons_footer">
+								<div class="footer-social-icon">
+									<a class="o_facebook" t-att-href="website.social_facebook"
+										t-if="website.social_facebook">
+										<i class="fa fa-facebook" />
+									</a>
+									<a class="o_twitter" t-att-href="website.social_twitter"
+										t-if="website.social_twitter">
+										<i class="fa fa-twitter" />
+									</a>
+									<a class="o_linkedin" t-att-href="website.social_linkedin"
+										t-if="website.social_linkedin">
+										<i class="fa fa-linkedin" />
+									</a>
+									<a class="o_youtube" t-att-href="website.social_youtube"
+										t-if="website.social_youtube">
+										<i class="fa fa-youtube-play" />
+									</a>
+									<a class="o_googleplus" t-att-href="website.social_googleplus"
+										t-if="website.social_googleplus" rel="publisher">
+										<i class="fa fa-google-plus-square" />
+									</a>
+									<a class="o_github" t-att-href="website.social_github" t-if="website.social_github">
+										<i class="fa fa-github" />
+									</a>
+								</div>
+							</div>
+							<ul class="list-unstyled" id="products">
+							</ul>	
+						</div>
+						<div class="col-md-4  col-lg-2">
+							<div class="footer-heading">
+								<ul class="customer-service-ul">
+									<li>
+										<a href="#">help</a>
+									</li>
+									<li>
+										<a href="#">gift cards</a>
+									</li>
+									<li>
+										<a href="#">order status</a>
+									</li>
+									<li>
+										<a href="#">free shipping</a>
+									</li>
+									<li>
+										<a href="#">returns &amp; exchanges</a>
+									</li>
+									<li>
+										<a href="#">international</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4  col-lg-2">
+							<div class="footer-heading">
+								<ul class="help-ul">
+									<li>
+										<a href="#">about us</a>
+									</li>
+									<li>
+										<a href="#">jobs</a>
+									</li>
+									<li>
+										<a href="#">Affiliates</a>
+									</li>
+									<li>
+										<a href="#">meet the maker</a>
+									</li>
+									<li>
+										<a href="#">contact</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4  col-lg-2">
+							<div class="footer-heading">
+								<ul class="security-ul">
+									<li>
+										<a href="#">security</a>
+									</li>
+									<li>
+										<a href="#">privacy</a>
+									</li>
+									<li>
+										<a href="#">text messaging</a>
+									</li>
+									<li>
+										<a href="#">legal</a>
+									</li>
+									<li>
+										<a href="#">supply chain</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4  col-lg-3">
+							<div class="oe_stucture"/>
+							<section><h3 class="footer_payment_heading">payment methods</h3></section>
+							<div class="payment_img_footer">
+								<section><img src="/clarico_layout/static/src/img/payment.png"></img></section>
+							</div>
+							<t t-call="website.language_selector" />
+						</div>
+						<div class="col-md-4  col-lg-2" id="info">
+							<ul class="list-unstyled" style="display:none">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="scrollup-div">
+				<a href="#" class="scrollup-a">
+					<i class="fa fa-angle-up scrollup-i"></i>
+				</a>
+			</div>
+			</div>
+		</xpath>
+	</template>
+	<template id="clarico_layout_footer_copyright" inherit_id="website.layout_footer_copyright"
+		name="Footer Copyright">
+		<xpath expr="//div[hasclass('mt16')]" position="replace">
+		</xpath>
+		<xpath expr="//footer" position="after">
+			<div class="container mt16 mb8">
+				<div class="endfooter_list">
+					<ul>
+						<li>
+							<a href="#">about us</a>
+						</li>
+						<li>
+							<a href="#">contact us</a>
+						</li>
+						<li>
+							<a href="#">customer service</a>
+						</li>
+						<li>
+							<a href="#">privacy policy</a>
+
+						</li>
+						<li>
+							<a href="#">accessibility</a>
+						</li>
+						<li>
+							<a href="#">store directory</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pull-center text-muted" itemscope="itemscope"
+					itemtype="http://schema.org/Organization">
+					Copyright
+					<a href="http://www.emiprotechnologies.com/" target="_blank">&amp;copy;
+					</a>
+					<span t-field="res_company.name" itemprop="name">Company name</span>
+				</div>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Loading Icon For All Things -->
+	<template id="load_icon_template" inherit_id="website.layout">
+		<xpath expr="//div[@id='wrapwrap']" position="after">
+		<!-- <xpath expr="//div[last()]" position="after"> -->
+			<div class="hidden cus_theme_loader_layout">
+				<div class="cus_theme_loader_div_layout">
+					<svg version="1.1" id="Layer_1" x="0px" y="0px" width="24px"
+						height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;"
+						xml:space="preserve">
+							    <rect x="0" y="0" width="4" height="10" fill="#333">
+							      <animateTransform attributeType="xml"
+						attributeName="transform" type="translate" values="0 0; 0 20; 0 0"
+						begin="0" dur="0.6s" repeatCount="indefinite"></animateTransform>
+							    </rect>
+							    <rect x="10" y="0" width="4" height="10" fill="#333">
+							      <animateTransform attributeType="xml"
+						attributeName="transform" type="translate" values="0 0; 0 20; 0 0"
+						begin="0.2s" dur="0.6s" repeatCount="indefinite"></animateTransform>
+							    </rect>
+							    <rect x="20" y="0" width="4" height="10" fill="#333">
+							      <animateTransform attributeType="xml"
+						attributeName="transform" type="translate" values="0 0; 0 20; 0 0"
+						begin="0.4s" dur="0.6s" repeatCount="indefinite"></animateTransform>
+							    </rect>
+							 </svg>
+				</div>
+			</div>
+		</xpath>
+	</template>
+</odoo>

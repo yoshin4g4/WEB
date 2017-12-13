@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_snippets" inherit_id="website.snippets">
+	    <xpath expr="//div[@id='snippet_structure']" position="before">
+	            <div id="clarico_snippet_structure" class="o_panel">
+	                <div class="o_panel_header">
+	                    <i class="fa fa-th-large"/> Clarico snippets
+	                </div>
+	              	  <div class="o_panel_body">
+	                  </div>
+	            </div>
+	</xpath>
+	</template>
+
+</odoo>

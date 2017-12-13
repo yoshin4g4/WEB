@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="website_sale.recommended_products" model="ir.ui.view">
+            <field name="priority">23</field>
+    </record>  
+	<template id="clarico_product_product" inherit_id="website_sale.product" priority="22">
+	<!--product Breadcrumb-->
+		<xpath expr="//section[@id='product_detail']" position="before">
+			<div id="sub_header_row">
+					<div class="col-sm-4 clarico_product_breadcrumb">
+						<div class="sub_breadcrumb">
+							<ol class="breadcrumb clarico_breadcrumb">
+								<li>
+									<a t-att-href="keep(category=0)">Products</a>
+								</li>
+								<li t-if="category">
+									<a t-att-href="keep('/shop/category/%s' % slug(category), category=0)"
+										t-field="category.name" />
+								</li>
+								<li class="active">
+									<span t-field="product.name" />
+								</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+		</xpath>
+		<!--Product Image-->
+		<xpath expr="//div[hasclass('col-sm-7')]" position="replace">
+					<div class="col-sm-7 res_product_img">
+									<t t-set="image_ids" t-value="product.product_image_ids" />
+									<div id="o-carousel-product" class="carousel slide"
+										data-ride="carousel" data-interval="0">
+										<div class="carousel-outer">
+											<div class="carousel-inner inner-slider">
+												<div class="item active image_zoom" itemprop="image"
+													t-field="product.product_variant_ids[0].image"
+													t-options='{"widget": "image", "class": "product_detail_img js_variant_img", "alt-field": "name", "zoom": "image"}' />
+												<div t-if="variant_img" class="item image_zoom"
+													itemprop="image" t-field="product.image"
+													t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image"}' />
+												<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+													<div class="item image_zoom" t-field="pimg.image"
+														t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image" }' />
+												</t>
+
+											</div>
+											<t t-if="len(image_ids) or variant_img">
+												<a class="carousel-control left" href="#o-carousel-product"
+													role="button" data-slide="prev">
+													<span class="fa fa-chevron-left res_prev_class"
+														aria-hidden="true" />
+													<span class="sr-only">Previous</span>
+												</a>
+												<a class="carousel-control right" href="#o-carousel-product"
+													role="button" data-slide="next">
+													<span class="fa fa-chevron-right res_next_class"
+														aria-hidden="true" />
+													<span class="sr-only">Next</span>
+												</a>
+											</t>
+										</div>
+										<ol class="carousel-indicators mCustomScrollbar" id="indicators"
+											t-if="len(image_ids) or variant_img" data-mcs-theme="dark">
+											<li data-target="#o-carousel-product" data-slide-to="0"
+												class="active">
+												<img class="img img-responsive js_variant_img_small"
+													t-attf-src="/website/image/product.product/{{product.product_variant_ids[0].id}}/image/90x90"
+													t-att-alt="product.name" />
+											</li>
+											<li t-if="variant_img" data-target="#o-carousel-product"
+												data-slide-to="1" class="">
+												<img class="img img-responsive"
+													t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"
+													t-att-alt="product.name" />
+											</li>
+											<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+												<li data-target="#o-carousel-product"
+													t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+													<img class="img img-responsive"
+														t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"
+														t-att-alt="pimg.name" />
+												</li>
+											</t>
+										</ol>
+										<div t-if="product.p_video_url">
+											<a class="pvideo_link" href="#">
+												<i class="fa fa-video-camera" aria-hidden="true"></i>
+											</a>
+										</div>
+										<!-- <div><a class="p_zoom_link">Click image to zoom product</a></div> -->
+									</div>
+									<div class="zoomed_image_on_screen">
+										<div class="div_cross_zoomed_image">
+											<p class="p_class_cross_image common-close-btn">
+												<span>X</span>
+											</p>
+										</div>
+										<div class="div_parent_zoom_class">
+											<div class="zooming_image_screen_o">
+												<img src="" class="zooming_image_screen"></img>
+											</div>
+											<!-- slider on zoom -->
+											<div class="clarico_slide">
+												<ol class="carousel-indicators mCustomScrollbar" t-if="len(image_ids) or variant_img"
+													data-mcs-theme="dark">
+													<li class="active ref_imgs">
+														<img class="img img-responsive"
+															t-attf-src="/website/image/product.product/{{product.product_variant_ids[0].id}}/image/2000x2000"
+															t-att-alt="product.name" />
+													</li>
+													<li t-if="variant_img" class="ref_imgs">
+														<img class="img img-responsive"
+															t-attf-src="/website/image/product.template/{{product.id}}/image/2000x2000"
+															t-att-alt="product.name" />
+													</li>
+													<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+														<li class="ref_imgs">
+															<img class="img img-responsive "
+																t-attf-src="/website/image/product.image/{{pimg.id}}/image/2000x2000"
+																t-att-alt="pimg.name" />
+														</li>
+													</t>
+												</ol>
+											</div>
+										</div>
+									</div>
+								</div>
+		</xpath>
+		<!--Breadcrumb-->
+		<xpath expr="//div[@id='wrap']/section/div[1]" position="replace">
+		
+		</xpath>
+		<xpath expr="//div[@t-field='product.website_description']" position="after">
+			<div class="div_class_whole_product_features common-div">
+				<div class="div_class_product_features block">
+						<div class="product_specification_left">
+						
+						</div>
+				
+				
+						<div class="column-right_p_alternative">
+
+						</div>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//div[@id='product_details']" position="replace">
+			<div class="col-sm-5 col-lg-4" id="product_details">
+				<div class="product_name_rating">
+					<div itemprop="name" t-field="product.name" class="c_product_name">Product
+						Name
+					</div>
+				</div>
+			
+				<span itemprop="url" style="display:none;" t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
+	            
+	            <div class="o_not_editable prod_des" t-if="product.description_sale">
+	                 <p t-field="product.description_sale" class="text-muted" />
+	            </div>
+	            
+	             <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
+	             <form action="/shop/cart/update" class="js_add_cart_variants" t-att-data-attribute_value_ids="attribute_value_ids" method="POST">
+	                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+	                 <div class="js_product" t-if="product.product_variant_ids">
+	                      <t t-call="website_sale.product_price" />
+	                     <div class='availability_messages'/>
+	                     <div class="clarico_product_sku" t-if="product.default_code">
+							<p class="sku_label">
+								SKU:
+								<t t-esc="product.default_code" />
+							</p>
+						 </div>
+	                     <t t-placeholder="select">
+	                         <input type="hidden" class="product_id" name="product_id" t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'" />
+	                         <t t-call="website_sale.variants">
+	                             <t t-set="ul_class" t-value="'nav-stacked'" />
+	                         </t>
+	                     </t>
+	                   	
+<!--
+	                     <div class="4_btns_combo">
+							<div class="4_btns_combo_sub">
+-->
+								<p t-if="len(product.product_variant_ids) &gt; 1" class="css_not_available_msg bg-danger" style="padding: 15px;">This combination does not exist.</p>
+								
+								<div class="cart-quantity-div">
+									
+									<div class="product_quantity">
+									
+									</div>
+									<div class="product_wish_compare">
+									<div class="wishlink" id="wishicon_div"></div>
+									<div class="compare_btn" id="compare_div"></div>
+									</div>
+								</div>
+								<div class="p_ad2cart">
+									<a id="add_to_cart"
+										class="btn btn-primary btn-lg mt8 js_check_product a-submit"
+										href="#">Add to Cart</a>
+								</div>
+<!--
+							</div>
+						</div>
+-->
+	                 </div>
+	             </form>
+	             <div class="ctg_class">
+					<p class="category_label" t-if="category">
+						Category:
+						<a t-att-href="keep('/shop/category/%s' % slug(category), category=0)" t-field="category.name" />
+					</p>
+				</div>
+	             <div class="p_static_desc_para">
+	             <p class="text-muted">
+	               30-day money-back guarantee<br />
+	               Free Shipping in U.S.<br />
+	               Buy now, get in 2 days
+	             </p>
+	             </div>
+					<div class="product_share">
+						<div class="oe_share s_share">
+							<a target="_Blank" class="oe_share_facebook"
+								href="https://www.facebook.com/sharer/sharer.php?u={url}">
+								<i class="fa fa-facebook"></i>
+							</a>
+							<a target="_Blank" class="oe_share_twitter"
+								href="https://twitter.com/intent/tweet?text={title}&amp;url={url}">
+								<i class="fa fa-twitter"></i>
+							</a>
+							<a target="_Blank" class="oe_share_linkedin"
+								href="http://www.linkedin.com/shareArticle?mini=true&amp;url={url}&amp;title={title}&amp;">
+								<i class="fa fa-linkedin"></i>
+							</a>
+							<a target="_Blank" class="oe_share_google"
+								href="https://plus.google.com/share?url={url}">
+								<i class="fa fa-google-plus"></i>
+							</a>
+							<a href="mailto:?body={url}&amp;subject={title}">
+								<i class="fa fa-envelope-o"></i>
+							</a>
+		
+						</div>
+					</div>
+             </div>
+	
+
+						 <hr id="hr_product_attributes_simple"></hr>
+		
+						 <p id="product_attributes_simple"></p>
+						 
+						 
+			<div class="product_video_popup_main">
+					<div class="product_video_popup_wrap">
+						<div class="product_video_subpopup">
+							<div class="item active iframe_product_video" t-if="product.p_video_url">
+								<iframe class="popup_iframe_url" t-attf-src="#{product.p_video_url}"></iframe>
+							</div>
+							<p class="popup-close common-close-btn">X</p>
+						</div>
+					</div>
+				</div>
+		</xpath>	
+	</template>
+	
+	<template id="website_sale.product_quantity" inherit_id="clarico_product.clarico_product_product" customize_show="True" name="Select Quantity">
+		<xpath expr="//div[hasclass('product_quantity')]" position="inside">
+	        <div class="css_quantity input-group oe_website_spinner" contenteditable="false">
+	            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+	                <i class="fa fa-minus"></i>
+	            </a>
+	            <input type="text" class="form-control quantity" data-min="1" name="add_qty" value="1"/>
+	            <a t-attf-href="#" class="mb8 input-group-addon float_left js_add_cart_json">
+	                <i class="fa fa-plus"></i>
+	            </a>
+	        </div>
+	    </xpath>
+    </template>
+	
+	<template id="product_quantity" inherit_id="website_sale.product" customize_show="True" name="Select Quantity">
+	</template>
+
+	
+	<!-- Attribute have sigle value -->
+ 	<template id="clarico_product_product_attributes" inherit_id="clarico_product.clarico_product_product" name="Product attributes">
+        <xpath expr="//p[@t-field='product.description_sale']" position="after">
+            <hr t-if="sum([(1 if len(l.value_ids)==1 else 0) for l in product.attribute_line_ids])" id='hr_product_attributes_simple'/>
+            <p class="text-muted" id="product_attributes_simple">
+                <t t-foreach="product.attribute_line_ids.sorted(key=lambda x: x.attribute_id.sequence)" t-as="variant_id">
+					<t t-if="variant_id.attribute_id.create_variant">
+                    <t t-if="len(variant_id.value_ids)==1">
+                        <span t-field="variant_id.attribute_id" />: <span t-field="variant_id.value_ids[0].name" /><br /></t>
+                </t>
+                </t>
+            </p>
+        </xpath>
+    </template> 
+
+
+
+    
+	<template id="suggested_products" inherit_id="website_sale.recommended_products" customize_show="True" name="Suggested Products">
+        <xpath expr="//div[hasclass('container')]" position="replace">
+        </xpath>
+    </template>
+
+ 	<template id="clarico_product_suggested_products" inherit_id="clarico_product.clarico_product_product">
+		<xpath expr="//div[hasclass('column-right_p_alternative')]"
+			position="inside">
+			<t t-if="product.alternative_product_ids">
+				<span style="display:none;" class="acce_count"
+					t-esc="len(product.alternative_product_ids)" />
+				<div class="alternate_recent_product_whole_div_class">
+					<div class="container_class" t-if="product.alternative_product_ids"
+						style="margin-top:0 !important;">
+						<h3 class="alternate_product_heading_para_class">Suggested Items</h3>
+						<div id="acce_item_product" class="recently_viewed_container">
+							<div class="owl-carousel">
+								<t t-foreach="product.alternative_product_ids" t-as="alt_product">
+									<div class="alternet_common">
+										<div class="parent">
+											<a t-attf-href="/shop/product/#{ slug(alt_product) }">
+												<div t-field="alt_product.image_medium" class="recently_viewed_img_div"
+													t-options="{'widget': 'image' ,'image':'s_image_common'}" />
+											</a>
+											<div class="alt_prod_details">
+												<div class="alt_prod_product_name">
+													<a t-attf-href="/shop/product/#{ slug(alt_product) }"
+														style="display: block">
+														<p t-field="alt_product.name" />
+													</a>
+												</div>
+
+												<div class="alt_prod_product_price">
+													<p t-esc="alt_product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+												</div>
+												<hr class="alt_prod_deatil_hr" />
+											</div>
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					</div>
+				</div>
+			</t>
+		</xpath>
+	</template>
+
+	<template id="clarico_product_suggested_Accessories"
+		inherit_id="clarico_product.clarico_product_product">
+		<xpath expr="//div[hasclass('column-right_p_alternative')]"
+			position="inside">
+			<t t-if="product.accessory_product_ids">
+				<span style="display:none;" class="suggest_count"
+					t-esc="len(product.accessory_product_ids)" />
+				<div class="alternate_recent_product_whole_div_class">
+					<div class="container_class" t-if="product.accessory_product_ids"
+						style="margin-top:0 !important;">
+						<h3 class="alternate_product_heading_para_class">Accessories</h3>
+						<div id="suggested_item_product" class="recently_viewed_container">
+							<div class="owl-carousel">
+								<t t-foreach="product.accessory_product_ids" t-as="alt_product">
+									<div class="alternet_common">
+										<div class="parent">
+											<a t-attf-href="/shop/product/#{ slug(alt_product.product_tmpl_id) }"
+												style="display: block">
+												<div t-field="alt_product.image_medium" class="recently_viewed_img_div"
+													t-options="{'widget': 'image','class':'s_image_common'}" />
+											</a>
+											<div class="alt_prod_details">
+												<div class="alt_prod_product_name">
+													<a t-attf-href="/shop/product/#{ slug(alt_product.product_tmpl_id) }"
+														style="display: block">
+														<p t-field="alt_product.name" />
+													</a>
+												</div>
+
+												<div class="alt_prod_product_price">
+													<p t-esc="alt_product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+												</div>
+												<hr class="alt_prod_deatil_hr" />
+											</div>
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					</div>
+				</div>
+			</t>
+		</xpath>
+	</template>
+	
+	
+
+	<template id="clarico_product_product_comment" inherit_id="website_sale.product_comment">
+		<xpath expr="//div[hasclass('col-md-8')]" position="attributes">
+			<attribute name="class">col-md-8</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('col-md-8')]" position="before">
+			<div class="comment_heading">
+					<div class="tot_review_heading">
+						<p>
+							Reviews(
+							<t t-esc="len(product.website_message_ids)" />
+							)
+						</p>
+					</div>
+					<h1>
+						<p>
+							<t t-if="len(product.website_message_ids) &lt;= 1">
+								<t t-esc="len(product.website_message_ids)" />
+								review
+							</t>
+							<t t-if="len(product.website_message_ids) > 1">
+								<t t-esc="len(product.website_message_ids)" />
+								reviews
+							</t>
+						</p>
+						<p> for </p>
+						<p>
+							"
+							<t t-esc="product.name" />
+							"
+						</p>
+					</h1>
+				</div>
+		</xpath>
+	</template>
+
+</odoo>

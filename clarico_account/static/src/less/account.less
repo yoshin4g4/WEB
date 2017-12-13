@@ -1,0 +1,153 @@
+.container{
+	.block;
+}
+/* Home */
+.account_home{
+	& .clarico_portal_docs{
+		
+		& .list-group-item{
+			border: none;
+			border-bottom : 1px solid #dddddd;
+			margin-bottom: 0;
+			padding: 15px 15px 5px 15px;
+			
+			& span.badge{
+				background: unset;
+				color: gray;
+				
+				&:after{
+					content:" )";
+				}
+				&:before{
+					content:"( ";
+				}
+			}
+		}
+	}
+}
+
+.my_details_div{
+
+	& .your_details{
+		.muli-regular;
+		.pb(5%);
+		
+		& .your_details_change_btn{
+			.muli-regular;
+			.size(11px);
+			.ml(10px);
+			border: 1px solid @theme-color;
+			padding: 2px 5px 2px 5px;
+			border-radius: 2px;
+			color : @theme-color;
+			
+			&:hover{
+				background: @theme-color;
+				color: #fff;
+				transition:0.5s;
+			}
+		}
+	}
+	
+	& address span{
+		line-height:185%;
+	}
+}
+
+/* Quotation */
+
+.quotation_table{
+	
+	& thead{
+		& tr th{
+			background-color : #000 !important;
+			color:#fff;
+			.muli-regular;
+			.size(14px);
+			font-weight: normal;
+			padding : 15px 10px;
+			border-bottom : 2px solid #000;
+		}
+	}
+	
+	& tbody{
+		& tr td{
+			.muli-regular;
+			.size(14px);
+			padding : 10px 10px;
+		}
+	}
+}
+.order_details_div{
+	.pt(2%);
+}
+
+.clarico_panel_main{
+	.mt(2%);
+	
+	& .panel-heading{
+		background-color: #000;
+		
+		& h4{
+			color: #fff;
+		}
+		
+		& #o_portal_order_actions{
+			& a i{
+				color : #fff;
+			}
+		}
+	}
+	& .address-div{
+		.pt(2%);
+		
+	}
+}
+.order-details_div{
+	.pt(1%);
+	.pb(1%);
+}
+.clarico_portal_details{
+
+	& label.control-label{
+		font-weight: normal;
+	}
+	
+	& input,select{
+		border-radius: 0;
+		height: 40px;
+	}
+}
+
+.clarico_website_quote{
+
+	& .bs-sidebar{
+		background-color: #eceaea !important;
+		border-radius: 0 !important;
+		
+		& a.btn{
+			border-radius: 0 !important;
+		}
+		
+		& .bs-sidenav{
+			
+			& li.active{
+				& a{
+					color : @theme-color;
+					border-right: 2px solid @theme-color;
+				}
+			}
+		}		
+	}
+}
+.quotation-order-heading{
+	font-size: 28px;
+    font-family: poppins-semibold;
+    text-transform: uppercase;
+    margin-bottom: 3%;
+    color: #6c6b6b;
+    
+    & small{
+    	.capitalize;
+    }
+}

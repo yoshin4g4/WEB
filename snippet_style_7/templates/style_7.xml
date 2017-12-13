@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="style_7" inherit_id="clarico_snippets.clarico_snippets"
+		name="Clarico snippet" priority="7">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_7.snippet_style_7_template" t-thumbnail="/snippet_style_7/static/src/img/Style_7.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_7_template" name="Style 7">
+		<section>
+			<div class="oe_structure" />
+
+			<div class="clarico_home_second_section">
+				<div class="clarico_home_second_sub_section">
+					<div class="chs_img_container">
+						<a href="#">
+						<img src="/snippet_style_7/static/src/img/style_7_img_1.jpeg"></img>
+						</a>
+					</div>
+					<div class="chs_detail_container">
+						<h2 class="chs_heading">Find the perfect expression of your style and taste!
+						</h2>
+						<p class="chs_para">
+							Shopping for chairs online can be stressful at best, without the touch
+							and feel element of walking into a traditional furniture
+							retailer.Through direct dealings with the designers and creators
+							themselves, we are able to secure high-quality products with a
+							price tag that doesn’t break the budget.Our collection of chairs
+							online displays the quality workmanship and passion of our
+							craftsmen.
+						</p>
+						<a class="chs_btn_readmore" href="#">shop Now</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</template>
+</odoo>

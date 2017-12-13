@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Replaced wishlist in header -->
+	<template id="clarico_header_wishlist" inherit_id="website_sale_wishlist.header"
+		name="Clarico Wishlist" priority="21">
+		<xpath expr="//li[@id='my_wish']" position="replace">
+
+		</xpath>
+	</template>
+	<!--Wishlist in Header -->
+	<template id="clarico_wishlist_header_view" inherit_id="clarico_layout.clarico_header_main"
+		name="Clarico Wishlist" priority="25">
+		<xpath expr="//div[@id='header-social']/li[@id='header-wishlist']"
+			position="inside">
+			<t t-if="request.env.ref('website_sale_wishlist.add_to_wishlist').active">
+				<t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())" />
+				<li id="my_wish" t-att-style="not wishcount and 'display:none;'">
+					<a href="/shop/wishlist">
+						<svg x="0px" y="0px" width="16px" height="16px" viewBox="-454 256 50 50">
+							<style type="text/css">
+								.st0{stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+							</style>
+							<path id="XMLID_4_" class="st0"
+								d="M-406.7,272.6c-0.7-7.2-5.8-12.4-12.1-12.4c-4.2,0-8.1,2.3-10.3,5.9c-2.2-3.7-5.9-5.9-10-5.9       c-6.4,0-11.5,5.2-12.2,12.4c0,0.1-0.1,0.5-0.1,1v0.3c0,0.8,0.1,2,0.5,3.4c0.9,3.9,3.1,7.5,6.2,10.3l15.6,14.1l15.8-14.1       c3.1-2.8,5.3-6.4,6.2-10.3C-406.5,274.6-406.7,273-406.7,272.6L-406.7,272.6z M-408.8,277c-0.8,3.6-2.8,6.8-5.7,9.4l-14.6,13.2       l-14.4-13.1c-2.9-2.6-4.8-5.9-5.7-9.4c-0.6-2.6-0.4-4-0.4-4V273c0.6-6.4,5-10.9,10.4-10.9c4,0,7.6,2.5,9.2,6.5l0.8,1.9l0.8-1.9       c1.7-4,5.5-6.5,9.6-6.5c5.5,0,9.8,4.6,10.4,10.9C-408.4,273-408.2,274.5-408.8,277z"></path>
+						</svg>
+						<sup t-attf-class="my_wish_quantity">
+							<t t-esc='wishcount' />
+						</sup>
+					</a>
+				</li>
+			</t>
+		</xpath>
+	</template>
+	<!-- Replaced the shop layout -->
+	<template id="clarico_shop_wishlist_replace" inherit_id="website_sale_wishlist.add_to_wishlist"
+		name="Clarico Shop Wishlist" priority="21">
+		<xpath expr="//a[hasclass('o_add_wishlist')]" position="replace">
+
+		</xpath>
+	</template>
+
+	<!-- Wishlist link in shoppage for view product in shop page -->
+	<template id="clarico_wishlist_wish_link" inherit_id="clarico_shop.clarico_shop_products">
+		<xpath expr="//div[@class='view-as']/div/div/div" position="inside">
+			<t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())" />
+			<a t-att-style="not wishcount and 'display:none;'" t-if="request.env.user.id != request.website.user_id.id"
+				class="apply-wishlist apply-filter-in-page shop_view_popup_link_btn">
+				View Wishlist
+				<span class="wish_no_count">
+					(<span class="my_wish_quantity">0</span>)
+				</span>
+			</a>
+		</xpath>
+	</template>
+
+	<!--Wishlist in Shop -->
+	<template id="clarico_shop_wishlist" inherit_id="clarico_shop.clarico_shop_products_item"
+		name="Clarico Shop Wishlist" priority="24">
+		<xpath expr="//div[@id='wishlist_shop']" position="inside">
+			<t t-if="request.env.user.id != request.website.user_id.id">
+				<t t-set="in_wish"
+					t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+				<t t-if="product.product_variant_ids">
+	
+					<a class="o_add_wishlist wish_shop_a" t-att-disabled='in_wish or None'
+						title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id"
+						data-action="o_wishlist">
+						<i class="fa fa-heart-o" aria-hidden="true"></i>
+					</a>
+				</t>
+			</t>
+			<t t-if="request.env.user.id == request.website.user_id.id">
+				<t t-set="url" t-value="request.httprequest.full_path" />
+				<a t-attf-href='/web/login?redirect=#{url}'>
+					<i class="fa fa-heart-o" aria-hidden="true"></i>
+				</a>
+			</t>
+		</xpath>
+		<xpath expr="//div[@id='in-wishlist-shop']" position="inside">
+			<t t-set="in_wish"
+				t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+			<t t-if="product.product_variant_ids">
+				<a class="o_add_wishlist wish_shop_a added-wish-item"
+					t-att-disabled='in_wish or None' t-att-data-product-product-id="product.product_variant_ids[0].id"
+					data-action="o_wishlist">
+					<i class="fa fa-heart-o" aria-hidden="true"></i>
+				</a>
+			</t>
+		</xpath>
+	</template>
+	<!-- Wishlist in My Account -->
+	 <template id="clarico_account_wishlist" inherit_id="clarico_account.clarico_account_clarico_layout">
+		<xpath expr="//li[@id='wishlist_id']" position="inside">
+
+			<p class="ul_class_admin_name">
+				<i class="fa fa-heart fa_common_style_header" style="padding-right: 9px;"></i>
+				<a href="/shop/wishlist">My Wishlist</a>
+			</p>
+		</xpath>
+	</template> 
+
+	<!-- Replaced the Product Page -->
+	<template id="clarico_product_wishlist_replace" inherit_id="website_sale_wishlist.product_add_to_wishlist"
+		name="Clarico Product Wishlist" priority="21">
+		<xpath expr="//a[hasclass('o_add_wishlist_dyn')]" position="replace">
+		</xpath>
+	</template>
+
+	<!-- Wishlist in Product Page -->
+	<template id="clarico_product_wishlist" inherit_id="clarico_product.clarico_product_product"
+		name="Clarico Product Wishlist" priority="23">
+		<xpath expr="//div[@class='cart-quantity-div']" position="after">
+			<t t-if="request.env.user.id != request.website.user_id.id">
+			<t t-set="in_wish"
+				t-value="product.product_variant_ids &amp; request.env['product.wishlist'].current().mapped('product_id')" />
+			<a class="o_add_wishlist_dyn" t-att-disabled='in_wish or None'
+				title="Add to Wishlist" t-att-data-product-product-id="product.product_variant_ids[0].id"
+				data-action="o_wishlist">
+				<span class="fa fa-heart"></span>
+			</a>
+			</t>
+			<t t-if="request.env.user.id == request.website.user_id.id">
+				<t t-set="url" t-value="request.httprequest.full_path" />
+				<a t-attf-href='/web/login?redirect=#{url}' class="product_wish_wo_signin">
+					<i class="fa fa-heart-o" aria-hidden="true"></i>
+				</a>
+			</t>
+			
+		</xpath>
+	</template>
+
+	
+
+	<!--Wishlist View -->
+	<template id="clarico_wishlist" inherit_id="website_sale_wishlist.product_wishlist"
+		name="Clarico Wishlist">
+		<xpath expr="//div[hasclass('oe_website_sale')]" position="before">
+			<div class="main-div-W100 wishlist-main">
+				<section>
+					<img class="wishlist-cover-img" src="/clarico_cart/static/src/img/cart_cover.jpg"></img>
+				</section>
+			</div>
+		</xpath>
+
+		<!--Add to cart (checkbox) -->
+		<xpath expr="//div[hasclass('checkbox')]" position="replace">
+			<div class="checkbox wish-add-cart-checkbox">
+				<label class='type-checkbox'>
+					<input class="checkbox-custom" type="checkbox" id='b2b_wish'
+						value="1" />
+					<label class="checkbox-custom-label">Add product to my cart
+						but keep it in my wishlist</label>
+				</label>
+			</div>
+		</xpath>
+
+		<!--heading of wishlist -->
+		<xpath expr="//h3" position="attributes">
+			<attribute name="class">chs_heading wishlist_temp_heading
+			</attribute>
+		</xpath>
+		<!--heading of wishlist -->
+		<xpath expr="//h3" position="after">
+			<a class="clear_wishlist" t-if="len(wishes)">( Clear wishlist )</a>
+		</xpath>
+		<!--image -->
+		<xpath expr="//td[hasclass('td-img')]" position="attributes">
+			<attribute name="class">td_clarico_img</attribute>
+		</xpath>
+		<xpath expr="//tr" position="attributes">
+			<attribute name="class">tr_clarico</attribute>
+		</xpath>
+
+		<xpath expr="//td[hasclass('text-left')]" position="replace">
+			<td class="td_clarico_text text-left">
+				<a class="a_clarico_wish_text"
+					t-att-href="'/shop/product/%s' % slug(wish.product_id.product_tmpl_id)">
+					<t t-esc="wish.product_id.display_name" />
+				</a>
+			</td>
+		</xpath>
+		<!--replace price div -->
+		<xpath expr="//td[3]" position="attributes">
+			<attribute name="class">price_td</attribute>
+
+		</xpath>
+		<xpath expr="//br" position="replace">
+
+
+		</xpath>
+
+		<!--Adding class to table -->
+		<xpath expr="//table[hasclass('table-bordered')]" position="attributes">
+			<attribute name="class">table table-bordered table-striped
+				table-hover text-center mt16 table-comparator clarico_table
+				oe_website_sale</attribute>
+		</xpath>
+		<!--rating in wishlist -->
+		<xpath expr="//td[hasclass('td-wish-btn')]" position="replace">
+			<td id="wish_rating">
+
+			</td>
+			<!-- Add to cart -->
+			<td class='text-center td-wish-btn clarico_wish_cart'>
+				<p class="p_wish_cart">
+					<input name="product_id" t-att-value="wish.product_id.id"
+						type="hidden" />
+					<a class="o_wish_add mb4 wish_clarico_add">
+						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						Add to Cart
+					</a>
+					<a class="o_wish_rm no-decoration wish_clarico_rm">
+						<small>
+							<i class='fa fa-trash-o'></i>
+							Remove
+						</small>
+					</a>
+				</p>
+			</td>
+		</xpath>
+		<!-- Recently Viewed div -->
+		<xpath expr="//table" position="after">
+			<div class="wish_recent_view">
+
+			</div>
+		</xpath>
+	</template>
+
+
+
+</odoo>

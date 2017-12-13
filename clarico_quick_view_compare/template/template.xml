@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>	
+	<!-- Compare in Quick View -->
+	<template id="clarico_quick_view_compare_category_Quickview" inherit_id="clarico_quick_view.clarico_quick_view_fetch-record">
+		<xpath expr="//div[hasclass('quick_product_quantity')]" position="after">
+            <!-- <t t-if="product.env.ref('website_sale_comparison.add_to_compare').active">
+                <a class="hidden-xs btn btn-default btn-lg mt8 o_add_compare_dyn" title="Compare" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_comparelist"><span class="fa fa-exchange"></span></a>
+            </t> -->
+            <a class="o_add_compare_dyn" title="Compare" t-att-data-product-product-id="product.product_variant_ids[0].id" data-action="o_comparelist"><span class="fa fa-exchange"></span></a>
+		</xpath>
+	</template>
+</odoo>

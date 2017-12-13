@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="website_carousel_filter_action_form_view" model="ir.ui.view">
+	        <field name="name">Website Filter Form</field>
+	        <field name="model">website.filter.ept</field>
+	        <field name="arch" type="xml">
+	            <form string="Website Carousel filter">
+	                <sheet>
+	                    <div class="oe_left">
+	                        <group>
+	                            <field name="filter_id" domain="[('model_id','=',('product.public.category','product.template'))]" />
+	                            <field name="name" />
+	                            <field name="website_published"/>
+	                            <!-- <field name="ept_id"/> -->
+	                        </group>
+	                    </div>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="website_carousel_filter_action_tree_view" model="ir.ui.view">
+	        <field name="name">Website Filter Tree</field>
+	        <field name="model">website.filter.ept</field>
+	        <field name="field_parent" eval="False"/>
+	        <field name="arch" type="xml">
+	            <tree string="Website Filter">
+	            	 <field name="id" />
+	                <field name="filter_id" domain="[('model_id','=',('product.public.category','product.template'))]"/>
+	                <field name="name"/>
+
+	            </tree>
+	        </field>
+	    </record>	
+	
+	
+	    <record id="website_carousel_filter_action" model="ir.actions.act_window">
+	        <field name="name">Website Carousel Filter</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">website.filter.ept</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" eval="False"/>
+	        <field name="help" type="html">
+	          <p class="oe_view_nocontent_create">
+	            Click to define a new Website Carousel filter.
+	          </p><p>
+	            website Carousel filter are used to browse your products through the
+	            touchscreen interface.
+	          </p>
+	        </field>
+	    </record>
+	    <menuitem action="website_carousel_filter_action" id="website_carousel_filter" parent="website.menu_website_global_configuration" sequence="0" />
+</odoo>

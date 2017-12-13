@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="json_filter_assets_frontend_js" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/clarico_attribute_filter/static/src/js/filter.js"></script>
+			<link rel="stylesheet" type="text/less" href="/clarico_attribute_filter/static/src/less/filter.less"/>
+		</xpath>
+	</template>
+</odoo>

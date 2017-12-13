@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data noupdate="0">
+		<record id="clarico_categories" model="website.menu">
+			<field name="name">Categories</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="dynamic_menu" eval="True"></field>
+			<field name="sequence" type="int">61</field>
+		</record>
+		
+		<record id="clarico_diningroom" model="website.menu">
+			<field name="name">Storage</field>
+			<!-- <field name="url">/</field> -->
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="menu_html">
+				<![CDATA[
+			<div class="custom-menu-inside-maxW">
+	<div class="column-main">
+		<div class="cat-column">
+			<div class="block-cate">
+				<div style="height:40px;"></div>
+				<div class="thumb">
+					<figure>
+						<img class="menu-cate-image" src="/clarico_layout/static/src/img/1.jpg">
+					</figure>
+				</div>
+				<a href="/shop" class="content-cat">
+					<h3 class="title_cat">Chair</h3>
+					<span class="count_cat">
+						( 5 items )            
+					</span>
+				</a>
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate-down">
+				<a href="/shop" class="content-cat">
+					<h3 class="title_cat">Chair</h3>
+					<span class="count_cat">
+						( 9 items )            
+					</span>
+				</a>
+				<div class="thumb">
+					<figure>
+						<img class="menu-cate-image" src="/clarico_layout/static/src/img/2.jpg">
+					</figure>
+				</div>
+				
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate">
+				<div style="height:40px;"></div>
+				<div class="thumb">
+					<figure>
+						<img class="menu-cate-image" src="/clarico_layout/static/src/img/3.jpg">
+					</figure>
+				</div>
+				<a href="/shop" class="content-cat">
+					<h3 class="title_cat">Sofas</h3>
+					<span class="count_cat">
+						( 7 items )            
+					</span>
+				</a>
+				<a href="/shop" class="button button_cat">
+					shop category   
+				</a>
+			</div>
+		</div>
+		<div class="cat-column">
+			<div class="block-cate-down">
+				<a href="/shop" class="content-cat">
+					<h3 class="title_cat">Bed</h3>
+					<span class="count_cat">
+						( 6 items )            
+					</span>
+				</a>
+				<div class="thumb">
+					<figure>
+						<img class="menu-cate-image" src="/clarico_layout/static/src/img/4.jpg">
+					</figure>
+				</div>
+				
+				<a href="/shop" class="button button_cat">
+					shop category    
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+			
+				]]>
+			</field>
+			<field name="sequence" type="int">62</field>
+		</record>
+
+		<record id="clarico_livingroom" model="website.menu">
+			<field name="name">Home Accessories</field>
+			<field name="parent_id" ref="website.main_menu" />
+			<field name="menu_html">
+				<![CDATA[
+					<div class="custom-menu-inside-maxW ">
+	<div class="custom-menu-inside-left-div">
+		<div class="static_menu_pc_view">
+			<div class="category-heading-div">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Sofas</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Chesterfield Sofa</a></h4>
+						<h4><a>6 Seater Dining Sets</a></h4>
+						<h4><a>8 Seater Dining Sets</a></h4>
+						<h4><a>Bar Stools Chair</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Living</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Arm Chairs</a></h4>
+						<h4><a>Balcony Furniture</a></h4>
+						<h4><a>Benches</a></h4>
+						<h4><a>Chairs</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Table</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Bar Cabinets</a></h4>
+						<h4><a>2 Seater Sofa</a></h4>
+						<h4><a>3 Seater Sofa</a></h4>
+						<h4><a>Chaise Lounge</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Living</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Arm Chairs</a></h4>
+						<h4><a>Balcony Furniture</a></h4>
+						<h4><a>Benches</a></h4>
+						<h4><a>Chairs</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Sofas</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Chesterfield Sofa</a></h4>
+						<h4><a>6 Seater Dining Sets</a></h4>
+						<h4><a>8 Seater Dining Sets</a></h4>
+						<h4><a>Bar Stools Chair</a></h4>
+					</ul>
+				</div>
+			</div>
+			<div class="category-heading-div ">
+				<div class="category-heading-center">
+					<a class="" href="/shop">Living</a>
+					<span class="expand-plus-icon  submenu-a" tabindex="-1"></span>
+					<ul class="expand-div ">
+						<hr class="category-heading-p-hr">
+						<h4><a>Arm Chairs</a></h4>
+						<h4><a>Balcony Furniture</a></h4>
+						<h4><a>Benches</a></h4>
+						<h4><a>Chairs</a></h4>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="custom-menu-inside-right-div">
+		<div class="menu-right-side-img-div">
+			<img class="menu-right-side-img" src="/clarico_layout/static/src/img/static_menu.jpg">
+		</div>
+	</div>
+</div>
+				]]>
+			</field>
+			<field name="sequence" type="int">63</field>
+		</record>
+	</data>
+</odoo>

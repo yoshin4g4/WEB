@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_8" inherit_id="clarico_snippets.clarico_snippets"
+		name="Heading Snippet" priority="8">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_8.snippet_style_8_template" t-thumbnail="/snippet_style_8/static/src/img/style_8.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_8_template" name="Style 8">
+		<section>
+			<div class="oe_structure">
+				<section class="second_layout_img_text_fade_wrap">
+    		<div class="second_layout_img_text_fade_container">
+    			<div class="text_area_div">
+    				<h1 class="img_text_fade_text_heading">big sale</h1>
+    				<h3 class="img_text_fade_text_heading_small">simple wooden armless chair</h3>
+    				<h1 class="discount_title">50% off</h1>
+    				<a class="fade_shop_now_button" href="#">shop now</a>
+    			</div>
+    			<div class="fade_img_container">
+    				<div class="slide1_img1_div">
+    				<a href="#">
+    				<img class="img_all" src="/snippet_style_8/static/src/img/style_8_img_1.png"></img>
+    				</a>
+    				</div>
+    			</div>
+    		</div>
+    	</section>
+			</div>
+
+		</section>
+	</template>
+
+</odoo>

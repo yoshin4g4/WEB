@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<!-- Compare in layout -->
+	<template id="clarico_compare_layout_icon" inherit_id="clarico_layout.clarico_header_main">
+		<xpath expr="//div[@id='header-social']/li[@id='header-compare']"
+			position="inside">
+				<a class="compare o_compare"  title="Add to Compare">
+
+					<svg x="0px" y="0px" width="16px" height="16px" viewBox="-454 256 50 50">
+						<style type="text/css">
+							.st0{fill:#030403;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+						</style>
+						<path id="XMLID_10_" class="st0"
+							d="M-409.8,282.3h-3.3l1.6-2.8L-409.8,282.3z M-412.3,277.1l-3.3,5.7c-0.2,0.3-0.2,0.7,0,0.9
+					c0.2,0.3,0.5,0.5,0.8,0.5h1.8c-1.7,7.7-8.4,13.1-16.4,13.1c-3.8,0-7.4-1.2-10.4-3.6c-1.1-0.9-2.1-1.9-3-3.1
+					c-0.3-0.4-0.9-0.5-1.3-0.2c-0.4,0.3-0.5,0.9-0.2,1.3c1,1.3,2.1,2.4,3.4,3.4c3.3,2.6,7.3,4,11.6,4c4.4,0,8.8-1.6,12.1-4.5
+					c3.2-2.7,5.4-6.4,6.2-10.5h2.8c0.3,0,0.6-0.2,0.8-0.5c0.1-0.1,0.1-0.3,0.1-0.5c0-0.2,0-0.3-0.1-0.5l-3.3-5.7
+					c-0.2-0.3-0.5-0.5-0.8-0.5C-411.8,276.6-412.1,276.8-412.3,277.1L-412.3,277.1z" />
+						<path id="XMLID_7_" class="st0"
+							d="M-444.9,279.8l-1.6,2.8l-1.6-2.8H-444.9z M-428.7,262.9L-428.7,262.9c-4.5,0-8.8,1.6-12.1,4.5
+					c-3.2,2.7-5.4,6.5-6.2,10.5h-2.8c-0.3,0-0.6,0.2-0.8,0.5c-0.2,0.3-0.2,0.7,0,0.9l3.3,5.7c0.1,0.3,0.4,0.5,0.8,0.5
+					c0.3,0,0.6-0.2,0.8-0.5l3.3-5.7c0.1-0.1,0.1-0.3,0.1-0.5c0-0.2,0-0.3-0.1-0.5c-0.2-0.3-0.5-0.5-0.8-0.5h-1.9
+					c1.7-7.7,8.5-13.1,16.4-13.1c3.8,0,7.4,1.2,10.4,3.6c1.1,0.9,2.1,1.9,3,3.1c0.3,0.4,0.9,0.5,1.3,0.2c0.2-0.2,0.4-0.5,0.4-0.8
+					c0-0.2-0.1-0.4-0.2-0.6c-1-1.3-2.1-2.4-3.4-3.4C-420.5,264.3-424.5,262.9-428.7,262.9L-428.7,262.9z" />
+					</svg>
+					<sup class="o_product_circle"></sup>
+
+				</a>
+		</xpath>
+	</template>
+
+
+	<!-- Replaced the shop layout -->
+	<template id="clarico_shop_compare_replace" inherit_id="website_sale_comparison.add_to_compare"
+		name="Clarico Shop Compare" priority="23">
+		<xpath expr="//a[hasclass('o_add_compare')]" position="replace">
+
+		</xpath>
+	</template>
+	<!--Compare in Shop -->
+	<template id="clarico_shop_compare" inherit_id="clarico_shop.clarico_shop_products_item"
+		name="Clarico Shop Compare" priority="25">
+
+		<xpath expr="//div[@id='compare_shop']" position="inside">
+			<t t-if="product.product_variant_ids">
+				<a class="btn btn-default btn-xs o_add_compare" title="Compare"
+					t-att-data-product-product-id="product.product_variant_ids[0].id"
+					data-action="o_comparelist">
+					<i class="fa fa-refresh" aria-hidden="true"></i>
+				</a>
+			</t>
+		</xpath>
+	</template>
+
+
+	<!-- Compare icon in product page -->
+	<template id="clarico_compare_remove_base_icon" inherit_id="website_sale_comparison.product_add_to_compare"
+		priority="9">
+		<xpath expr="//a[hasclass('o_add_compare_dyn')]" position="replace">
+
+		</xpath>
+	</template>
+	<template id="clarico_compare_product_add_to_compare"
+		inherit_id="clarico_product.clarico_product_product" priority="24">
+		<xpath expr="//div[@class='cart-quantity-div']" position="after">
+			<t t-if="product.env.ref('website_sale_comparison.add_to_compare').active">
+				<a class="o_add_compare_dyn" title="Compare"
+					t-att-data-product-product-id="product.product_variant_ids[0].id"
+					data-action="o_comparelist">
+					<span class="fa fa-exchange"></span>
+				</a>
+			</t>
+		</xpath>
+	</template>
+
+
+	<!-- compare in carousel -->
+	<template id="clarico_compare_product_carousel_icon"
+		inherit_id="clarico_product_carousel.product_carousel_snippet_product"
+		name="Clarico Carousel Compare">
+		<xpath expr="//div[@id='pc_compare']" position="inside">
+			<a class="carousel-icon o_add_compare" title="Compare"
+				t-att-data-product-product-id="product.product_variant_ids[0].id"
+				data-action="o_comparelist">
+				<i class="fa fa-refresh" aria-hidden="true"></i>
+			</a>
+		</xpath>
+	</template>
+
+	<template id="clarico_compare_multi_carousel_icon"
+		inherit_id="clarico_product_multi_carousel.clarico_product_multi_carousel_static_carousel_snippet_product">
+		<xpath expr="//div[@id='pc_compare']" position="inside">
+			<a class="carousel-icon o_add_compare" title="Compare"
+				t-att-data-product-product-id="product.product_variant_ids[0].id"
+				data-action="o_comparelist">
+				<i class="fa fa-refresh" aria-hidden="true"></i>
+			</a>
+		</xpath>
+	</template>
+
+
+
+	<!-- compare in my account -->
+	<!-- <template id="clarico_compare_clarico_layout" name="Link to e-Commerce 
+		frontend portal" inherit_id="clarico_layout.clarico_layout"> <xpath expr="//ul[@id='logout_ul']//li[@id='o_logout']" 
+		position="before"> <li> <p class="ul_class_admin_name"> <i class="fa fa-exchange 
+		fa_common_style_header" style="padding-right: 9px;"></i><a href="/shop/compare">My 
+		compare</a> </p> </li> </xpath> </template> -->
+
+	<!-- Compare Page -->
+	<template id="clarico_compare_product_compare" inherit_id="website_sale_comparison.product_compare">
+		<xpath expr="//div[hasclass('oe_website_sale')]" position="replace">
+			<div class="container oe_website_sale compare_slider">
+				<div class="compare_product_heading_left_div">
+					<div class="compare_product_div">
+						<h2 class="chs_heading">Compare Product</h2>
+					</div>
+						<div class="blank_div">
+						</div>
+				</div>
+				<div class="compare_product_heading_right_div">
+					<div class="compare_slider_main common-div">
+						<span class="compare-count-span" t-esc="len(products)" style="display:none;"></span>
+						<div t-att-class="'owl-carousel' if len(products) > 3 else 'owl-carousel'">
+							<!-- <div class="owl-carousel"> -->
+							<t t-foreach="products" t-as="product">
+								<div class="compare_main" t-att-data-id="product.id">
+									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+									<input type="hidden" class="product_id" name="product_id"
+										t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'" />
+
+									<div class="parent">
+										<a class="compare_remove" t-att-data-product_product_id="product.id">
+	                                        <span class=''>x</span>
+	                                    </a>
+										<div class="compare_img_div compare_product_img">
+											<div t-field="product.image_medium" t-options="{'widget': 'image' }" />
+
+											<div class="sale-div" t-if="product.label_ept_id">
+												<div t-field="product.label_ept_id" class="sale-btn"></div>
+											</div>
+										</div>
+
+
+										<div class="contentmaxW">
+											<div class="product_description compare_product_name ">
+												<a t-att-href="'/shop/product/%s' %slug(product.product_tmpl_id)"
+													class="c_product_name" t-field="product.name" />
+											</div>
+											<div id="compare_rating"></div>
+											<div class="product_description compare_product_price">
+												<t
+													t-if="(compute_currency(product.lst_price) - product.website_price ) &gt; 0.01  and website.get_current_pricelist().discount_policy=='without_discount'">
+													<del class="text-danger mr8 strike-through" style="white-space: nowrap;"
+														t-esc="compute_currency(product.website_public_price)"
+														t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+												</t>
+												<span class="orignal-price" t-esc="product.website_price"
+													t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+												<span itemprop="price" style="display:none;" t-esc="product.website_price" />
+												<span itemprop="priceCurrency" style="display:none;"
+													t-esc="website.currency_id.name" />
+											</div>
+
+											<div class="product_description compare_product_description ">
+												<span class="text-muted res_pera_description" t-field="product.description_sale" />
+											</div>
+
+											<div class="product_description compare_product_variant">
+												<t
+													t-foreach="product.attribute_line_ids.sorted(key=lambda x: x.attribute_id.name)"
+													t-as="attr">
+													<span class="color_name_heading" t-field="attr.attribute_id.name"></span>
+													<t t-if="attr.attribute_id.name == 'Color'">
+														<span class="label_comma">:</span>
+														<t t-foreach="attr.value_ids" t-as="attrvalue">
+															<span class="label_class_attr_color_div"
+																t-attf-style="background-color:#{attrvalue.html_color};">
+															</span>
+														</t>
+													</t>
+
+													<t t-if="not attr.attribute_id.name == 'Color'">
+														<span class="label_comma">:</span>
+														<t t-foreach="attr.value_ids" t-as="attrvalue">
+															<span class="other_variant" t-field="attrvalue.name" />
+														</t>
+													</t>
+													<br />
+												</t>
+											</div>
+											<div class="compare_function_main_div">
+												<form action="/shop/cart/update" method="post" class="text-center">
+													<div class="compare_add_to_cart_div">
+														<input name="product_id" t-att-value="product.id"
+															type="hidden" />
+														<a class="btn btn-primary btn-block a-submit">
+															<i class="fa fa-shopping-cart"></i>
+															&amp;nbsp;Add to Cart
+														</a>
+													</div>
+												</form>
+												<div id="compare_wishlist_div_id" class="compare_wishlist_div">
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</t>
+						</div>
+					</div>
+				</div>
+			</div>
+		</xpath>
+	</template>
+
+	<template id="clarico_compare_product_product" inherit_id="website_sale_comparison.product_product">
+		<xpath expr="//div[hasclass('col-sm-1')]" position="attributes">
+			<attribute name="class">col-sm-1 col-xs-1</attribute>
+		</xpath>
+	</template>
+
+	<!-- Compare icon in suggested item -->
+	<template id="clarico_compare_recommended_product" inherit_id="website_sale_comparison.recommended_product">
+		<xpath expr="//span[hasclass('h3')]" position="replace">
+			<span class='common_heading suggest-product-heading'>Suggested Products :</span>
+		</xpath>
+		<xpath expr="//a[hasclass('btn-primary')]" position="attributes">
+			<attribute name="class">btn btn-primary suggest-product-compare
+			</attribute>
+		</xpath>
+	</template>
+
+	<!-- Specification table in product page -->
+	<template id="clarico_product_product_attributes_body"
+		inherit_id="website_sale_comparison.product_attributes_body">
+		<!-- <xpath expr="//section[@id='product_full_spec']" position="attributes"> 
+			<attribute name="class">container specification_table_section</attribute> 
+			</xpath> <xpath expr="//section[@id='product_full_spec']//h3" position="attributes"> 
+			<attribute name="class">product_info_heading_para_class block</attribute> 
+			</xpath> <xpath expr="//div[@id='product_specifications']" position="attributes"> 
+			<attribute name="class">product_specification_div</attribute> </xpath> -->
+		<xpath expr="//section[@id='product_full_spec']" position="replace">
+
+		</xpath>
+
+	</template>
+	<template id="clarico_compare_clarico_product" inherit_id="clarico_product.clarico_product_product">
+		<xpath expr="//div[hasclass('product_specification_left')]"
+			position="inside">
+			<section class="container specification_table_section" id="product_full_spec">
+				<t t-set="atts" t-value="product.get_variant_groups()" />
+				<t t-if='len(atts)'>
+					<h3 class="product_info_heading_para_class">
+						Specifications for "
+						<t t-esc="product.name" />
+						"
+					</h3>
+					<div class="">
+						<div class='product_specification_div common-div' id='product_specifications'>
+							<table class='table table-striped table-condensed table-hover'>
+								<t t-foreach="atts.keys()" t-as="spec">
+									<t t-if="len(atts.keys())&gt;1">
+										<tr class="success text-left breadcrumb clickable"
+											data-toggle="collapse" t-att-data-target="'.'+spec.split()[0]">
+											<th t-att-colspan="2">
+												<t t-esc="spec" />
+											</th>
+										</tr>
+									</t>
+									<tr t-foreach="atts[spec]" t-as="att"
+										t-att-class="'collapse in ' + spec.split()[0]">
+										<td t-esc="att.attribute_id.name" />
+										<td>
+											<t t-set='or_separator'> , </t>
+											<t
+												t-esc="(' %s ' % or_separator).join(att.value_ids.mapped('name'))" />
+										</td>
+									</tr>
+								</t>
+							</table>
+						</div>
+					</div>
+				</t>
+			</section>
+		</xpath>
+		<xpath expr="//h3[hasclass('product_info_heading_para_class')]"
+			position="after">
+			<div class="totus_product_specification_div" t-if="product.product_sort_description">
+				<!-- <h3 class="product_info_heading_para_class">Specifications for "<t 
+					t-esc="product.name"/>"</h3> -->
+				<t if="product_sort_description">
+					<div class="sort_description_div_main">
+						<p class="sort_description_p" t-esc="product.product_sort_description"></p>
+					</div>
+				</t>
+			</div>
+		</xpath>
+	</template>
+	
+	<!-- Compare max limit message -->
+	<template id="clarico_compare_max_message" inherit_id="website.layout">
+		<xpath expr="//div[@id='wrapwrap']" position="inside">
+			<div class="compare_max_limit">
+				<span> <i class="fa fa-warning text-danger"></i> You can compare max 4 products.</span>
+			</div>
+		</xpath>
+	</template>
+
+</odoo>

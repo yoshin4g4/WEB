@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style2_assets_frontend" inherit_id="web.assets_frontend" name="Style">
+		<xpath expr="." position="inside">
+			<link href="/snippet_style_2/static/src/less/c_snippet.less"
+				type="text/less" rel="stylesheet" />
+			<script src="/snippet_style_2/static/src/js/c_snippet.js"
+				type="text/javascript"></script>
+		</xpath>
+	</template>
+</odoo>

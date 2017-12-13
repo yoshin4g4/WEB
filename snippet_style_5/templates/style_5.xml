@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_5" inherit_id="clarico_snippets.clarico_snippets"
+		name="Heading Snippet" priority="5">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_5.snippet_style_5_template" t-thumbnail="/snippet_style_5/static/src/img/style_5.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_5_template" name="Style 5">
+		<section>
+			<div class="oe_structure">
+
+				<div class="products_with_section_div">
+					<div class="products_with_section_sub_div">
+						<div class="home_three_products">
+							<div class="product_main_div">
+								<div class="product_img_div">
+									<section>
+									<a href="#">
+										<img src="/snippet_style_5/static/src/img/style_5_img_2.jpeg"></img>
+										</a>
+									</section>
+								</div>
+								<div class="product_detail_div">
+									<p class="product_name">Living Room Chair</p>
+									<a class="product_add_cart_link" href="#">
+										Add to Cart
+										<i class="fa fa-long-arrow-right" id="arrow_ri8"></i>
+									</a>
+								</div>
+							</div>
+							<div class="product_main_div">
+								<div class="product_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_5/static/src/img/style_5_img_1.jpeg"></img>
+										</a>
+									</section>
+								</div>
+								<div class="product_detail_div">
+									<p class="product_name">Living Room Chair</p>
+									<a class="product_add_cart_link" href="#">
+										Add to Cart
+										<i class="fa fa-long-arrow-right" id="arrow_ri8"></i>
+									</a>
+								</div>
+							</div>
+
+
+						</div>
+
+
+						<div class="static_home_section">
+							<h3 class="content_title">Furniture Interior</h3>
+							<p class="desc_para">We have lots of styles and types, from sun loungers to
+								armchairs, and you can even create your own combination with our
+								sofa sections.</p>
+							<a class="shop_now_button" href="#">Shop now</a>
+						</div>
+					</div>
+
+
+
+
+
+				</div>
+			</div>
+
+		</section>
+	</template>
+
+</odoo>

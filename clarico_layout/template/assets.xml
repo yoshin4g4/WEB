@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="layout_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_layout/static/src/less/clarico_header.less" />
+			
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_layout/static/src/less/header_responsive.less" />
+			<script src="/clarico_layout/static/src/js/custom_header.js"
+				type="text/javascript"></script>
+		</xpath>
+	</template>
+</odoo>

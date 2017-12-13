@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<!-- Add link into my account -->
+ 	<template id="clarico_account_clarico_layout" name="Link to e-Commerce frontend portal"
+		inherit_id="clarico_layout.clarico_header_main">
+		<xpath expr="//ul[@id='logout_ul']//li[@id='o_logout']"
+			position="before">
+			<li id="wishlist_id"></li>
+		<div id="cart_id"></div>
+			<li>
+				<p class="ul_class_admin_name">
+					<i class="fa fa-pie-chart fa_common_style_header" style="padding-right: 9px;"></i><a href="/my/orders">My Orders</a>
+					</p>
+			</li>
+			<li>
+				<p class="ul_class_admin_name">
+				<i class="fa fa-usd fa_common_style_header" style="padding-right: 9px;"></i><a href="/my/invoices">My Invoices</a>
+				</p>
+			</li>
+		</xpath>
+	</template>
+	
+	<!-- Home page -->
+	<template id="clarico_account_portal_my_home" inherit_id="portal.portal_my_home" name="My Portal">
+		<xpath expr="//div[hasclass('o_portal_my_home')]" position="attributes">
+			<attribute name="class">o_portal_my_home account_home</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('o_portal_my_home')]//h3" position="attributes">
+			<attribute name="class">common_heading</attribute>
+		</xpath>
+		<xpath expr="//ul[hasclass('o_portal_docs')]" position="attributes">
+			<attribute name="class">o_portal_docs list-group clarico_portal_docs</attribute>
+		</xpath>
+	</template>
+	
+	<!-- Home page your details section -->
+	<template id="clarico_account_portal_layout_details" inherit_id="portal.portal_layout" name="Portal Layout">
+		<xpath expr="//div[hasclass('o_portal_my_details')]" position="attributes">
+			<attribute name="class">o_portal_my_details my_details_div</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('o_portal_my_details')]//h3" position="attributes">
+			<attribute name="class">your_details</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('o_portal_my_details')]//h3/a" position="attributes">
+			<attribute name="class">your_details_change_btn</attribute>
+		</xpath>
+	</template>
+	
+	<!-- Quotation Home -->
+	<template id="clarico_account_portal_my_quotations" inherit_id="sale.portal_my_quotations" name="My Quotations"> 
+		<xpath expr="//h3" position="attributes">
+			<attribute name="class">common_heading</attribute>
+		</xpath>
+		<xpath expr="//table[hasclass('o_portal_my_doc_table')]" position="attributes">
+			<attribute name="class">table table-hover o_portal_my_doc_table quotation_table</attribute>
+		</xpath>
+	</template>
+	
+	<!-- Quotataion orders -->
+ 	<template id="clarico_account_portal_order_page" inherit_id="sale.portal_order_page" name="Sales Order">
+		<xpath expr="//div[hasclass('container')]" position="attributes">
+			<attribute name="class">container clarico_container</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('panel-default')]" position="attributes">
+			<attribute name="class">panel panel-default clarico_panel_main</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('panel-body')]/div[hasclass('row')]" position="attributes">
+			<attribute name="class">row address-div</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('orders_vertical_align')]" position="attributes">
+			<attribute name="class">row orders_vertical_align order_details_div</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('orders_vertical_align')]/div[@id='product_name']" position="replace">
+			<div id='product_name' class="col-lg-4 col-sm-6 col-xs-3">
+               <span t-esc="ol.product_id.display_name"/>
+             </div>
+		</xpath>
+	</template> 
+	
+	<!-- Sales Order Home -->
+ 	<template id="clarico_account_portal_my_orders" inherit_id="sale.portal_my_orders" name="My Sales Order"> 
+		<xpath expr="//h3" position="attributes">
+			<attribute name="class">common_heading</attribute>
+		</xpath>
+		<xpath expr="//table[hasclass('o_portal_my_doc_table')]" position="attributes">
+			<attribute name="class">table table-hover o_portal_my_doc_table quotation_table</attribute>
+		</xpath>
+	</template>
+	
+ 	<template id="clarico_account_portal_my_details" inherit_id="portal.portal_my_details">
+		<xpath expr="//h3" position="attributes">
+			<attribute name="class">common_heading</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('o_portal_details')]" position="attributes">
+			<attribute name="class">row o_portal_details clarico_portal_details</attribute>
+		</xpath>
+	</template>	
+	
+	<template id="clarico_account_so_quotation" inherit_id="website_quote.so_quotation">
+		<xpath expr="//div[hasclass('o_website_quote')]" position="attributes">
+			<attribute name="class">container o_website_quote clarico_website_quote</attribute>
+		</xpath>
+	</template>
+	
+	<!-- Accept Order quote -->
+	<template id="clarico_account_pricing" inherit_id="website_quote.pricing">
+		<xpath expr="//section[@id='quote']" position="attributes">
+			<attribute name="class">quote section_quote</attribute>
+		</xpath>
+		<xpath expr="//table[hasclass('table')]" position="attributes">
+			<attribute name="class">table wq-table table_quote</attribute>
+		</xpath>
+	</template>
+	
+	<!-- Quotation content -->
+	<template id="clarico_account_so_quotation_content" inherit_id="website_quote.so_quotation_content">
+		<xpath expr="//h1" position="attributes">
+			<attribute name="class">quotation-order-heading</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('row')]//div[hasclass('col-md-6')]" position="attributes">
+			<attribute name="class">col-md-6 col-xs-6 full_width</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('row')]//div[hasclass('col-md-6')]" position="attributes">
+			<attribute name="class">col-md-6 col-xs-6 full_width</attribute>
+		</xpath>
+	</template>
+	
+	<template id="clarico_account_portal_my_invoices" inherit_id="account.portal_my_invoices" name="My Quotations"> 
+		<xpath expr="//h3" position="attributes">
+			<attribute name="class">common_heading</attribute>
+		</xpath>
+		<xpath expr="//table[hasclass('o_portal_my_doc_table')]" position="attributes">
+			<attribute name="class">table table-hover o_portal_my_doc_table quotation_table</attribute>
+		</xpath>
+	</template>
+	
+	<template id="clarico_account_portal_invoice_page" inherit_id="account.portal_invoice_page">
+		<xpath expr="//div[hasclass('container')]" position="attributes">
+			<attribute name="class">container clarico_container</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('panel-default')]" position="attributes">
+			<attribute name="class">panel panel-default clarico_panel_main</attribute>
+		</xpath>
+	</template>
+</odoo> 

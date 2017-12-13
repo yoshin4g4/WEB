@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_9" inherit_id="clarico_snippets.clarico_snippets"
+		name="Heading Snippet" priority="9">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_9.snippet_style_9_template" t-thumbnail="/snippet_style_9/static/src/img/style_9.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_9_template" name="Style 9">
+		<section>
+			<section class="cat_img_content_snippet_wrap">
+				<div class="cat_img_content_snippet_container">
+
+					<div class="daily_deals_img_section">
+						<section>
+							<a href="#">
+							<img src="/snippet_style_9/static/src/img/style_9_img_1.jpeg"></img>
+							</a>
+						</section>
+					</div>
+					<div class="daily_deals_content_class">
+						<p class="hr_before_heading"></p>
+						<h1 class="content_heading">daily deals</h1>
+						<div class="daily_deals_para">
+							<p class="">You can select a product to buy without leaving
+								current page,instantly add product to basket. Increase user
+								experiance and sales.</p>
+						</div>
+						<a class="shop_now_button" href="#">shop now</a>
+					</div>
+
+					<div class="daily_deals_snippet_category">
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c1.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">bed room</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c2.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">bulk</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c3.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">dining</a>
+							</div>
+						</div>
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c4.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">kids</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c5.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">living</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c6.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">bed room</a>
+							</div>
+						</div>
+						<div class="category_row">
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c7.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">sofas</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+										<a href="#">
+										<img src="/snippet_style_9/static/src/img/c8.jpg"></img>
+										</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">chairs</a>
+							</div>
+							<div class="category">
+								<div class="cat_img_div">
+									<section>
+									<a href="#">
+										<img src="/snippet_style_9/static/src/img/c9.jpg"></img>
+									</a>
+									</section>
+								</div>
+								<a href="#" class="category_name">storage</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+	</template>
+
+</odoo>

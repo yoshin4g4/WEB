@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Main Rating Template 0.10 -->
+	<template id="clarico_rating_star">
+		<div class="o_rating_star_card">
+			<div t-attf-class="stars #{rating_disabled and 'disabled' or 'enabled'}">
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+			</div>
+			<input type="hidden" readonly="readonly" name="rating"
+				t-att-data-default="val or 0.0" />
+		</div>
+	</template>
+
+	<!-- Shop page -->
+	<template id="clarico_rating_shop_product_rating_products_item"
+		inherit_id="clarico_shop.clarico_shop_products_item">
+		<xpath expr="//div[hasclass('product_price')]" position="before">
+			<div class="shop_rating">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+						<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Wishlist page -->
+	<template id="clarico_rating_wishlist_product_rating"
+		inherit_id="clarico_wishlist.clarico_wishlist">
+		<xpath expr="//td[@id='wish_rating']" position="inside">
+			<div class="shop_rating text-left">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+						<t t-set="val" t-value="rating_product[wish.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Rating In Compare -->
+	<template id="clarico_compare_rating" inherit_id="clarico_compare.clarico_compare_product_compare">
+		<xpath expr="//div[@id='compare_rating']" position="inside">
+			<div class="shop_rating pull-left">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+
+						<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Rating in product carousel static -->
+	<template id="clarico_rating_product_carousel"
+		inherit_id="clarico_product_carousel.product_carousel_snippet_product">
+		<xpath expr="//p[hasclass('para_c_cs_product_name')]" position="after">
+			<div class="product_carousel_rating mb4">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+						<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Rating in product carousel multi -->
+	<template id="clarico_rating_productmulti_carousel"
+		inherit_id="clarico_product_multi_carousel.clarico_product_multi_carousel_static_carousel_snippet_product">
+		<xpath expr="//p[hasclass('para_c_cs_product_name')]" position="after">
+			<div class="product_carousel_rating mb4">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+						<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+	<!-- Clarico Product rating -->
+	<template id="clarico_rating_product" inherit_id="clarico_product.clarico_product_product">
+		<xpath expr="//div[hasclass('product_name_rating')]" position="after">
+			<div class="rating-block">
+				<t t-if="rating_product">
+					<t t-call="clarico_rating.clarico_rating_star">
+						<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+					</t>
+				</t>
+			</div>
+		</xpath>
+	</template>
+
+</odoo>

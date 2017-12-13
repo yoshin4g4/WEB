@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="latest_blog_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet"
+				href="/clarico_latest_blog/static/src/less/latest_blog.less"></link>
+		</xpath>
+	</template>
+</odoo>

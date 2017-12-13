@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="layout_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/clarico_pricefilter/static/src/less/price_filter_style.less"></link>
+			<script type="text/javascript" src="/clarico_pricefilter/static/src/js/price_filter_slider_plugin.js"></script>
+			<script type="text/javascript" src="/clarico_pricefilter/static/src/js/custom.js"></script>
+		</xpath>
+	</template>
+</odoo>

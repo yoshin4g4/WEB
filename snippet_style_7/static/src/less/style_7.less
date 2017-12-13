@@ -1,0 +1,103 @@
+
+.clarico_home_second_section
+{
+	display:inline-block;
+	width:100%;
+	
+	.clarico_home_second_sub_section
+	{
+		display:block;
+		width:90%;
+		margin:0px auto;
+		max-width:1400px;
+		
+		.chs_img_container
+		{
+			width:50%;
+			display:block;
+			.left;
+			
+			img
+			{
+				max-width:100%;
+			}
+		}	
+		.chs_detail_container
+		{
+			width:50%;
+			display:block;
+			.right;
+			.mt(5%);
+			
+			.chs_para
+			{
+				.size(15px);
+				line-height: 180%;
+				.mb(41px) !important;
+				color: #898383;
+				.muli-light();
+				.mt(25px);
+			}
+			.chs_btn_readmore
+			{	display: inline-block;
+				.size(14px);
+				line-height: 46px;
+				height: 46px;
+				letter-spacing: 2px;
+				padding: 0 30px;
+				text-align: center;
+				text-transform: uppercase;
+				background: @theme-color;
+				border-radius: 25px;
+				border: none;
+				color: #fff;
+				transition: all 300ms;
+				text-decoration: none;
+				.oswald-regular;
+			
+				&:hover
+				{
+					background: #333;
+					color:#fff;	
+					transition: background-color linear 0.5s;
+				}
+			}
+		}
+	}
+	
+}
+@media (max-width: 800px) {
+	.clarico_home_second_section .clarico_home_second_sub_section .chs_img_container {
+		width: 90%;
+		.center;
+    }
+    .clarico_home_second_section .clarico_home_second_sub_section .chs_detail_container {
+		width: 100%;
+		.center;
+    }
+    .clarico_home_second_section .clarico_home_second_sub_section .chs_detail_container .chs_heading {
+		.size(28px);
+		.center;
+    }
+    .clarico_home_second_section .clarico_home_second_sub_section .chs_detail_container .chs_para {
+		.size(14px);
+		.center;
+    }
+    .clarico_home_second_section .clarico_home_second_sub_section .chs_img_container img {
+		max-width: 80%;
+	}
+}
+@media (max-width: 600px) {
+	.clarico_home_second_section .clarico_home_second_sub_section .chs_img_container img {
+		max-width: 90%;
+	}
+	.clarico_home_second_section .clarico_home_second_sub_section .chs_detail_container .chs_heading {
+		.size(20px) !important;
+	}
+	.clarico_home_second_section .clarico_home_second_sub_section .chs_detail_container .chs_para {
+		.size(13px);
+		.mb(21px);
+		.mt(9px);
+	}
+}
+

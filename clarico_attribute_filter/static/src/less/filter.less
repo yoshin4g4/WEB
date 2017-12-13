@@ -1,0 +1,88 @@
+.filter-main-div{
+	width: 100%;
+	position: fixed;
+    z-index: 9999;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95) !important;
+    display: none;
+    
+
+	.filter-div-maxW{
+		width: 60%;
+	    max-width: 1400px;
+	    .center;
+	    
+	    
+	    .filter-option{
+	    	transition: opacity 1s;
+	    	height: 300px;
+		    position: fixed;
+    		width: 700px;
+	    	
+	    	
+	    	.clear-all-filter{
+	    		.right;
+			    .mr(10px);
+			    .size(12px);
+			    color: black;
+			    border-bottom: 1px solid;
+			    display:none;
+			    
+			    & span{
+			    	.size(13px);
+			    }
+	    	}
+	    	.filter-option-h2{
+	    		.size(30px);
+				color: #222;
+				.uppercase();
+				line-height: 169%;
+				.oswald-light();
+				letter-spacing: 2px;
+				word-spacing: 1px;
+			    .pb(10%);
+			    margin:0;
+			    width:100%;
+			    text-align:left;
+	    	}
+	    	
+	    	.attribute{
+	    		padding:4px 0px 4px 0px;
+			    .size(13px);
+			    .muli-regular;
+			    margin: 0 20px 10px 0;
+			    .capitalize;
+			     display: inline-block;
+			     border-bottom: 1px solid @theme-color;
+			     .left;
+			    
+			    & a{
+			    	.right;
+				    padding: 0;
+				    margin: 0;
+				    .ml(9px);
+				    .size(9px);
+				    .pt(4px);
+				    cursor:pointer;
+			    }
+	    	}
+	    }
+	}
+}
+
+.zoom-fadein {
+	-webkit-animation:animatezoomfade 0.6s;
+	animation:animatezoomfade 0.6s
+}
+@-webkit-keyframes animatezoomfade{
+	from{-webkit-transform:scale(0); opacity:0;} 
+	to{-webkit-transform:scale(1); opacity:1;}
+}
+@keyframes animatezoomfade{
+	from{transform:scale(0); opacity:0;} 
+	to{transform:scale(1); opacity:1;}
+}

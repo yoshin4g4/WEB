@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="showcase_snippets" inherit_id="clarico_snippets.clarico_snippets">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="clarico_category.clarico_category_showcase_snippet_body"
+				t-thumbnail="/clarico_category/static/src/img/clarico_category.jpg" />
+		</xpath>
+	</template>
+
+	<!-- ======== E-Commerce Product Carousel Snippets ======== E-Commerce Product 
+		Carousel Snippet's Body -->
+	<template id="clarico_category_showcase_snippet_body" name="Categories">
+		<section class="s_image">
+			<div class="ss_container">
+				<div class="cat_showcase_heading">
+					<h3 class="cat_title">Our Featured Categories</h3>
+				</div>
+				<div class="js_get_category" data-isemipro="true" data-loading="true"
+					data-objects_limit="10" data-template="clarico_category.clarico_category_category_showcase" />
+			</div>
+		</section>
+	</template>
+	<template id="clarico_category_category_showcase">
+		<div class="product_carousel_slider">
+			<t t-foreach="object" t-as="category">
+				<t t-call="clarico_category.clarico_category_category_show" />
+			</t>
+		</div>
+	</template>
+	<template id="clarico_category_category_show" name="Category_image_with_name">
+		<div class="c_pc_image">
+			<span itemprop="image" />
+			<div class="c_sub_pc_image">
+				<a t-att-href="'/shop/category/%s' %slug(category)">
+				<span itemprop="image" t-field="category.image" t-options="{'widget': 'image'}"
+					t-att-alt="category.name" />
+					</a>
+			</div>
+			<a t-field="category.name" class="cat_name"
+				t-att-href="'/shop/category/%s' %slug(category)"></a>
+		</div>
+	</template>
+	<template id="clarico_category_product_carousel_snippets_option" inherit_id="website.snippet_options">
+		<xpath expr="//div[@data-js='background']" position="after">
+			<div data-js="js_get_category" data-selector=".js_get_category" />
+		</xpath>
+	</template>
+</odoo>

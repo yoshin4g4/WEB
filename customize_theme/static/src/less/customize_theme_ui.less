@@ -1,0 +1,149 @@
+/*******************************
+* MODAL AS LEFT SIDEBAR
+*******************************/
+#theme_customize_modal.modal.left,
+#theme_customize_modal.modal.right {
+	.modal-dialog{
+		position: fixed;
+		width: 320px;
+		top: 34px;
+		height: 100%;
+		-webkit-transform: translate3d(0%, 0, 0);
+		-ms-transform: translate3d(0%, 0, 0);
+		-o-transform: translate3d(0%, 0, 0);
+		transform: translate3d(0%, 0, 0);
+	}
+	.modal-content{
+		height: 100%;
+		overflow-y: auto;
+	}
+	.modal-body {
+		padding: 15px 15px 80px;
+	}
+}
+/*Left*/
+#theme_customize_modal.modal.left.fade .modal-dialog{
+	left: -320px;
+	-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+	   -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+	     -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+	        transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+#theme_customize_modal.modal.left.fade.in .modal-dialog{
+	left: 0;
+}
+        
+/*Right*/
+#theme_customize_modal.modal.right.fade .modal-dialog {
+	right: -320px;
+	-webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+	   -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+	     -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+	        transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+#theme_customize_modal.modal.right.fade.in .modal-dialog {
+	right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+#theme_customize_modal .modal-content {
+	border-radius: 0;
+	border: none;
+	hr{
+		color: @theme-color;
+	    width: 69px;
+	    display: block;
+	    margin: 0px auto;
+	    border-top: 3px solid
+	}
+}
+
+#theme_customize_modal .modal-header {
+	border-bottom-color: #d4d4d4;
+	background-color: @theme-color;
+	color: #fff;
+	button.close{
+		color: #fff;
+	    opacity: 1;
+	    font-size: 28px;	
+	}
+}
+
+.btn-main {
+    color: #ffffff;
+    background-color:#000000 !important;
+    border-color:#000000;
+}
+.btn-main:active, .btn-main.active, .open > .dropdown-toggle.btn-main{
+	color: #ffffff;
+    background-color: #bc3e60;
+    border-color: #bc3e60;
+}
+
+/*******************************
+* Color Radio Button
+*******************************/
+#theme_customize_modal label.btn{
+	border-radius: 0;
+    margin: 6px;
+}
+#theme_customize_modal .btn span.fa {    			
+	opacity: 0;
+}
+#theme_customize_modal .btn.checked span.fa {				
+	opacity: 1;				
+}
+#theme_customize_modal .btn-default span.fa {
+	color: #000;
+}
+/*******************************
+* Set the color&style of the svg loader
+*******************************/
+.cus_theme_loader svg path,
+.cus_theme_loader svg rect{
+  fill: @theme-color;
+}
+.cus_theme_loader svg{
+	display: block;
+    margin: 0px auto;
+}    
+.cus_theme_loader{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background: rgba(0,0,0,0.7);
+	z-index: 10;
+}
+.cus_theme_loader_div{
+	margin-top: 49%;
+	width: 100%;
+	display: inline-block;
+}
+
+/*Button Style*/
+#theme_customize_modal .btn-success{
+	border-color: #4cae4c !important;
+	background: #4cae4c;
+}
+#theme_customize_modal .btn-primary{
+	border-color: #2e6da4 !important;
+	background: #2e6da4;
+}
+#theme_customize_modal .btn-info{
+	border-color: #46b8da !important;
+	background: #46b8da;
+}
+#theme_customize_modal .btn-default{
+	border-color: #cccccc !important;
+	background: #cccccc;
+}
+#theme_customize_modal .btn-warning{
+	border-color: #eea236 !important;
+	background: #eea236;
+}
+#theme_customize_modal .btn-danger{
+	border-color:#be4978  !important;
+	background: #be4978	;	
+}

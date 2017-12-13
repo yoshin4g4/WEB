@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Change Qweb view priority  -->
+	<record id="website_sale.products_categories" model="ir.ui.view">
+            <field name="priority">17</field>
+    </record>        
+    
+    <record id="website_sale.products_description" model="ir.ui.view">
+			  <field name="priority">24</field>
+    </record>
+    
+    
+	<!-- View As Template -->
+	<template id="clarico_shop_products" inherit_id="website_sale.products" name="Clarico Shop">
+		<xpath expr="//div[@id='wrap']" position="replace">
+			<div id="wrap" class="js_sale">
+				<div class="oe_structure" />
+				<div class="oe_website_sale">
+					<div class="shop_cover_img_container">
+						<section>
+							<div class="oe_structure"/>
+						<img src="/clarico_shop/static/src/img/shop.jpeg" />
+						</section>
+					</div>
+					<div t-att-style="'display:none;' if not bins  else 'display:block;'"
+						id="sub_header_row" class="shop-page-breadcrumb">
+						<div class="clarico_product_breadcrumb">
+							<div class="sub_breadcrumb">
+								<div class="nav-view">
+									<div class="nav-selection-div">
+										<a class="home-icon" href="/shop">
+											<i class="fa fa-home" aria-hidden="true"></i>
+										</a>
+										<span class="select-nevigation-span" />
+										<a class="select-nevigation-child"></a>
+										<!-- <a class="select-nevigation" href="/shop"> Home <span>/</span> 
+											</a> -->
+									</div>
+									<div class="view-as-div">
+										<label class="view-label">View As</label>
+										<a class="grid-view">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</a>
+										<a class="list-view">
+
+											<i class="fa fa-bars" aria-hidden="true"></i>
+										</a>
+
+										<a class="view-as-two-col">2</a>
+										<a class="view-as-three-col">4</a>
+									</div>
+								</div>
+								<div class="products_pager" id="shop_pager">
+									<div class="row" style="width: 100%;">
+										<t t-call="website.pager" />
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="right-cnt-main">
+						<div class="right-cnt-maxW">
+
+							<div class="view-as">
+								<div class="view-as-maxW">
+									<div class="view-mode">
+										<div class="menu-filter-div">
+											<a class="menu-filter">
+												<i class="fa fa-align-left" aria-hidden="true"></i>
+												Filter
+											</a>
+											<a class="apply-filter apply-filter-in-page shop_view_popup_link_btn">View Filter</a>
+										</div>
+									</div>
+									<div t-att-style="'display:none;' if not bins  else 'display:block;'" class="view-as-right-cnt">
+										<div class="filter-show">
+
+											<button class="btn btn-2 dropdown-toggle" data-toggle="dropdown">
+												<i class="icon-exchange"></i>
+												<span class="filter-show-label">show</span>
+												<i class="icon-chevron-down"></i>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+
+												<li class="show_product">
+													<a class="ppg_show" data-id="16">16</a>
+												</li>
+												<li class="show_product">
+													<a class="ppg_show" data-id="20">20</a>
+												</li>
+
+											</ul>
+										</div>
+
+										<div class="filter-sort-by">
+
+											<t t-set="list_price_desc_label">
+												Price
+												<i class="fa fa-arrow-up" aria-hidden="true" />
+											</t>
+											<t t-set="list_price_asc_label">
+												Price
+												<i class="fa fa-arrow-down" aria-hidden="true" />
+											</t>
+											<t t-set="name_asc_label">Name</t>
+											<t t-set="website_sale_sortable"
+												t-value="[
+			                (list_price_desc_label, 'list_price desc'),
+			                (list_price_asc_label, 'list_price asc'),
+			                (name_asc_label, 'name asc')
+			            ]" />
+											<div class="dropdown btn-group dropdown_sorty_by">
+												<a href="#" class="dropdown-toggle btn btn-default"
+													data-toggle="dropdown">
+													<span class="filter-show-label">Sort by</span>
+													<!-- <span class="caret"></span> -->
+												</a>
+
+												<ul class="dropdown-menu" role="menu">
+													<li t-foreach="website_sale_sortable" t-as="sortby">
+														<a t-att-href="keep('/shop', order=sortby[1])">
+															<span t-raw="sortby[0]" />
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="hidden" id="products_grid_before"></div>
+							<div class="products-grid-main" id="products_grid">
+								<table id="product-grid-table" width="100%">
+									<!-- <tr>
+										<td>
+											<div class="product-grid-div" t-foreach="bins" t-as="tr_product">
+												<p class="p_Count" style="display:none" t-att-data-id="products_count" />
+												<t t-foreach="tr_product" t-as="td_product">
+		
+													<t t-if="td_product">
+														<t t-set="product" t-value="td_product['product']" />
+														<div class="product-row3" t-att-colspan="td_product['x'] != 1 and td_product['x']"
+															t-att-rowspan="td_product['y'] != 1 and td_product['y']"
+															t-attf-class="oe_product oe_grid oe-height-#{td_product['y']*2} #{ td_product['class'] }">
+															<div class="oe_product_cart"
+																t-att-data-publish="product.website_published and 'on' or 'off'">
+																<t t-set="product_image_big" t-value="td_product['x']+td_product['y'] &gt; 2" />
+																<t t-call="clarico_shop.clarico_shop_products_item" />
+															</div>
+														</div>
+													</t>
+													<div t-if="not td_product" class="oe-height-2" />
+												</t>
+											</div>
+										</td>
+									</tr> -->
+									<tr>
+										<td>
+											<t t-foreach="bins" t-as="tr_product">
+												<t t-foreach="tr_product" t-as="td_product">
+									                <div class="product-grid-div"> 
+														<p class="p_Count" style="display:none" t-att-data-id="products_count" />
+									                        <t t-if="td_product">
+									                            <t t-set="product" t-value="td_product['product']" />
+									                          <div class="product-row3" t-att-colspan="td_product['x'] != 1 and td_product['x']" t-att-rowspan="td_product['y'] != 1 and td_product['y']" t-attf-class="oe_product product_div oe_grid oe-height-#{td_product['y']*2} #{ td_product['class'] }"> 
+									                                <div class="oe_product_cart" t-att-data-publish="product.website_published and 'on' or 'off'">
+									                                     <t t-set="product_image_big" t-value="td_product['x']+td_product['y'] &gt; 2" /> 
+									                                    <t t-call="website_sale.products_item" />
+									                                </div>
+									                         </div> 
+									                        </t>
+									                        <div t-if="not td_product" class="oe-height-2" />
+									            	</div>
+								            	</t>
+								            </t>
+								         </td>
+									</tr>
+								</table>
+								<t t-if="not bins">
+									<div class="hide_filter"></div>
+									<div class="text-center text-muted not_defined">
+										<div class="left_class">
+											<h3 class="css_editable_display">
+												<i class="fa fa-wheelchair" aria-hidden="true"></i>
+												No product defined.
+											</h3>
+											<a href="/shop" class="shop_now_button">Shop now</a>
+										</div>
+										<div class="right_class">
+											<img src="/clarico_shop/static/src/img/product_not.jpg"></img>
+										</div>
+									</div>
+								</t>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="products_pager bottom_pager">
+				<div class="row" style="width: 100%;">
+					<t t-call="website.pager" />
+				</div>
+			</div>
+		</xpath>
+	</template>
+	<!-- products_item -->
+	<template id="clarico_shop_products_item" inherit_id="website_sale.products_item" priority="23">
+		<xpath expr="//form" position="replace">
+			<form action="/shop/cart/update" method="post">
+				<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+				<div class="itemscope-main" itemscope="itemscope"
+					itemtype="http://schema.org/Product">
+					<div class="ribbon-wrapper" t-if="product.label_ept_id">
+
+						<div t-field="product.label_ept_id" class="ribbon btn btn-danger sale-btn"></div>
+					</div>
+
+
+					<div class="product-image oe_product_image">
+						<a itemprop="url"
+							t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))">
+							<span itemprop="image" t-field="product.image_medium"
+								t-options="{'widget': 'image'}" t-att-alt="product.name" />
+						</a>
+					<div id="in-wishlist-shop"></div>
+					</div>
+					
+					<div class="product-des">
+						<div class="hover-cnt">
+							<div id="wishlist_shop"></div>
+							<hr class="product-hover-hr"></hr>
+							<div id="compare_shop"></div>
+							<hr class="product-hover-hr"></hr>
+							<div id="quick_view_shop"></div>
+						</div>
+					</div>
+
+					<t t-if="show_publish">
+						<div id="website_published_button" class=""
+							groups="sales_team.group_sale_manager">
+							<t t-call="website.publish_management">
+								<t t-set="object" t-value="product" />
+								<t t-set="publish_edit" t-value="True" />
+								<t t-set="action" t-value="'product.product_template_action'" />
+							</t>
+						</div>
+					</t>
+					<section>
+						<div class="production-description">
+							<div class="details">
+								<h5 class="product-name-h5">
+									<label>
+										<a class="product-name-a" itemprop="name"
+											t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))"
+											t-field="product.name" />
+									</label>
+								</h5>
+							</div>
+							
+							<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="product.product_variant_ids">
+		                        <b>
+		                            <t t-if="product.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+		                                <del class="strike-through mr8" style="white-space: nowrap;" t-esc="compute_currency(product.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+		                            </t>
+		
+		                            <span t-esc="product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+		                            <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
+		                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+		                        </b>
+		                    </div>
+						</div>
+					</section>
+				</div>
+			</form>
+		</xpath>
+	</template>
+	
+	<!-- Category Grid Before -->
+	<template id="clarico_shop_shop_page" inherit_id="website_sale.products_categories" priority="17">
+		<xpath expr="//div[@id='products_grid_before']" position="replace">
+			<div class="main">
+				<div class="mCustomScrollbar" id="products_grid_before"
+					data-mcs-theme="dark">
+					<div class="products_grid_before_maxW">
+						<span class="mobile-view-filter-close-btn">X</span>
+						<h4 class="category">Product Category</h4>
+						<a class="apply-filter">View Filter</a>
+
+						<hr></hr>
+
+						<div class="all-category-div">
+							<ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
+								<li t-att-class=" '' if category else 'active all-products' ">
+									<a t-att-href="keep('/shop',category=0)" class="o_not_editable">All Products
+									</a>
+								</li>
+								<t t-foreach="categories" t-as="categ">
+									<!-- <t t-call="clarico_shop.clarico_shop_option_collapse_categories_recursive" 
+										/> -->
+									<t t-call="website_sale.option_collapse_categories_recursive" />
+								</t>
+							</ul>
+						</div>
+
+
+						<hr></hr>
+
+						<form class="js_attributes" method="get">
+							<input type="hidden" name="search" t-att-value="search" />
+							<ul class="nav nav-pills nav-stacked mt16">
+								<t t-foreach="attributes" t-as="a">
+									<t t-if="a.type != 'hidden'">
+										<li t-if="a.value_ids and len(a.value_ids) &gt; 1">
+											<div class="attribut-main-div">
+												<div class="filter-by-div">
+													<i class="down-arrow fa fa-caret-down" aria-hidden="true"></i>
+													<h5 class="refined-by-attr">Filter By </h5>
+													<h5 class="refined-by-attr refined-by-dynamic" t-field="a.name">
+													</h5>
+
+												</div>
+												<a class="clear-all-variant">(Clear all)</a>
+												<div class="attr-val mCustomScrollbar" data-mcs-theme="dark">
+													<t t-if="a.type == 'color'">
+														<t t-foreach="a.value_ids" t-as="v">
+															<div class="color-with-name-divmaxW">
+																<div class="color-with-name-div">
+																	<label t-attf-style="background-color:#{v.html_color or v.name}"
+																		t-attf-class="css_attribute_color #{'active' if v.id in attrib_set else ''}">
+																		<input type="checkbox" name="attrib"
+																			t-att-value="'%s-%s' % (a.id,v.id)"
+																			t-att-checked="'checked' if v.id in attrib_set else None"
+																			t-att-title="v.name" />
+																	</label>
+																	<p class="color-name" t-esc="v.name"></p>
+																</div>
+															</div>
+														</t>
+													</t>
+
+													<t t-if="a.type == 'radio'">
+														<div>
+															<ul
+																class="nav nav-pills nav-stacked type-radio nav-overflow-scroll">
+																<t t-foreach="a.value_ids" t-as="v">
+																	<li class="nav-stacked-li" t-att-class="'active' if v.id in attrib_set else None">
+																		<div class="nav-stacked-div">
+																			<label class="type-checkbox">
+																				<input class="checkbox-custom" type="checkbox"
+																					t-att-data-id="'%s' % v.id" name="attrib"
+																					t-att-value="'%s-%s' % (a.id,v.id)"
+																					t-att-checked="'checked' if v.id in attrib_set else None" />
+																				<label class="checkbox-custom-label" style="font-weight: normal"
+																					t-field="v.name" />
+																				<!-- <input class="checkbox-custom" type="checkbox" name="attrib" 
+																					t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set 
+																					else None" /> <label class="checkbox-custom-label" style="font-weight: normal" 
+																					t-field="v.name" /> -->
+																			</label>
+																		</div>
+																	</li>
+																</t>
+															</ul>
+														</div>
+													</t>
+
+													<t t-if="a.type == 'select'">
+														<div>
+															<select class="form-control" name="attrib">
+																<option value="" />
+																<t t-foreach="a.value_ids" t-as="v">
+																	<option t-att-value="'%s-%s' % (a.id,v.id)"
+																		t-esc="v.name" t-att-selected="v.id in attrib_set" />
+																</t>
+															</select>
+														</div>
+													</t>
+												</div>
+												<hr class="refined-by-hr"></hr>
+											</div>
+										</li>
+									</t>
+								</t>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//div[@id='products_grid']" position="attributes">
+            <attribute name="class">products-grid-main</attribute>
+        </xpath>
+	</template>
+	
+	  <template id="website_sale.option_collapse_products_categories" name="Collapsible Category List" inherit_id="clarico_shop.clarico_shop_shop_page" active="False" customize_show="False">
+        <xpath expr="//div[hasclass('all-category-div')/ul" position="replace">
+			<ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
+                <li t-att-class=" '' if category else 'active' ">
+                    <a t-att-href="keep('/shop',category=0)" class="o_not_editable">All Products</a>
+                </li>
+                <t t-foreach="categories" t-as="categ">
+                    <t t-call="website_sale.option_collapse_categories_recursive" />
+                </t>
+            </ul>
+        </xpath>
+    </template>
+	
+	
+	<!-- Sort By -->
+	<template id="clarico_shop_sort" inherit_id="website_sale.sort">
+		<xpath expr="//div[hasclass('dropdown_sorty_by')]"
+			position="replace">
+		</xpath>
+	</template>
+	
+	 
+	
+</odoo>

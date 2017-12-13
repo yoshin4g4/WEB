@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="style7_assets_frontend" inherit_id="web.assets_frontend" name="Style">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/snippet_style_7/static/src/less/style_7.less" />
+		</xpath>
+	</template>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	 <record id="website.action_website_menu" model="ir.actions.act_window">
+		 <field name="name">Website Menu</field>
+		 <field name="res_model">website.menu</field>
+		 <field name="view_type">form</field>
+		 <field name="view_mode">tree,form,list</field>
+		 <field name="context">{'search_default_my_websites':1}</field>
+	 </record>
+
+     <record id="website.menu_tree" model="ir.ui.view">
+         <field name="name">website.menu.tree</field>
+         <field name="model">website.menu</field>
+         <field name="field_parent">child_id</field>
+         <field name="arch" type="xml">
+             <tree string="Website menu">
+			    <field name="sequence" widget="handle"/>
+			    <field name="website_id" />
+			    <field name="name"/>
+			    <field name="url"/>
+			    <field name="new_window"/>
+			    <field name="parent_id"/>
+			</tree>
+         </field>
+     </record>
+	
+	<record id="menu_form" model="ir.ui.view">
+		<field name="name">website.menu.form</field>
+		<field name="model">website.menu</field>
+        <field name="arch" type="xml">
+			<form string="Website Menu">
+              <sheet>
+                  <group name="Menu">
+                        <field name="sequence" widget="handle"/>
+	                    <field name="website_id" />
+	                    <field name="name"/>
+	                    <field name="url"/>
+	                    <field name="new_window"/>
+	                    <field name="parent_id"/>
+	                    <field name="dynamic_menu" />
+	                    <field name="menu_html" attrs="{'invisible':[('dynamic_menu', '==', True)]}" />
+                  </group>
+              </sheet>
+          </form>
+		</field>
+	</record>
+</odoo>

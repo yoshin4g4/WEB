@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="website_sale.products_list_view" inherit_id="website_sale.products"
+		active="False" customize_show="True" name="List View" priority="17">
+		<xpath expr="//div[@id='products_grid']" position="replace">
+			<div class="products-grid-main" id="products_grid">
+				<table id="product-grid-table" width="100%">
+					<tr>
+						<td>
+							<p class="p_Count" style="display:none" t-att-data-id="products_count" />
+							<t t-foreach="products" t-as="product">
+								<div class="oe_product oe_list oe_product_cart"
+									t-att-data-publish="product.website_published and 'on' or 'off'">
+									<t t-call="clarico_shop.clarico_shop_products_item">
+										<t t-set="show_publish" t-value="True" />
+									</t>
+								</div>
+							</t>							
+						</td>
+					</tr>
+				</table>
+				<t t-if="not bins">
+					<div class="hide_filter"></div>
+					<div class="text-center text-muted not_defined oe_list">
+						<div class="left_class">
+							<h3 class="css_editable_display">
+								<i class="fa fa-wheelchair" aria-hidden="true"></i>
+								No product defined.
+							</h3>
+							<a href="/shop" class="shop_now_button">Shop now</a>
+						</div>
+						<div class="right_class">
+							<img src="/clarico_shop/static/src/img/product_not.jpg"></img>
+						</div>
+					</div>
+				</t>
+			</div>
+		</xpath>
+	</template> 
+</odoo>

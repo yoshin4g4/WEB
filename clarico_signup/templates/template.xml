@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="clarico_signup_c_signup" inherit_id="auth_signup.signup">
+		<xpath expr="//form[hasclass('oe_signup_form')]" position="replace">
+			<div class="signin_main_div">
+				<div class="login_area_container">
+					<form class="oe_signup_form clarico_signup" role="form"
+						method="post" t-if="not message">
+						<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+						<t t-call="auth_signup.fields">
+							<t t-set="only_passwords" t-value="bool(token)" />
+						</t>
+						<p class="alert alert-danger" t-if="error">
+							<t t-esc="error" />
+						</p>
+						<input type="hidden" name="redirect" t-att-value="redirect" />
+						<input type="hidden" name="token" t-att-value="token" />
+						<div class="clearfix oe_login_buttons c_signup_link_btn">
+
+							<button type="submit" class="btn btn-primary pull-left c_signup_btn common-btn">Sign up</button>
+							<a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right back_to_login_text">Back to
+								Login
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Back to home icon -->
+			<div class="back_home_icon_div animation_move">
+				<a href="/">
+					<i class="fa fa-arrow-right "></i>
+				</a>
+			</div>
+		</xpath>
+		<xpath expr="//t[@t-call='web.login_layout']" position="inside">
+				<div class="image_signup_class">
+				<t t-if="signup_bg_image">
+					<img class="" t-att-src="'data:image/jpeg;base64,%s' % to_text(signup_bg_image)"></img>
+					</t>
+					<t t-if="not signup_bg_image">
+					<img src="/clarico_signup/static/src/img/signup.jpeg"></img>
+					</t>
+				</div>
+		</xpath>
+	</template>
+	<template id="clarico_signup_c_signup_fields" inherit_id="auth_signup.fields">
+		<xpath expr="//input[@name='login']" position="attributes">
+			<attribute name="class">form-control c_signup_input</attribute>
+		</xpath>
+		<xpath expr="//input[@name='name']" position="attributes">
+			<attribute name="class">form-control c_signup_input</attribute>
+		</xpath>
+		<xpath expr="//input[@name='password']" position="attributes">
+			<attribute name="class">form-control c_signup_input</attribute>
+		</xpath>
+		<xpath expr="//input[@name='confirm_password']" position="attributes">
+			<attribute name="class">form-control c_signup_input</attribute>
+		</xpath>
+	</template>
+	<template id="clarico_signup_c_reset_pw" inherit_id="auth_signup.reset_password">
+		<xpath expr="//input[@name='login']" position="attributes">
+			<attribute name="class">form-control c_reset_input</attribute>
+		</xpath>
+		<xpath expr="//div[hasclass('oe_login_buttons')]"
+			position="replace">
+			<div class="clearfix oe_login_buttons c_reset_login_btns">
+				<button type="submit" class="btn btn-primary pull-left reset_submit_btn">Confirm</button>
+				<a t-if="invalid_token" href="/web/login" class="btn btn-link pull-right">Back to Login</a>
+				<a t-if="not token" t-attf-href="/web/login?{{ keep_query() }}"
+					class="btn btn-link pull-right c_reset_backtologin">Back to Login</a>
+			</div>
+		</xpath>
+	</template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_attribute_filter_clarico_filter" inherit_id="clarico_shop.clarico_shop_shop_page">
+		<xpath expr="//div[hasclass('main')]" position="after">
+		<div class="filter-main-div">
+        	<div class="filter-div-maxW">
+        		<a class="filter-option-close-btn common-close-btn"><span>x</span></a> 
+        		<div class="filter-option">
+        			<a class="clear-all-filter">Clear all <span>x</span></a>
+        			<h2 class="filter-option-h2">Filter Option</h2>
+        		</div>
+        	</div>
+    	</div>
+    	</xpath>
+	</template>
+</odoo>

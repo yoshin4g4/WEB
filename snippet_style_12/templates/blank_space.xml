@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_blank_space" inherit_id="clarico_snippets.clarico_snippets"
+		name="Clarico snippet" priority="12">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_12.snippet_style_12_template" t-thumbnail="/snippet_style_12/static/src/img/style12.jpg"/>
+		</xpath>
+	</template>
+
+	<template id="snippet_style_12_template" name="Style 12">
+		<section>
+			<div class="bs_margin" style="display:inline-block;width:100%;margin-top:60px;">
+			</div>
+		</section>
+	</template>
+
+</odoo>

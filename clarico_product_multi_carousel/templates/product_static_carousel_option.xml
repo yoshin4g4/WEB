@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<!--E-Commerce Product Carousel Snippet's Options -->
+	<template id="clarico_product_carousel_static_snippets_option"
+		inherit_id="website.snippet_options">
+		<xpath expr="//div[@data-js='background']" position="after">
+			<div data-js='js_get_static_objects' data-selector=".js_get_static_objects" />
+			<div data-js='js_get_static_selectFilter' data-selector=".js_get_static_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Select
+						Filter
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+					</ul>
+				</li>
+			</div>
+			
+			<div data-js='js_get_static_label' data-selector=".js_get_static_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Sale Label
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-sale_label="1">
+							<a>Allow</a>
+						</li>
+						<li data-sale_label="0">
+							<a>Deny</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+
+			<div data-js='js_get_static_rating' data-selector=".js_get_static_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Rating
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-get_rating="1">
+							<a class="snippets_option_font_style" tabindex="-1" href="#">Allow
+							</a>
+						</li>
+						<li data-get_rating="0">
+							<a class="snippets_option_font_style" tabindex="-1" href="#">Deny
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+		</xpath>
+	</template>
+</odoo>

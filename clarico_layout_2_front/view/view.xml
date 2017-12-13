@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="home_2_record" model="website.page">
+			<field name="url">/home-layout2</field>
+			<field name="website_published">True</field>
+			<field name="view_id" ref="clarico_layout_2_front_template" />
+		</record>
+	</data>
+</odoo>
+

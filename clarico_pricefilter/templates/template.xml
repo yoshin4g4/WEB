@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_pricefilter_for_category" name="Price Filter"
+		inherit_id="clarico_shop.clarico_shop_shop_page">
+		<xpath expr="//form/ul[hasclass('nav-stacked')]"
+			position="inside">
+			<div class="form_class price_filter_main">
+				<div class="div_class_price_filter_heading">
+					<i  class="down-arrow fa fa-caret-down" aria-hidden="true"></i>
+					<h5 class="refined-by-attr">Price Filter</h5>
+				</div>
+				<a class="clear-pricefilter">(Clear)</a>
+				<div class="div_class_whole_filter">
+					<div type="text" id="price_slider" />
+					<input type="hidden" id="price_slider_min" t-att-value="min_val" value="100" />
+					<input type="hidden" id="price_slider_max" t-att-value="max_val" value="15000" />
+		            <span class="span_class_currency_symbol" t-field="website.currency_id.symbol"></span>
+					<input type="text" name="min_val" t-att-value="custom_min_val"
+						placeholder="Min" t-att-min="min_val" id="price_range_min_value"
+						onpaste="return false" />
+					<span class="span_class_currency_symbol">-</span>
+					<span class="span_class_currency_symbol" t-field="website.currency_id.symbol"></span>
+					<input type="text" name="max_val" t-att-value="custom_max_val"
+						placeholder="Max" t-att-max="max_val" id="price_range_max_value"
+						onpaste="return false" />
+					<input id="price_slider_form" type="submit" value="GO"></input>
+				</div>
+			</div>
+		</xpath>
+	</template>
+</odoo>

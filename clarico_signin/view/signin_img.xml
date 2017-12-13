@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+<data>
+	<record id="signin_img" model="ir.ui.view">
+	 <field name="name">res.config.settings.inherit.signin</field>
+	 	<field name="model">res.config.settings</field>
+	 	<field name="inherit_id" ref="website.res_config_settings_view_form"/>
+		  <field name="arch" type="xml">
+		 	<xpath expr="//button[@name='open_template_user']/.." position="before">	 
+				<div class="mt8 row">
+                    <label class="col-md-4 o_light_label" for="signin_bg_image_id" />
+                    <field name="signin_bg_image_id" class="pull-left" domain="[('id','=',False)]"/>
+                </div>
+		  	</xpath>
+		  </field>
+	</record>
+</data>
+</odoo>

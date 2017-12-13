@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="signup_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/clarico_signup/static/src/less/signup.less"></link>
+		</xpath>
+	</template>
+</odoo>

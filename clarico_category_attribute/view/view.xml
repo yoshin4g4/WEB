@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="attribute_select_public_category" model="ir.ui.view">
+        <field name="name">attribute.select.public.category</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+        <field name="arch" type="xml">
+        	<field name='sequence' position='after'>
+        		<field name="attribute_select"/>
+        	</field>
+        </field>
+    </record>
+</odoo>    
+    

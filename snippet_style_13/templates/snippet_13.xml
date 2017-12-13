@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_thirteen" inherit_id="clarico_snippets.clarico_snippets"
+		name="Clarico snippet" priority="13">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_13.snippet_style_13_template" t-thumbnail="/snippet_style_13/static/src/img/style_13.jpg"/>
+		</xpath>
+	</template>
+	
+	<template id="snippet_style_13_template" name="Style 13">
+		<section>
+			<div class="three_Column_snippet_wrap">
+				<div class="three_column_snippet_container">
+					<div class="tcs_column1">
+						<div class="tcs_icon_wrap">
+							<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img1.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+						<a href="#">FREE SHIPPING WORLDWIDE</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							On All Orders Of USD 250,00+
+						</div>
+					</div>				
+					<div class="tcs_column2">
+						<div class="tcs_icon_wrap">
+						<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img2.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+							<a href="#">24/7 CUSTOMER SERVICE</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							Get Help When You Need It.
+						</div>
+					</div>
+					<div class="tcs_column3">
+						<div class="tcs_icon_wrap">
+						<a href="#"><section><img src="/snippet_style_13/static/src/img/style13_img3.svg"></img></section></a>
+						</div>
+						<div class="tcs_bold_text_wrap tcs_bold">
+							<a href="#">100% MONEY BACK</a>
+						</div>
+						<div class="tcs_normal_text_wrap">
+							30 Day Money Back Guarantee.
+						</div>
+					</div>
+				</div>	
+			</div>
+		</section>
+	</template>
+</odoo>

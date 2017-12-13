@@ -1,0 +1,147 @@
+.signin_main_div{
+	max-width: 1400px;
+	display: block;
+	margin: 0px auto;
+	width:90%;
+}
+.c-login-input
+{
+	border: none;
+	border-bottom: 1px solid #CCC;
+	border-radius: 0;
+	box-shadow: unset;
+	.mb(10%);
+	background: transparent;
+	position:relative;
+	display:inline-block;
+
+	&:focus
+	{
+		border-bottom: 2px solid cornflowerblue; 
+		box-shadow: unset;
+		transition:width 0.5s linear;
+	}
+}
+
+
+.login_btn_main,.db_btn
+{
+	.bg(@theme-color);
+	
+	&:hover
+	{
+		.bg(@theme-color);
+	}
+}
+.signup_main
+{
+	background-color:@theme-color !important;
+	margin-left: 20px;
+	display: inline-block;
+	
+	&:hover
+	{
+		text-decoration:none;
+	}
+}
+.reset_pw_main
+{
+	color:@theme-color;
+	bottom: 5%;
+    position: absolute;
+    right: 0;
+    padding: 0;
+    .bg(transparent);
+	
+	&:hover
+	{
+		color:@theme-color;
+	}
+}
+.login_btn_main
+{
+	.left();
+}
+.all_login_btns
+{
+	width:100% !important;
+
+	.pull-right
+	{
+		//.common-div;
+		//float:none !important;
+	
+		a:first-child
+		{
+			color:@theme-color;
+		    padding: 2px 12px;
+		    display:block;
+		    width:auto;
+		    .left();
+		    .mb(10px);
+			.pl(0);	
+			.bg(transparent);
+		}
+	}
+}
+
+.login_area
+{
+	display: block;
+	margin:0px auto !important;
+	max-width: 400px !important;
+}
+.login_area_container
+{
+	width:30%;
+	display:block;
+	float:left;
+	padding: 18px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 9px 0px #ccc;
+    background-color: white;
+}
+.login_img_cont
+{
+	background-image:url('/clarico_signin/static/src/img/login.jpeg');
+	width:100%;
+	background-size:cover;
+	padding:25%;
+	background-position: center;
+}
+.back_home_icon_div{
+	position: fixed;
+    left: 27px;
+    top: 53px;
+    .size(30px);
+    color: white;
+    width: 60px;
+    .pt(5px);
+    .pb(5px);
+    
+    & a{
+		color:@theme-color;
+    }
+}
+.c_reset_login_btns{
+	& .pull-right > div > a.btn{
+		background:transparent;
+	}
+}
+/*.animation_move
+{
+ -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+}
+@-webkit-keyframes mymove {
+    0% {left: 0px;}
+   50% {left: 30px;}
+100%{left:0px;}
+}
+
+@keyframes mymove {
+    0% {left: 0px;}
+   50% {left: 30px;}
+100%{left:0px;}
+}
+*/

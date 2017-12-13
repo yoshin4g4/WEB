@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<!--E-Commerce Product Carousel Snippet's Options -->
+	<template id="product_carousel_snippets_option" inherit_id="website.snippet_options">
+		<xpath expr="//div[@data-js='background']" position="after">
+			<div data-js='js_get_objects' data-selector=".js_get_objects" />
+			<div data-js='js_get_selectFilter' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Select
+						Filter
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+					</ul>
+				</li>
+			</div>
+			
+			<div data-js='js_get_type' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Carousel
+						Type
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-c_type="1">
+							<a>Slider</a>
+						</li>
+						<li data-c_type="0">
+							<a>Non - Slider</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+			
+			<div data-js='js_get_label' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Sale Label
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-sale_label="1">
+							<a>Allow</a>
+						</li>
+						<li data-sale_label="0">
+							<a>Deny</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+
+			<div data-js='js_get_rating' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Rating
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-get_rating="1">
+							<a class="snippets_option_font_style" tabindex="-1" href="#">Allow
+							</a>
+						</li>
+						<li data-get_rating="0">
+							<a class="snippets_option_font_style" tabindex="-1" href="#">Deny
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+			
+
+			<div data-js='js_get_filter_products_limit' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Records
+						Limit
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-objects_limit="1">
+							<a>1</a>
+						</li>
+						<li data-objects_limit="2">
+							<a>2</a>
+						</li>
+						<li data-objects_limit="3">
+							<a>3</a>
+						</li>
+						<li data-objects_limit="4">
+							<a>4</a>
+						</li>
+						<li data-objects_limit="5">
+							<a>5</a>
+						</li>
+						<li data-objects_limit="6">
+							<a>6</a>
+						</li>
+						<li data-objects_limit="7">
+							<a>7</a>
+						</li>
+						<li data-objects_limit="8">
+							<a>8</a>
+						</li>
+						<li data-objects_limit="9">
+							<a>9</a>
+						</li>
+						<li data-objects_limit="10">
+							<a>10</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+
+
+			<div data-js='js_get_product_in_slidesToShow' data-selector=".js_get_objects">
+
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Limit
+						per Slide
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-objects_in_slide="1">
+							<a>1</a>
+						</li>
+						<li data-objects_in_slide="2">
+							<a>2</a>
+						</li>
+						<li data-objects_in_slide="3">
+							<a>3</a>
+						</li>
+						<li data-objects_in_slide="4">
+							<a>4</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+			
+		</xpath>
+	</template>
+</odoo>
+<!-- <?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	E-Commerce Product Carousel Snippet's Options
+	<template id="product_carousel_snippets_option" inherit_id="website.snippet_options">
+		<xpath expr="//div[@data-js='background']" position="after">
+			<div data-js='js_get_objects' data-selector=".js_get_objects" />
+			<div data-js='js_get_selectFilter' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Select
+						Filter
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+					</ul>
+				</li>
+			</div>
+
+			<div data-js='js_get_type' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Carousel
+						Type
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-c_type="1">
+							<a>Slider</a>
+						</li>
+						<li data-c_type="0">
+							<a>Non - Slider</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+			<div data-js='js_get_filter_products_limit' data-selector=".js_get_objects">
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Records
+						Limit
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-objects_limit="1">
+							<a>1</a>
+						</li>
+						<li data-objects_limit="2">
+							<a>2</a>
+						</li>
+						<li data-objects_limit="3">
+							<a>3</a>
+						</li>
+						<li data-objects_limit="4">
+							<a>4</a>
+						</li>
+						<li data-objects_limit="5">
+							<a>5</a>
+						</li>
+						<li data-objects_limit="6">
+							<a>6</a>
+						</li>
+						<li data-objects_limit="7">
+							<a>7</a>
+						</li>
+						<li data-objects_limit="8">
+							<a>8</a>
+						</li>
+						<li data-objects_limit="9">
+							<a>9</a>
+						</li>
+						<li data-objects_limit="10">
+							<a>10</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+			<div data-js='js_get_product_in_slidesToShow' data-selector=".js_get_objects">
+
+				<li class="dropdown-submenu">
+					<a class="snippets_option_font_style" tabindex="-1" href="#">Limit
+						per Slide
+					</a>
+					<ul class="snippets_option_font_style dropdown-menu">
+						<li data-objects_in_slide="1">
+							<a>1</a>
+						</li>
+						<li data-objects_in_slide="2">
+							<a>2</a>
+						</li>
+						<li data-objects_in_slide="3">
+							<a>3</a>
+						</li>
+						<li data-objects_in_slide="4">
+							<a>4</a>
+						</li>
+					</ul>
+				</li>
+
+			</div>
+		</xpath>
+	</template>
+</odoo> -->

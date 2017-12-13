@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="recently_viewed_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet"
+				href="/clarico_recently_viewed/static/src/less/recently_viewed.less"></link>
+			<script src="/clarico_recently_viewed/static/src/js/recently_viewed.js"></script>
+		</xpath>
+	</template>
+</odoo>

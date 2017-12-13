@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="compare_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less" href="/clarico_compare/static/src/less/compare.less" />
+		</xpath>
+		<xpath expr="//script[last()]" position="after">
+			<script type="text/javascript" src="/clarico_compare/static/src/js/compare.js"></script> 
+			<script type="text/javascript" src="/clarico_compare/static/src/js/compare_script.js"></script>
+		</xpath>
+	</template>
+</odoo>

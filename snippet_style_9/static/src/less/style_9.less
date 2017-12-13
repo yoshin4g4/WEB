@@ -1,0 +1,180 @@
+/* daily deals */
+
+.cat_img_content_snippet_wrap
+{
+	display:inline-block;
+	width:100%;
+	
+	
+	.cat_img_content_snippet_container
+	{
+		display:block;
+		width:90%;
+		margin:0px auto;
+		max-width:1400px;
+	}
+}
+
+.daily_deals_img_section
+{
+	display:block;
+	width:25%;
+	.left;
+	max-height: 400px;
+	
+	img
+	{
+		width:auto;
+		max-width:100%;
+		display:block;
+		margin:0px auto;
+	}
+}
+.daily_deals_content_class
+{
+	display:block;
+	width:35%;
+	.left;
+	.pl(10px);
+	
+	.hr_before_heading
+	{
+	 	border: 2px solid @theme-color;
+	 	.mt(35px);
+	    width: 85px;
+	    .mb(0px);
+	}
+	
+	.content_heading
+	{
+		.size(30px);
+		color:#000;
+		.mt(43px);
+		letter-spacing: 2px;
+		.mb(18px);
+		.uppercase;
+		letter-spacing: 0.1em;
+		.oswald-light;
+		.mt(8%);
+	
+	}
+	.daily_deals_para
+	{
+		.size(15px);
+	    color: #898383;
+	    line-height: 180%;
+	    .mb(7%);
+	    .muli-light;
+	}
+}
+.daily_deals_snippet_category
+{
+	display:block;
+	width:40%;
+	.left;
+	
+	.category_row
+	{
+		display:inline-block;
+		width:100%;
+		.pt(5%);
+		
+		.category
+		{
+			width:30%;
+			display:block;
+			.left;
+			.mr(5px);
+			
+			.cat_img_div
+			{
+				width:100%;
+				
+				img
+				{
+					width:auto;
+					max-width:100%;
+					display:block;
+					margin:0px auto;
+				}
+			}
+			.category_name
+			{
+				.size(13px);
+				.capitalize;
+				.center;
+				display:block;
+				padding: 5px 25px;
+				cursor:pointer;
+				
+				&:hover
+				{
+					color:@theme-color;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 1000px) {
+	
+	.daily_deals_img_section 
+	{   
+	   	width: 100% !important; 
+  		float: none !important; 
+     	max-height: 400px !important;
+     }
+     .daily_deals_content_class 
+     {	
+	     float: none !important;
+	     .pl(0%) !important;
+	     width: 100% !important;
+	     max-width: 600px;
+	     margin: 0px auto;
+	     .mt(10%);
+	     text-align:center;
+	  }
+	 
+	.daily_deals_snippet_category
+	{
+		float: none !important;
+		width: 100% !important;
+		max-width: 600px;
+		margin: 0px auto;
+		.mt(7%);
+	}
+	.daily_deals_content_class .hr_before_heading {
+		margin:0px auto;
+	}
+}
+
+@media (max-width: 900px) {
+
+	.daily_deals_snippet_category .category_row .category .category_name {
+		padding: 5px 20px !important;
+	}
+}
+@media (max-width: 600px) 
+{
+	.daily_deals_content_class .content_heading
+  	 {   
+  	 	.size(20px) !important;
+		}
+	.daily_deals_content_class .daily_deals_para 
+	{
+		.size(13px) !important;
+	}
+
+	.daily_deals_img_section img
+	{
+		max-width: 80% !important;
+	}
+}
+
+
+
+
+
+
+
+

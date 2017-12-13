@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="cart_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less" href="/clarico_cart/static/src/less/clarico_cart.less" />
+			<link rel="stylesheet" type="text/less" href="/clarico_cart/static/src/less/cart_responsive.less" />
+			<script type="text/javascript" src="clarico_cart/static/src/js/clarico_cart.js"></script>
+		</xpath>
+	</template>
+</odoo>

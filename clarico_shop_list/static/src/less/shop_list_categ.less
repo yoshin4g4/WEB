@@ -1,0 +1,127 @@
+.main_list
+{
+
+	#products_grid_before
+	{
+		width:23%;   
+		position: relative;
+		background-color: transparent;
+		.left;
+		z-index:100;
+	}
+	.list_products_grid_before{
+		height: 100%;
+		width: 0;
+		position: fixed !important;
+		z-index: 9999 !important;
+		top: 0;
+		left: 0;
+		background-color: white !important;
+		overflow-x: hidden;
+		transition: 0.5s !important;
+		.pt(6%);
+		
+		& .products_grid_before_maxW{
+			.pl(10%) !important;
+		}
+	}
+	.products_grid_before_maxW {
+	    .pl(0%) !important;
+	}
+}
+.main_listid
+{
+	width: 75% !important;
+	.right;
+}
+.right-cnt-maxW_list
+{
+    width: 90%;
+    max-width: 1400px !important;
+    display: block;
+    margin: 0px auto;
+}
+
+.oe_subdescription_list
+{
+	display:block !important;
+	div
+	{
+	    .muli-regular();
+	    color: #949494;
+	    line-height: 170%;
+	    .size(13px);
+	    .mb(10px);
+	    text-align: left;
+	    max-width:500px;
+	}
+}
+
+.oe_product.oe_list {
+	.pb(5%) !important;
+    min-height: auto !important;
+    height:auto !important;
+    display : inline-block !important;
+}
+.oe_product.oe_list .itemscope-main {
+    height: auto;
+}
+.oe_product.oe_list .oe_product_image {
+    width: 30% !important;
+    margin-top:0px;
+}
+.in_stock_list
+{
+    float: none;
+    width: 100%;
+    .mt(10px);
+    .mb(14px);
+    color: green;
+    span
+    {
+    	float: none;
+    }
+}
+.warning_list{
+	float: none;
+    width: 100%;
+    .mt(10px);
+    .mb(14px);
+    span{
+    	float: none;
+    }
+}
+.oe_list .itemscope-main{
+	border:none !important;
+}
+.product-name-h5_list
+{
+    float: none;
+     width:100%;
+}
+.oe_product.oe_list .product-des
+{
+    display: block !important;
+    position: relative;
+    width: 68% !important;
+    .right;
+    .pl(5px);
+}
+.product-des_list{
+	div{
+		
+		& #wishlist_shop, #compare_shop, #quick_view_shop, #addtocart_shop{
+			width:auto;
+			.left;
+			padding: 0 !important;
+		}
+	}
+}
+.oe_product.oe_list section {
+    padding: 1px 0px 0px 35px !important;
+    width:auto;
+}
+
+.product-des_list #compare_shop, .product-des_list #quick_view_shop{
+	padding: 0 !important;
+}

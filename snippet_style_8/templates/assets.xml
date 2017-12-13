@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style8_assets_frontend" inherit_id="web.assets_frontend" name="Style">
+		<xpath expr="." position="inside">
+			<link href="/snippet_style_8/static/src/less/style_8.less" type="text/less"
+				rel="stylesheet" />
+			<script src="/snippet_style_8/static/src/js/style_8.js" type="text/javascript"></script>
+		</xpath>
+	</template>
+</odoo>

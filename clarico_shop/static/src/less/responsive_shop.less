@@ -1,0 +1,253 @@
+@maxScreen:    ~"only screen and (max-width: 1400px) and (min-width: 1100px)";
+@minScreen:    ~"only screen and (max-width: 1100px)";
+@TabletScreen:    ~"only screen and (max-width: 900px)";
+@mobile:    ~"only screen and (max-width: 768px)";
+@mobile-small:    ~"only screen and (max-width: 500px)";
+
+@media (max-width:1400px){
+	.product-grid-div{
+		width:24.5%;
+	}
+}
+@media @maxScreen {
+	.oe_list{
+		width:100%;
+	}
+}
+
+@media @minScreen {
+	.product-grid-div{
+		width:33%;
+	}
+	.oe_list{
+		width:100% !important;
+	}
+}
+
+@media @TabletScreen {
+	.product-grid-div{
+		width:49.5%;
+	}
+	.oe_list{
+		width:100% !important;
+	}
+	
+	#products_grid .oe_product.oe_grid section {
+	    background: rgba(255, 255, 255, 0.75) !important;
+	    .pt(2%) !important;
+	}
+	.clarico_product_breadcrumb{
+		.pt(3%);
+		.pb(3%);
+	}
+	.main {
+		.pt(5%);
+	}
+	.right-cnt-maxW{
+		width: 100% !important;
+	}
+	.view-as-div{
+		display:none;
+	}
+	.view-as .view-as-right-cnt .filter-sort-by .dropdown-toggle{
+		padding: 0px 25px 0 0 !important;
+	}
+	.view-as .view-as-right-cnt .filter-show .filter-show-label{
+		padding: 0px 25px 0 0 !important;
+	}
+	.dropdown_sorty_by, .filter-show{
+		border:1px solid black;
+		.mr(5px);
+	}
+	.view-mode{
+		.ml(10px);
+	}
+	.itemscope-main{
+		margin: 0px 10px 0px 10px !important;
+	}
+	.oe_grid .production-description 
+	{
+		.pt(3%);
+	    display: block;
+	    width: 100%;
+	    margin: 0px auto;
+	}
+	.strike-through{
+		
+		& span.oe_currency_value{
+			.size(12px);
+		}
+	}
+	
+	.deleted_price_responsive
+	{
+		width: auto;
+		display: block;
+		.left;
+	}
+	
+	.product-des
+	{
+		display: -webkit-inline-flex !important;
+		
+		.hover-cnt
+		{
+			.bg(#fff);
+			.mt(0);
+		}
+	}
+	.clear-all-variant{
+		clear:both;
+		.mb(7%);
+	}
+}
+@media @mobile {
+	.product-grid-div{
+		width:49.5% !important;
+	}
+	.view-as-maxW{
+		.pt(0px);
+	}
+	
+	.filter-stick > .view-as-maxW{
+		width:100%;
+	}
+	.filter-show .dropdown-toggle ,.filter-sort-by .dropdown-toggle{
+		width:100px !important;
+	}
+	.view-mode .menu-filter{
+		.size(12px) !important;
+		width:100%;
+		.pb(7%);
+		.pt(3%);
+	}
+	.apply-filter{
+		.ml(0) !important;
+	}
+	.view-as .view-as-right-cnt .filter-show .filter-show-label
+	{
+		.size(12px);
+	}
+	.filter-show-label
+	{
+		.size(12px);
+	}
+	.nav-selection-div{
+		.pt(7px) !important;
+	}
+	.select-nevigation-home,.select-nevigation-span,.select-nevigation-child{
+		.size(10px) !important;
+	}
+	.all-category-div ul li a{
+		.size(14px) !important;
+	}
+	.all-category-div ul > li > ul > li > a,.color-name{
+		.size(14px) !important;
+	}
+	.nav-stacked-div .type-checkbox label{
+		.size(13px) !important;
+	}
+	.all-category-div .nav-pills > li.active > a{
+		.size(14px) !important;
+	}
+	.category,.refined-by-color{
+	.size(13px) !important;
+	}
+	.apply-filter{
+		position: relative;
+		.ml(5px);
+	}
+	.mobile-view-filter-close-btn{
+		display:block;
+	}
+	.product-image img{
+		.left !important;
+	}
+	.left_class{
+		width:100% !important;
+	}
+	.right_class{
+		width:100% !important;
+		.pt(10%) !important;
+	}
+	.not_defined h3.css_editable_display{
+		.pt(5%);
+		.pb(5%);
+	}
+	.select-nevigation-span{
+		.pt(3px);
+	}
+	.select-nevigation-child{
+		.pt(4px);
+	}
+}
+@media @mobile-small {
+	.product-grid-div{
+		width:100% !important;
+	}
+	.oe_product{
+		width:100% !important;
+	}
+		
+	.filter-option{
+		width:90% !important;
+		top: 10% !important;
+		left: 5% !important;
+	}
+	.nav-selection-div {
+		.pt(4px) !important;
+	}
+	.filter-show .dropdown-toggle ,.filter-sort-by .dropdown-toggle{
+		width:140px !important;
+	}
+	.view-as-right-cnt{
+		.pt(5%);
+		width:100% !important;
+		.pl(18px);
+		.pb(10px);
+	}
+	.filter-sort-by{
+		.right !important;
+	}
+	.dropdown-menu{
+		min-width: 140px !important;
+	}
+	.filter-stick{
+		position: relative;
+		height: 100px !important;
+		top:0 !important;
+	}
+	.apply-filter-in-page{
+				.mt(15px);
+	}
+	.menu-filter-div{
+		.pb(6px);
+	}
+	.production-description{
+		width:100% !important;
+	}
+	.orignal-price{
+		& span.oe_currency_value{
+			.size(12px);
+		}
+	}
+	.responsive_price
+	{
+		width: auto;
+		display: block;
+	}
+	.product-name-a{
+		.pt(5px);
+	}
+	.second-level-a , third-level-ul li a{
+		.ellipsis;
+		max-width:200px;
+	}
+	.div_c_sub_pc_image .sale-btn::after
+	{
+		display:none;
+	}
+	
+	
+}
+

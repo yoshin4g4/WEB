@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="product_carousel_in_snippets" inherit_id="website.snippets">
+		<xpath expr="//div[hasclass('o_panel_body')]" position="inside">
+			<t t-snippet="clarico_product_carousel.product_carousel_snippet_body"
+				t-thumbnail="/clarico_product_carousel/static/src/img/style_6.jpeg" />
+		</xpath>
+	</template>
+
+	<!-- ======== E-Commerce Product Carousel Snippets ======== -->
+	<!--E-Commerce Product Carousel Snippet's Body -->
+	<template id="product_carousel_snippet_body" name="Product Carousel">
+		<div class="oe_structure"/>
+		<section class="s_product_carousel common-div">
+			<div class="s_product_carousel_maxw block">
+				<div class="js_get_objects" data-loading="true"
+					data-objects_in_slide="4" data-isemipro='true' data-objects_limit="10"
+					data-template="clarico_product_carousel.product_carousel_snippet_heading"
+					data-object_name="product.template" data-c_type="1"
+					data-sale_label="0" data-custom_controller="1" data-get_rating="0" />
+					
+			</div>
+		</section>
+	</template>
+
+	<!--E-Commerce Product Carousel products's Template -->
+
+
+	<template id="product_carousel_snippet_heading">
+		<div class="headline">
+			<h1 class="text-center chs_heading" t-esc="title"></h1>
+		</div>
+		<div class="product_carousel_slider oe_website_sale">
+			<div class="owl-carousel">
+				<t t-foreach="objects" t-as="obj">
+					<t t-foreach="obj" t-as="product">
+						<t t-call="clarico_product_carousel.product_carousel_snippet_product" />
+					</t>
+				</t>
+			</div>
+		</div>
+	</template>
+	<!-- =========================================product template=================================== -->
+	<template id="product_carousel_snippet_product" name="Product Carousel Snippets Products">
+		<section class="pc_individual">
+			<div class="div_c_pc_image">
+					<span itemprop="image" />
+					<div class="div_c_sub_pc_image">
+						<div class="ribbon-wrapper" t-if="product.label_ept_id">
+							<div t-field="product.label_ept_id" class="ribbon btn btn-danger label-block sale-btn"></div>
+						</div>
+						<div class="product-carousel-icons p-bottom-hide">
+							<div class="hover-cnt">
+								<div id="pc_quick_view"></div>
+								<div id="pc_wishlist"></div>
+								<div id="pc_compare"></div>
+							</div>
+						</div>
+						<a t-attf-href="/shop/product/#{ slug(product) }">
+						<img t-att-src="'data:image/png;base64,%s' % to_text(product.image_medium)" class="s_image_common"></img>
+						</a>
+					</div>
+				
+			</div>
+			<section class="section_c_cs_product_desc new_section">
+				<div class="product_desc_sub">
+					
+					<p class="para_c_cs_product_name mb4">
+						<a class="anch_c_cs_product_name" itemprop="name"
+							t-att-href="'/shop/product/%s' % slug(product)" t-field="product.name" />
+					</p>
+					 <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price product_price div_main_c_cs_product_price" t-if="product.product_variant_ids">
+                        <b>
+                            <t t-if="product.website_price_difference and website.get_current_pricelist().discount_policy=='without_discount'">
+                                <del class="strick-price mr8" style="white-space: nowrap;" t-esc="compute_currency(product.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" />
+                            </t>
+
+                            <span t-esc="product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                            <span itemprop="price" style="display:none;" t-esc="product.website_price" />
+                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+                        </b>
+                    </div>
+				</div>
+			</section>
+		</section>
+	</template>
+</odoo>

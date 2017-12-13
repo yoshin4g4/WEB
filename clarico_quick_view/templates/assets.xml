@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="quick_view_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_quick_view/static/src/less/quick_view.less" />
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_quick_view/static/src/less/responsive_quick_view.less" />
+			<script type="text/javascript" src="/clarico_quick_view/static/src/js/quick_view.js"></script>
+			<script type="text/javascript" src="/clarico_quick_view/static/src/js/quickview_script.js"></script>
+		</xpath>
+	</template>
+</odoo>

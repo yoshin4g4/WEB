@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="shop_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_shop/static/src/less/clarico_shop.less" />
+			<link rel="stylesheet" type="text/less"
+				href="/clarico_shop/static/src/less/responsive_shop.less" />
+
+			<link rel="stylesheet" type="text/css"
+				href="/clarico_shop/static/src/less/jquery.mCustomScrollbar.css" media="(min-width: 600px)" />
+
+			<link rel="stylesheet" type="text/css"
+				href="/clarico_shop/static/src/less/compare_wishlist_common.less" />
+			<script type="text/javascript" src="/clarico_shop/static/src/js/clarico_shop.js"></script>
+			<script type="text/javascript"
+				src="/clarico_shop/static/src/js/clarico_shop_json.js"></script>
+<!--
+			<script type="text/javascript"
+				src="/clarico_shop/static/src/js/jquery.mCustomScrollbar.concat.min.js"></script>
+-->
+		</xpath>
+	</template>
+</odoo>

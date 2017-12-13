@@ -1,0 +1,117 @@
+.c_signup_link_btn a.btn{
+	background: transparent;
+}
+
+
+.clarico_signup,.oe_reset_password_form
+{
+	max-width:400px !important;
+	display:block;
+	margin:0px auto;
+	
+
+	#name
+	{
+		.mb(12%);
+	}
+}
+
+
+.c_signup_input,.c_reset_input
+{
+		border: none;
+		border-bottom: 1px solid #CCC;
+		border-radius: 0;
+		box-shadow: unset;
+		.mb(5%);
+		background: transparent;
+		position:relative;
+		display:inline-block;
+
+
+		&:focus
+		{
+			border-bottom: 2px solid cornflowerblue; 
+			box-shadow: unset;
+			transition:width 0.5s linear;
+		}
+}
+.c_signup_btn,.reset_submit_btn
+{
+	background-color:@theme-color !important;
+	
+	&:hover
+	{
+		.bg(@theme-color);
+	}
+}
+.back_to_login_text,.c_reset_backtologin
+{
+	color:@theme-color;
+	padding: 5% 0;
+    float: left !important;
+	.bg(transparent);
+	
+	&:hover
+	{
+		color:@theme-color;
+		.bg(transparent);
+	}
+}
+.c_reset_login_btns,.oe_login_buttons
+{
+		.pull-right
+		{
+			//.common-div;
+			//float:none !important;
+	
+		a:first-child
+		{
+			color:@theme-color;
+			padding: 2px 12px;
+			display:block;
+		 	width:auto;
+			.left();
+			.mb(10px);
+			.pl(0);	
+		}
+	}
+
+}
+.c_signup_link_btn,.c_reset_login_btns
+{
+	width:100% !important;
+
+}
+.signup_img_cont
+{
+	background-image:url('/clarico_signup/static/src/img/signup.jpeg');
+	width:100%;
+	background-size:cover;
+	padding:25%;
+	background-position: center;
+}
+.image_signup_class
+{
+	img
+	{
+	width: 100%;
+	display: block;
+	margin: 0px auto;
+	}
+}
+.oe_website_login_container
+{
+	position: fixed;
+	background-color: #FFF;
+	z-index: 9999;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.login_area_container
+{
+	position: absolute;
+}

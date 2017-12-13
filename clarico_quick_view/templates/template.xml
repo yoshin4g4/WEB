@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_quick_view_fetch-record">
+		<div class="mask"></div>
+		<!-- <div class="model-main-div"> -->
+		<div class="product_quick_view_class oe_website_sale">
+
+				<div itemscope="itemscope" itemtype="http://schema.org/Product">
+					<div class="product_quick_view_subclass">
+						<div class="close_btn common-close-btn">
+							<span>x</span>
+						</div>
+						<div id="wishlist_in_quick_view"></div>
+						<div class="quick_view_img_div_container">
+							<div class="quick_view_image_div" itemprop="image" t-field="product.image"
+								t-options="{'widget': 'image', 'alt-field': 'name'}" />
+						</div>
+
+						<div class="quick_view_product_details">
+							<div class="quick_view_product_sub_details">
+								<span itemprop="url" style="display:none;"
+									t-esc="'/shop/product/%s' % slug(product)" />
+								<form action="/shop/cart/update" class="js_add_cart_variants"
+									t-att-data-attribute_value_ids="product.product_variant_ids.ids"
+									method="POST">
+									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+									<div class="js_product" t-if="product.product_variant_ids">
+										<h3 class="quick_view_p_name" t-if="product.name">
+											<a t-field="product.name" t-att-href="'/shop/product/%s' %slug(product)"></a>
+										</h3>
+
+										<div class="q_rating-block">
+											<t t-call="clarico_rating.clarico_rating_star">
+												<t t-set="val" t-value="rating_product[product.id].get('avg')" />
+											</t>
+										</div>
+										<div class="prod_des" t-if="product.description_sale">
+											<p t-field="product.description_sale" class="text-muted res_pera_description" />
+
+										</div>
+
+										<div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer"
+											class="product_price" t-if="product.product_variant_ids">
+											<h4 class="oe_price_h4 css_editable_mode_hidden">
+												<div class="price_comman_class">
+													<div class="price_comman_sub_class">
+														<t t-call="website_sale.product_price" />
+													</div>
+												</div>
+											</h4>
+											<h4 class="css_non_editable_mode_hidden decimal_precision"
+												t-att-data-precision="product.currency_id.decimal_places">
+												<span t-field="product.lst_price"
+													t-options='{
+					                   "widget": "monetary",
+					                   "display_currency": product.currency_id,
+					               }' />
+											</h4>
+											<h4 class="hidden oe_not_available bg-warning">Product not available</h4>
+
+										</div>
+										<div class="sku_container" t-if="product.default_code">
+											<p class="sku_label">
+
+												SKU:
+												<t t-esc="product.default_code" />
+											</p>
+										</div>
+										<input type="hidden" class="product_id" name="product_id"
+												t-att-value="product.product_variant_id.id" />
+										<t t-placeholder="select">
+											
+											<t t-call="website_sale.variants">
+												<t t-set="ul_class" t-value="'nav-stacked'" />
+											</t>
+										</t>
+
+										<div class="Quick_product_wish_compare">
+										</div>
+								<p t-if="len(product.product_variant_ids) &gt; 1" class="css_not_available_msg bg-danger"
+											style="padding: 15px;">Product not available</p>
+										<div class="qv_ad2cart">
+											<input name="product_id" t-att-value="product.product_variant_id.id"
+												type="hidden" />
+											<t t-if="len(product.product_variant_ids) == 1">
+												<a class="btn btn-default a-submit" id="add_to_cart">
+													Add to Cart
+												</a>
+											</t>
+											<t t-if="len(product.product_variant_ids) &gt; 1">
+												<a class="btn btn-default a-submit" id="add_to_cart">
+													Add to Cart
+												</a>
+											</t>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- </div> -->
+		</div>
+	</template>
+
+	<template id="product_quick_view_quantity"
+		inherit_id="clarico_quick_view.clarico_quick_view_fetch-record">
+		<xpath expr="//div[hasclass('Quick_product_wish_compare')]"
+			position="before">
+			<div class="quick_product_quantity">
+				<div class="css_quantity input-group oe_website_spinner"
+					contenteditable="false">
+					<a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+						<i class="fa fa-minus"></i>
+					</a>
+					<input type="text" class="form-control" data-min="1" name="add_qty"
+						value="1" />
+					<a t-attf-href="#"
+						class="mb8 input-group-addon float_left js_add_cart_json">
+						<i class="fa fa-plus"></i>
+					</a>
+				</div>
+			</div>
+
+		</xpath>
+	</template>
+
+	<template id="product_quick_view_varients" inherit_id="website_sale.variants">
+		<xpath
+			expr="//ul[@t-attf-class='list-unstyled js_add_cart_variants #{ul_class}']"
+			position="replace">
+
+			<ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}"
+				t-att-data-attribute_value_ids="attribute_value_ids">
+				<t
+					t-foreach="product.attribute_line_ids.sorted(key=lambda x: x.attribute_id.sequence)"
+					t-as="variant_id">
+					<t t-if="variant_id.attribute_id.create_variant">
+					<li t-if="len(variant_id.value_ids) > 1">
+						<strong class="variant-name-strong" t-field="variant_id.attribute_id.name">:</strong>
+						<t t-if="variant_id.attribute_id.type in ['select', 'hidden']">
+							<div class="select_wrapp">
+								<span class="arrow_s">
+									<i class="fa fa-chevron-down" aria-hidden="true" id="chevron-down_icon"></i>
+								</span>
+								<select
+									t-attf-class="form-control #{'js_variant_change' if variant_id.attribute_id.create_variant else ''}"
+									t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+									id="attr_select">
+									
+									
+									<t t-foreach="variant_id.value_ids" t-as="value_id">
+										<option t-att-value="value_id.id">
+											<span t-field="value_id.name" />
+											<span t-if="value_id.price_extra">
+												<t t-esc="value_id.price_extra > 0 and '+' or ''" />
+												<span t-field="value_id.price_extra" style="white-space: nowrap;"
+													t-options='{
+		                                   "widget": "monetary",
+		                                    "from_currency": product.currency_id,
+		                                   "display_currency": website.currency_id
+		                               }' />
+											</span>
+										</option>
+									</t>
+								</select>
+							</div>
+						</t>
+
+						<t t-if="variant_id.attribute_id.type == 'radio'">
+							<ul class="list-unstyled">
+								<t t-set="inc" t-value="0" />
+								<t t-foreach="variant_id.value_ids" t-as="value_id">
+									<li class="form-group js_attribute_value" style="margin: 0; margin-bottom: 5px;">
+										<label class="control-label" style="margin: 0 0px; font-weight:500;">
+											<input type="radio"
+												t-att-class="'js_variant_change' if variant_id.attribute_id.create_variant else None"
+												t-att-checked="'checked' if not inc else None"
+												t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+												t-att-value="value_id.id" style="vertical-align: top; margin-right: 10px;" />
+											<span t-field="value_id.name" />
+											<span class="extra_price_lbl" t-if="value_id.price_extra">
+												<t t-esc="value_id.price_extra > 0 and '+' or ''" />
+												<span t-field="value_id.price_extra" style="white-space: nowrap;"
+													t-options='{
+ 			                                          "widget": "monetary",
+ 			                                          "from_currency": product.currency_id,
+ 			                                          "display_currency": website.currency_id
+ 			                                       }' />
+											</span>
+										</label>
+
+									</li>
+									<t t-set="inc" t-value="inc+1" />
+								</t>
+							</ul>
+						</t>
+
+						<t t-if="variant_id.attribute_id.type == 'color'">
+							<ul class="list-inline">
+								<t t-set="inc" t-value="0" />
+								<li t-foreach="variant_id.value_ids" t-as="value_id">
+									<label
+										t-attf-style="background-color:#{value_id.html_color or value_id.name}"
+										t-attf-class="css_attribute_color #{'active' if not inc else ''}">
+										<input type="radio"
+											t-att-class="'js_variant_change' if variant_id.attribute_id.create_variant else None"
+											t-att-checked="'checked' if not inc else None"
+											t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+											t-att-value="value_id.id" t-att-title="value_id.name" />
+									</label>
+									<t t-set="inc" t-value="inc+1" />
+								</li>
+							</ul>
+						</t>
+					</li>
+					</t>
+				</t>
+			</ul>
+		</xpath>
+	</template>
+	<!-- Quick view in shop -->
+	<template id="product_quick_view_products_item" inherit_id="clarico_shop.clarico_shop_products_item">
+		<xpath expr="//div[@id='quick_view_shop']" position="inside">
+			<a title="Quick View" class="quick-view-a" t-att-data-id="'%s' % product.id">
+				<i class="fa fa-eye" aria-hidden="true"></i>
+			</a>
+		</xpath>
+	</template>
+	<!-- Add2Cart in wishlist -->
+	<!-- <template id="quick_view_wishlist_template" inherit_id="clarico_wishlist.clarico_wishlist_wishlist_template"> 
+		<xpath expr="//div[@id='quick_view_wishlist']" position="inside"> <a class="add-to-cart 
+		quick-view-a" t-att-data-id="'%s' % p.product_id.id"> <i class="fa fa-shopping-cart" 
+		aria-hidden="true"></i> Add to Cart </a> </xpath> </template> -->
+	
+	<template id="quick_product_box" inherit_id="website.layout">
+		<xpath expr="//main" position="inside">
+			<div class="mask_cover"></div>
+		</xpath>
+	</template>
+
+
+</odoo>

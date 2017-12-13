@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="product_assets_frontend" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet"
+				href="/clarico_product/static/src/less/clarico_product.less"></link>
+			<link rel="stylesheet"
+				href="/clarico_product/static/src/less/product_responsive.less"></link>
+			<script src="/clarico_product/static/src/js/clarico_product.js" type="text/javascript"></script>
+			<script src="/clarico_product/static/src/js/image_zoom.js" type="text/javascript"></script>
+		</xpath>
+	</template>
+</odoo>

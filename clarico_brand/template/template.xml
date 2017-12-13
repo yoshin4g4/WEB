@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="clarico_brand_form" inherit_id="clarico_shop.clarico_shop_shop_page">
+		<xpath expr="//form/ul[@class='nav nav-pills nav-stacked mt16']"
+			position="inside">
+			<t t-if="brand_list">
+				<li>
+					<div class="attribut-main-div">
+						<div class="filter-by-div">
+							<i class="down-arrow fa fa-caret-down" aria-hidden="true"></i>
+							<h5 class="refined-by-attr">Filter By </h5>
+							<h5 class="refined-by-attr refined-by-dynamic">Brands</h5>
+						</div>
+						<a class="clear-all-variant">(Clear all)</a>
+						<div class="attr-val mCustomScrollbar" data-mcs-theme="dark">
+							<div>
+								<ul class="nav nav-pills nav-stacked type-radio nav-overflow-scroll">
+									<t t-foreach="brand_list" t-as="brand">
+										<li class="nav-stacked-li">
+											<div class="nav-stacked-div">
+												<label class="type-checkbox">
+													<input class="checkbox-custom" type="checkbox" name="attrib"
+														t-att-value="'0-%s' % (brand.id)"
+														t-att-checked="'checked' if brand.id in attrib_set else None" />
+													<label class="checkbox-custom-label" style="font-weight: normal"
+														t-field="brand.name" />
+												</label>
+											</div>
+										</li>
+									</t>	
+								</ul>
+							</div>
+						</div>
+					</div>
+				</li>
+			</t>
+		</xpath>
+	</template>
+</odoo>

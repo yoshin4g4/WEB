@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<template id="snippet_style_six" inherit_id="clarico_snippets.clarico_snippets"
+		name="Clarico snippet" priority="6">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_6.snippet_style_6_template" t-thumbnail="/snippet_style_6/static/src/img/style6.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_6_template" name="Style 6">
+
+
+		<div class="oe_structure" />
+		<section class="ic_slider_design">
+
+			<div class="clarico_comman_class">
+				<div class="clarico_sub_comman_class">
+
+					<div class="comman_wrapper_class">
+						<div class="slider_wrapper_div_left">
+							<div class="wrapper_full_class">
+
+								<section class="slider_back_image slider_back_color_black bg-black">
+									<span class="left_content">
+										<p class="left_content_color">Modern Collection</p>
+										<p class="left_content_pera">Clarico owns beautiful homepage with modern design.
+											Each page has different style and layout. So, you can feel
+											free to turn up your personality and build an awesome
+											website. Enjoy it now!</p>
+										<p>
+											<a class="left_content_btn" href="#">Shop Now</a>
+										</p>
+									</span>
+								</section>
+
+							</div>
+						</div>
+
+						<div class="slider_wrapper_div_right">
+							<div class="wrapper_full_class">
+
+								<div class="slider_back_img_center">
+									<div class="center slider">
+										<section class="div_img">
+											<a href="#">
+												<img class="product_image"
+													src="/snippet_style_6/static/src/img/style_6_img_1.jpeg" />
+											</a>
+										</section>
+										<section class="div_img">
+											<a href="#">
+												<img class="product_image"
+													src="/snippet_style_6/static/src/img/style_6_img_2.jpg" />
+											</a>
+										</section>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+	</template>
+</odoo>

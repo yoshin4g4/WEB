@@ -1,0 +1,155 @@
+/* offer new snippet */
+
+.main_offer_banner_section
+{
+	display:inline-block;
+	width:100%;
+	
+	.homepage_offers_snippet_container
+	{
+		display:block;
+		width:90%;
+		max-width:1200px;
+		margin:0px auto;
+	}
+}
+.offer_images_first_div,.offer_images_second_div,.offer_images_third_div
+{
+	display:block;
+	width:32%;
+	.left;
+	.mr(10px);
+}
+.div_offer_img
+{
+	display:block;
+	width:100%;
+		
+	img
+	{
+		max-width:100%;
+		width:auto;
+		margin:0px auto;
+		display:block;
+		
+		&:hover
+		{
+			opacity: 0.7;
+			transition: all 1.5s ease;
+		}
+	}
+}
+.offer_detail_div
+{
+	max-height:270px;
+	display:block;
+	width:100%;
+	padding: 14px 30px 14px;
+	text-align: center;
+	.mb(10px);
+
+	.offer_snippet_second_div_detail_heading
+	{
+		color: rgb(0, 0, 0);
+		.oswald-light();
+	 	font-family: oswald-light;
+	 	.uppercase;
+	    .size(25px);
+	    font-size:25px;
+	    letter-spacing: 2px;
+	    .center;
+	    word-spacing: 0;
+	    width: 90%;
+	    max-width: 1400px;
+	    display: block;
+	    margin: 0px auto;
+	    .mb(25px);
+	}
+
+	.second_div_detail_para
+	{
+		.size(15px);
+	    color: #898383;
+	    line-height: 180%;
+	    .muli-light();
+		.center;
+		.mb(27px);
+		max-height: 109px;
+		min-height: 109px;
+		display:block;
+		overflow:hidden;
+	}
+	.offer_detail_div_btn
+	{
+		display: inline-block;
+		.size(14px);
+		line-height: 46px;
+		height: 46px;
+		letter-spacing: 2px;
+		padding: 0 30px;
+		.center;
+		.uppercase;
+		background:@theme-color;
+		border-radius: 25px;
+		border: none;
+		color: #fff;
+		transition: all 300ms;
+		text-decoration: none;
+		.oswald-regular();
+		
+		&:hover
+		{
+			background: #333;
+			color:#fff;	
+			transition: background-color linear 0.5s;
+		}
+	}
+
+}
+.first_div_img_one_height
+{
+	max-height:500px;
+	margin-bottom:10px;
+}
+.first_div_img_two_height
+{
+	max-height:270px;
+}
+.second_div_img_height
+{
+	max-height:500px;
+}
+.third_div_img_one_height
+{
+	max-height:385px;
+	margin-bottom:10px;
+}
+.third_div_img_two_height
+{
+	max-height:385px;
+}
+
+
+@media (max-width: 800px) {
+
+	.offer_images_first_div, .offer_images_second_div, .offer_images_third_div 
+	{    
+	 
+	    width: 100% !important;    
+	    float: none !important;
+	}
+	.offer_detail_div
+	{
+		.mb(10%) !important;
+		.mt(10%) !important;
+	}
+}
+
+
+
+
+
+
+
+
+

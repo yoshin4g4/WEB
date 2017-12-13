@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="style_10" inherit_id="clarico_snippets.clarico_snippets"
+		name="Heading Snippet" priority="10">
+		<xpath
+			expr="//div[@id='clarico_snippet_structure']/div[hasclass('o_panel_body')]"
+			position="inside">
+			<t t-snippet="snippet_style_10.snippet_style_10_template" t-thumbnail="/snippet_style_10/static/src/img/style_10.jpg" />
+		</xpath>
+	</template>
+	<template id="snippet_style_10_template" name="Style 10">
+		<section>
+			<section class="main_offer_banner_section">
+				<div class="homepage_offers_snippet_container">
+					<div class="offer_images_first_div">
+						<div class="div_offer_img first_div_img_one_height">
+							<section>
+								<a href="#"><img src="/snippet_style_10/static/src/img/style_10_img_1.jpeg"></img></a>
+							</section>
+						</div>
+						<div class="div_offer_img first_div_img_two_height">
+							<section>
+								<a href="#"><img src="/snippet_style_10/static/src/img/style_10_img_2.jpeg"></img></a>
+							</section>
+						</div>
+
+					</div>
+
+					<div class="offer_images_second_div">
+						<div class="offer_detail_div">
+							<h1 class="offer_snippet_second_div_detail_heading">
+								hot categories
+							</h1>
+							<p class="second_div_detail_para">
+								Duis euismod eu nibh at pharetra. Vivamus placerat ac metus et
+								placerat. Nulla molestie massa id est posuere, maximus hendrerit
+								est rhoncus.
+							</p>
+							<a href="#" class="offer_detail_div_btn">
+								view all categories
+							</a>
+						</div>
+						<div class="div_offer_img second_div_img_height">
+							<section>
+								<a href="#"><img src="/snippet_style_10/static/src/img/style_10_img_3.jpeg"></img></a>
+							</section>
+						</div>
+					</div>
+					<div class="offer_images_third_div">
+						<div class="div_offer_img third_div_img_one_height">
+							<section>
+							<a href="#"><img src="/snippet_style_10/static/src/img/style_10_img_4.jpeg"></img></a>
+							</section>
+						</div>
+						<div class="div_offer_img third_div_img_two_height">
+							<section>
+							<a href="#"><img src="/snippet_style_10/static/src/img/style_10_img_5.jpeg"></img></a>
+							</section>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+	</template>
+
+</odoo>

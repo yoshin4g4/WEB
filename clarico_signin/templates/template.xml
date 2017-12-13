@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="clarico_signin_c_signin" inherit_id="web.login" priority="15">
+		<xpath expr="//form[hasclass('oe_login_form')]" position="replace">
+			<div class="signin_main_div">
+				<div class="login_area_container">
+					<form class="oe_login_form login_area" role="form"
+						t-attf-action="/web/login{{ '?debug' if debug else '' }}" method="post"
+						onsubmit="this.action = this.action + location.hash">
+						<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+						<div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+							<label for="db" class="control-label">Database</label>
+							<div class="input-group">
+								<input type="text" name="db" t-att-value="request.db" id="db"
+									class="form-control" required="required" readonly="readonly" />
+								<span class="input-group-btn">
+									<a href="/web/database/selector" class="btn btn-default db_btn">
+										Select
+										<i class="fa fa-database"></i>
+									</a>
+								</span>
+							</div>
+						</div>
+						<div class="form-group field-login">
+							<label for="login" class="control-label c_login_lbl">Email</label>
+							<input type="text" name="login" t-att-value="login" id="login"
+								class="form-control c-login-input" required="required"
+								autofocus="autofocus" autocapitalize="off" />
+
+						</div>
+						<div class="form-group field-password">
+							<label for="password" class="control-label  c_login_lbl">Password</label>
+							<input type="password" name="password" id="password"
+								class="form-control c-login-input" required="required"
+								t-att-autofocus="'autofocus' if login else None" maxlength="4096" />
+						</div>
+						<p class="alert alert-danger" t-if="error">
+							<t t-esc="error" />
+						</p>
+						<p class="alert alert-success" t-if="message">
+							<t t-esc="message" />
+						</p>
+
+						<input type="hidden" name="redirect" t-att-value="redirect" />
+						<div class="clearfix oe_login_buttons  all_login_btns">
+							<button type="submit" class="btn btn-primary login_btn_main common-btn">Log in</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Back to home icon -->
+			<div class="back_home_icon_div animation_move">
+				<a href="/">
+					<i class="fa fa-arrow-right "></i>
+				</a>
+			</div>
+		</xpath>
+		<xpath expr="//t[@t-call='web.login_layout']" position="inside">
+			<div class="image_signup_class">
+				<t t-set="signin_bg_image" t-value="website.get_bgimage()"></t>
+				<t t-if="signin_bg_image">
+					<img t-att-src="'data:image/png;base64,%s' % to_text(signin_bg_image)"></img> 
+				</t>
+				<t t-if="not signin_bg_image">
+					<img src="/clarico_signin/static/src/img/login.jpeg"></img>
+				</t>
+			</div>
+		</xpath>
+	</template>
+	<template id="clarico_signin_auth_signup" inherit_id="auth_signup.login">
+		<xpath expr="//a[@t-if='reset_password_enabled']" position="attributes">
+			<attribute name="class">btn-link reset_pw_main</attribute>
+		</xpath>
+		<xpath expr="//a[@t-if='signup_enabled']" position="replace">
+			<a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}" class="btn btn btn-link signup_main common-btn">Sign Up</a>
+		</xpath>
+	</template>
+</odoo>
