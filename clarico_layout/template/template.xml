@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="clarico_submenu" inherit_id="website.submenu">
-    	<xpath expr="//li[@t-if='not submenu.child_id']" position="inside">
+    	<xpath expr="//li[@t-if='submenu.is_visible and not submenu.child_id.filtered(lambda menu: menu.is_visible)']" position="inside">
     		<t t-if="submenu.dynamic_menu">
 				<t t-call="clarico_layout.dynamic_category"></t>
 			</t>
