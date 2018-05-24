@@ -34,7 +34,7 @@
 		<xpath expr="//t/div[3]" position="attributes">
 			<attribute name="class">block blog_main</attribute>
 		</xpath>
-		<xpath expr="//t/div[3]/div[@class='row']" position="attributes">
+		<xpath expr="//t/div[3]//div[@class='row']" position="attributes">
 			<attribute name="class">sub-blog_main</attribute>
 		</xpath>
 		<xpath expr="//div[@id='main_column']" position="attributes">
