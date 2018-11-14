@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NewsWidget">
+        <div class="ribbon"><span><t t-esc="title"></t></span></div>
+    </t>
+
+    <!-- count items widget -->
+    <t t-name="CountItemWidget">
+        <div class="oe_status js_proxy show_hide_buttons">
+            <div class="js_connected oe_icon">
+                <i class='fa fa-list'></i>
+            </div>
+        </div>
+        <div class="oe_status js_proxy">
+            <div class="js_connected oe_icon ">
+                <i class='fa fa-money'></i>
+            </div>
+            <div class="js_connected oe_icon">
+                <span class="notification amount_total">0</span>
+            </div>
+        </div>
+        <div class="oe_status js_proxy">
+            <div class="js_connected oe_icon ">
+                <i class='fa fa-cart-plus'></i>
+            </div>
+            <div class="js_connected oe_icon">
+                <span class="notification count_item">0</span>
+            </div>
+        </div>
+        <div class="oe_status js_proxy">
+            <div class="js_connected oe_icon ">
+                <i class='fa fa-gift'></i>
+            </div>
+            <div class="js_connected oe_icon">
+                <span class="notification remain_point">0</span>
+            </div>
+        </div>
+    </t>
+
+    <!-- tool tip widget-->
+    <t t-name="product_tooltip">
+        <div class="debug-widget info_tooltip" id="info_tooltip">
+            <div class="toggle close_button"><i class='fa fa-times' /></div>
+            <div class="content">
+                <ul>
+                    <ul>
+                        <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Name: <t t-esc="product.display_name"/></li>
+                        <t t-if="product.default_code">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Internal Ref: <t t-esc="product.default_code"/></li>
+                        </t>
+                        <t t-if="product.barcode">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Barcode: <t t-esc="product.barcode"/></li>
+                        </t>
+                        <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Unit Of Measure: <t t-esc="product.uom_id[1]"/></li>
+                        <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Price: <t t-esc="product.list_price"/></li>
+                        <t t-if="product.volume">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Volume: <t t-esc="product.volume"/></li>
+                        </t>
+                        <t t-if="product.weight">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Weight: <t t-esc="product.weight"/></li>
+                        </t>
+                    </ul>
+                    <ul>
+                        <t t-if="product.description_sale">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Description for Customers: <t t-esc="product.description_sale"/></li>
+                        </t>
+                        <t t-if="product.description_pickingout">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Description for Delivery Orders: <t t-esc="product.description_pickingout"/></li>
+                        </t>
+                        <t t-if="product.description_pickingin">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Description for Receptions: <t t-esc="product.description_pickingin"/></li>
+                        </t>
+                        <t t-if="product.description_picking">
+                            <li class="button tooltip-info"><i class="fa fa-caret-right"></i>Description for Internal Transfers: <t t-esc="product.description_picking"/></li>
+                        </t>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="promotion_recommend_customer">
+        <t t-foreach="promotions" t-as="promotion">
+            <ul class="bus_info">
+                <li class="info">
+                    <i class="fa fa-gift"></i>
+                    <t t-esc="promotion['name']"/>
+                </li>
+            </ul>
+        </t>
+    </t>
+
+    <t t-extend="OrderSelectorWidget">
+        <t t-jquery="i[class*='fa-plus']" t-operation="append">
+
+        </t>
+        <t t-jquery="i[class*='fa-minus']" t-operation="append">
+
+        </t>
+    </t>
+
+
+    <t t-extend="OrderChangeReceipt">
+        <t t-jquery="receipt left:eq(2)" t-operation="prepend">
+            <t t-if="change.tags">
+                <t t-foreach="change.tags" t-as="tag">
+                    <line indent='1'>
+                        <span class='bus-info' t-att-data-id="tag.id">
+                            <i class="fa fa-tag">
+                                <t t-esc="tag.name"/>
+                            </i>
+                        </span>
+                    </line>
+                </t>
+            </t>
+            <t t-if="change.variants">
+                <t t-foreach="change.variants" t-as="variant">
+                    <line indent='1'>
+                        <t t-esc="variant.value_id[1]"/>
+                    </line>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Product">
+        <t t-jquery="span[class*='product']" t-operation="replace">
+            <t t-if="widget.pos.config.product_view == 'list'">
+                <tr class='product-list' t-att-data-product-id="product.id">
+                    <td>
+                        <img class='orderline_image' t-att-src='image_url'/>
+                    </td>
+                    <td>
+                        <t t-esc="product.display_name"/>
+                    </td>
+                    <td>
+                        <t t-if="product.default_code">
+                            <t t-esc="product.default_code"/>
+                        </t>
+                        <t t-if="!product.default_code">
+                            N/A
+                        </t>
+                    </td>
+                    <td>
+                        <span t-if="!product.to_weight">
+                           <t t-esc="widget.pos.units_by_id[product.uom_id[0]].name"/>
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <span class="price-tag text-right">
+                            <t t-esc="widget.format_currency(product.list_price,'Product Price')"/>
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <span class="price-tag text-right">
+                            <t t-esc="widget.format_currency(product.standard_price, 'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                        </span>
+                    </td>
+                    <t t-if="widget.pos.server_version == 10">
+                        <td class="text-right">
+                            <span class="price-tag text-right">
+                                <t t-esc="widget.format_currency(widget.pos.get_price_with_tax(product, 1),'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                            </span>
+                        </td>
+                    </t>
+                    <t t-if="widget.pos.server_version == 11">
+                        <td class="text-right">
+                            <span class="price-tag text-right">
+                                <t t-esc="widget.format_currency(product.get_price_with_tax(product, 1),'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                            </span>
+                        </td>
+                    </t>
+                    <td class="text-center">
+                        <t t-if="widget.pos.server_version == 10">
+                            <t t-if="widget.pos.config.display_onhand">
+                                <t t-if="product['type'] == 'product'">
+                                    <t t-if="product.qty_available &gt; 0">
+                                        <i class="fa fa-certificate" style="color: #6EC89B;"/>
+                                        <span class="qty_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available == 0">
+                                        <i class="fa fa-lock" style="color: red"/>
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available &lt; 0">
+                                        <i class="fa fa-lock" style="color: red"/>
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                </t>
+                                <t t-if="product['type'] !== 'product'">
+                                    <i class="fa fa-certificate" style="color: #6EC89B;"/>
+                                    <span class="qty_available">
+                                        <t t-esc="product['type']"/>
+                                    </span>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.server_version == 11">
+                            <t t-if="widget.pos.config.display_onhand">
+                                <t t-if="product['type'] == 'product'">
+                                    <t t-if="product.qty_available &gt; 0">
+                                        <i class="fa fa-certificate" style="color: #6EC89B;"/>
+                                        <span class="qty_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available == 0">
+                                        <i class="fa fa-lock" style="color: red"/>
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available &lt; 0">
+                                        <i class="fa fa-lock" style="color: red"/>
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                </t>
+                                <t t-if="product['type'] !== 'product'">
+                                    <i class="fa fa-certificate" style="color: #6EC89B;"/>
+                                    <span class="qty_available">
+                                        <t t-esc="product['type']"/>
+                                    </span>
+                                </t>
+                            </t>
+                        </t>
+                    </td>
+                </tr>
+            </t>
+            <t t-if="widget.pos.config.product_view == 'box'">
+                <span t-attf-class='product' t-att-data-product-id="product.id">
+                    <div class="product-img">
+                        <img t-att-src='image_url' />
+                        <t t-if="widget.pos.server_version == 10">
+                            <t t-if="widget.pos.config.display_onhand">
+                                <t t-if="product['type'] == 'product'">
+                                    <t t-if="product.qty_available &gt; 0">
+                                        <span class="qty_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available == 0">
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available &lt; 0">
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="widget.pos.config.display_cost_price">
+                                <span class="price-tag-cost">
+                                    Cost: <t t-esc="widget.format_currency(product.standard_price, 'Product Price')"/>
+                                </span>
+                            </t>
+                            <t t-if="widget.pos.config.display_sale_price_within_tax">
+                                <t t-if="!product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(widget.pos.get_price_with_tax(product), 'Product Price')"/>
+                                    </span>
+                                </t>
+                                <t t-if="product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(widget.pos.get_price_with_tax(product),'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                                    </span>
+                                </t>
+                            </t>
+                            <t t-if="!widget.pos.config.display_sale_price_within_tax">
+                                <t t-if="!product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.price,'Product Price')"/>
+                                    </span>
+                                </t>
+                                <t t-if="product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.price,'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                                    </span>
+                                </t>
+                            </t>
+
+                        </t>
+                        <t t-if="widget.pos.server_version == 11">
+                            <t t-if="widget.pos.config.display_onhand">
+                                <t t-if="product['type'] == 'product'">
+                                    <t t-if="product.qty_available &gt; 0">
+                                        <span class="qty_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available == 0">
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="product.qty_available &lt; 0">
+                                        <span class="qty_not_available">
+                                            <t t-esc="product.qty_available"/>
+                                        </span>
+                                    </t>
+                                </t>
+                            </t>
+                            <t t-if="widget.pos.config.display_cost_price">
+                                <span class="price-tag-cost">
+                                    Cost: <t t-esc="widget.format_currency(product.standard_price, 'Product Price')"/>
+                                </span>
+                            </t>
+                            <t t-if="widget.pos.config.display_sale_price_within_tax">
+                                <t t-if="!product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.get_price_with_tax(pricelist, 1), 'Product Price')"/>
+                                    </span>
+                                </t>
+                                <t t-if="product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.get_price_with_tax(pricelist, 1),'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                                    </span>
+                                </t>
+                            </t>
+                            <t t-if="!widget.pos.config.display_sale_price_within_tax">
+                                <t t-if="!product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1), 'Product Price')"/>
+                                    </span>
+                                </t>
+                                <t t-if="product.to_weight">
+                                    <span class="price-tag">
+                                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price') + '/' + widget.pos.units_by_id[product.uom_id[0]].name"/>
+                                    </span>
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+                    <t t-if="product.is_combo">
+                        <div class="product_special">
+                            Combo
+                        </div>
+                    </t>
+                    <t t-if="product.is_credit">
+                        <div class="product_special">
+                            Credit
+                        </div>
+                    </t>
+                    <t t-if="product.multi_uom">
+                        <div class="product_special">
+                            Multi unit
+                        </div>
+                    </t>
+                    <t t-if="product.multi_variant">
+                        <div class="product_special">
+                            Multi variant
+                        </div>
+                    </t>
+                    <t t-if="product.cross_selling">
+                        <div class="product_special">
+                            Cross selling
+                        </div>
+                    </t>
+                    <t t-if="product.suggestion_sale">
+                        <div class="product_special">
+                            Suggestion sale
+                        </div>
+                    </t>
+                    <div class="product-name">
+                        <t t-if="product.default_code">
+                            [ <t t-esc="product.default_code"/> ]
+                        </t>
+                        <t t-esc="product.display_name"/>
+                    </div>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <!-- quickly add products -->
+    <!-- quickly add customer -->
+    <!-- quickly payment -->
+    <!-- main button list -->
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery=".leftpane" t-operation="before">
+            <div class="buttons_pane order-scroller touch-scrollable">
+                <div class="button-list"/>
+            </div>
+        </t>
+        <t t-jquery="table[class*='layout-table']" t-operation="before">
+            <t t-if="widget.pos.config.quickly_buttons">
+                <div class="quickly_buttons">
+                    <span class="breadcrumb quickly_icon product_list">
+                        <i class='fa fa-list-ol'></i>
+                    </span>
+                    <span class="breadcrumb quickly_icon product_box">
+                        <i class='fa fa-th-large'></i>
+                    </span>
+                    <t t-if="widget.pos.config.quickly_buttons">
+                        <span class="breadcrumb quickly_icon add_customer">
+                            <i class='fa fa-user-plus'></i>
+
+                        </span>
+                        <t t-if="widget.pos.config.product_operation">
+                            <span class="breadcrumb quickly_icon add_product">
+                                <i class='fa fa-plus-circle'></i>
+
+                            </span>
+                        </t>
+                        <t t-if="widget.pos.config.quickly_payment_full">
+                            <span class="breadcrumb quickly_icon quickly_payment">
+                                <i class='fa fa-cart-arrow-down'></i>
+
+                            </span>
+                        </t>
+                        <t t-if="widget.pos.config.lock_session">
+                            <span class="breadcrumb quickly_icon lock_session">
+                                <i class='fa fa-lock' />
+
+                            </span>
+                        </t>
+                        <span class="breadcrumb quickly_icon daily_report">
+                            <i class='fa fa-signal' />
+
+                        </span>
+                        <t t-if="widget.pos.config.receipt_without_payment_template != 'none'">
+                            <span class="breadcrumb quickly_icon print_receipt">
+                                <i class='fa fa-print' />
+
+                            </span>
+                        </t>
+                        <t t-if="widget.pos.config.allow_customer">
+                            <div class="searchbox find_customer">
+                                <input placeholder="Search Partners" class="ui-autocomplete-input" autocomplete="off"/>
+                                <span class="search-clear"></span>
+                            </div>
+                        </t>
+                        <span class="breadcrumb quickly_icon clear_blank_order">
+                            <i class='fa fa-trash' />
+                        </span>
+                    </t>
+                </div>
+            </t>
+        </t>
+        <!-- display product screen or not : allow_add_product -->
+        <t t-jquery="tr[class*='header-row']" t-operation="replace">
+            <t t-if="widget.pos.config.allow_add_product">
+                <tr class="header-row">
+                    <td class="header-cell">
+                        <span class="placeholder-ProductCategoriesWidget" />
+                    </td>
+                </tr>
+            </t>
+            <t t-if="!widget.pos.config.allow_add_product">
+               <tr class="header-row" style="display:none">
+                    <td class="header-cell">
+                        <span class="placeholder-ProductCategoriesWidget" />
+                    </td>
+                </tr>
+            </t>
+        </t>
+        <!-- show / hide pads -->
+        <t t-jquery="div[class*='control-buttons']" t-operation="before">
+            <div>
+                <i class="show_hide_pads fa fa-caret-down fa-2x"/>
+            </div>
+        </t>
+        <!-- categories right bar -->
+        <!--<t t-jquery="tr[class*='header-row']" t-operation="replace"/>-->
+        <!--<t t-jquery="div[class*='rightpane']" t-operation="after">-->
+            <!--<div class="categories_pane">-->
+                <!--<tr class="header-row">-->
+                    <!--<td class="header-cell">-->
+                        <!--<span class="placeholder-ProductCategoriesWidget" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</div>-->
+        <!--</t>-->
+    </t>
+
+    <!--<t t-name="ProductCategoriesWidget">-->
+        <!--<div>-->
+            <!--<header class='rightpane-header'>-->
+                <!--<div class="searchbox">-->
+                    <!--<input placeholder="Search Products" />-->
+                    <!--<span class="search-clear"></span>-->
+                <!--</div>-->
+            <!--</header>-->
+            <!--<div class="breadcrumbs touch-scrollable">-->
+                <!--<span class="breadcrumb">-->
+                    <!--<span class=" breadcrumb-button breadcrumb-home js-category-switch">-->
+                        <!--<i class='fa fa-home'></i>-->
+                    <!--</span>-->
+                <!--</span>-->
+                <!--<t t-foreach="widget.breadcrumb" t-as="category">-->
+                    <!--<span class="breadcrumb">-->
+                        <!--<i class="fa fa-angle-right"/>-->
+                        <!--<span class="breadcrumb-button js-category-switch" t-att-data-category-id="category.id">-->
+                            <!--<t t-esc="category.name"/>-->
+                        <!--</span>-->
+                    <!--</span>-->
+                <!--</t>-->
+            <!--</div>-->
+            <!--<t t-if="widget.subcategories.length > 0">-->
+                <!--<div class="categories">-->
+                    <!--<div class="category-list-scroller touch-scrollable">-->
+                        <!--<div class="category-list">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</t>-->
+        <!--</div>-->
+    <!--</t>-->
+
+    <t t-extend="ProductListWidget">
+        <t t-jquery="div[class='product-list-container']" t-operation="replace">
+            <t t-if="widget.pos.config.product_view == 'list'">
+                <div class='product-list-container'>
+                    <div class="product-list-scroller touch-scrollable">
+                        <div class="product-list">
+                        </div>
+                        <t t-if="widget.pos.config.allow_add_product">
+                            <div class="product-list-scroller touch-scrollable">
+                                <div class="product-list-re-comment" style="display:none">
+                                </div>
+                                <table class="product-list list">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th>UoM</th>
+                                            <th>Sale</th>
+                                            <th>Cost</th>
+                                            <th>Within tax</th>
+                                            <th class="text-center">Available</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class='product-list-contents'>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                        <t t-if="!widget.pos.config.allow_add_product">
+                            <div class="product-list-scroller touch-scrollable" style="display:none">
+                                <div class="product-list-re-comment" style="display:none">
+                                </div>
+                                <table class="product-list list" style="display:none">
+                                    <thead>
+                                        <tr>
+                                           <th class="text-center">Available</th>
+                                            <th>Image</th>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                            <th>UoM</th>
+                                            <th>Sale</th>
+                                            <th>Cost</th>
+                                            <th>Within tax</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class='product-list-contents'>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                    <span class="placeholder-ScrollbarWidget" />
+                </div>
+            </t>
+            <t t-if="widget.pos.config.product_view == 'box'">
+                <div class='product-list-container'>
+                    <t t-if="widget.pos.config.allow_add_product">
+                        <div class="product-list-scroller touch-scrollable">
+                            <div class="product-list-re-comment" style="display:none">
+                            </div>
+                            <div class="product-list">
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="!widget.pos.config.allow_add_product">
+                        <div class="product-list-scroller touch-scrollable" style="display:none">
+                            <div class="product-list-re-comment" style="display:none">
+                            </div>
+                            <div class="product-list" style="display:none">
+                            </div>
+                        </div>
+                    </t>
+                    <span class="placeholder-ScrollbarWidget" />
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="product_suggestion">
+        <span class='product' t-att-data-suggestion-id="suggestion.id">
+            <div class="product-img">
+                <img t-att-src='image_url' />
+                <span class="price-tag">
+                    <t t-esc="widget.format_currency(suggestion['list_price'], 'Product Price')"/>
+                </span>
+            </div>
+            <div class="product-name">
+                <t t-esc="suggestion.product_id[1]"/>
+            </div>
+        </span>
+    </t>
+
+</templates>

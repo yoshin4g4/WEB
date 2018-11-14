@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="NumpadWidget">
+        <!-- allow_numpad, allow_remove_line, allow_price, allow_qty, allow_discount -->
+        <t t-jquery="div[class*='numpad']" t-operation="replace">
+            <div class="numpad">
+                <t t-if="widget.pos.config.allow_numpad">
+                    <button class="input-button number-char">1</button>
+                    <button class="input-button number-char">2</button>
+                    <button class="input-button number-char">3</button>
+                </t>
+                <t t-if="!widget.pos.config.allow_numpad">
+                    <button class="input-button number-char" style="display:none">1</button>
+                    <button class="input-button number-char" style="display:none">2</button>
+                    <button class="input-button number-char" style="display:none">3</button>
+                </t>
+                <t t-if="widget.pos.config.allow_qty">
+                    <button class="mode-button" data-mode='quantity'>Qty
+
+                    </button>
+                </t>
+                <t t-if="!widget.pos.config.allow_qty">
+                    <button class="mode-button" data-mode='quantity' style="display:none">Qty</button>
+                </t>
+                <br />
+                <t t-if="widget.pos.config.allow_numpad">
+                    <button class="input-button number-char">4</button>
+                    <button class="input-button number-char">5</button>
+                    <button class="input-button number-char">6</button>
+                </t>
+                <t t-if="!widget.pos.config.allow_numpad">
+                    <button class="input-button number-char" style="display:none">4</button>
+                    <button class="input-button number-char" style="display:none">5</button>
+                    <button class="input-button number-char" style="display:none">6</button>
+                </t>
+                <t t-if="widget.pos.config.allow_discount">
+                    <button class="mode-button" data-mode='discount'>Disc
+
+                    </button>
+                </t>
+                <t t-if="!widget.pos.config.allow_discount">
+                    <button class="mode-button" data-mode='discount' style="display:none">Disc</button>
+                </t>
+                <br />
+                <t t-if="widget.pos.config.allow_numpad">
+                    <button class="input-button number-char">7</button>
+                    <button class="input-button number-char">8</button>
+                    <button class="input-button number-char">9</button>
+                </t>
+                <t t-if="!widget.pos.config.allow_numpad">
+                    <button class="input-button number-char" style="display:none">7</button>
+                    <button class="input-button number-char" style="display:none">8</button>
+                    <button class="input-button number-char" style="display:none">9</button>
+                </t>
+                <t t-if="widget.pos.config.allow_price">
+                    <button class="mode-button" data-mode='price'>Price
+
+                    </button>
+                </t>
+                <t t-if="!widget.pos.config.allow_price">
+                    <button class="mode-button" data-mode='price' style="display:none">Price</button>
+                </t>
+                <br />
+                <t t-if="widget.pos.config.allow_numpad">
+                    <button class="input-button numpad-minus" >+/-</button>
+                    <button class="input-button number-char">0</button>
+                    <button class="input-button number-char">.</button>
+                </t>
+                <t t-if="!widget.pos.config.allow_numpad">
+                    <button class="input-button numpad-minus" style="display:none">+/-</button>
+                    <button class="input-button number-char" style="display:none">0</button>
+                    <button class="input-button number-char" style="display:none">.</button>
+                </t>
+                <t t-if="widget.pos.config.allow_remove_line">
+                    <button class="input-button numpad-backspace">
+                        <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" />
+                    </button>
+                </t>
+                <t t-if="!widget.pos.config.allow_remove_line">
+                    <button class="input-button numpad-backspace" style="display:none">
+                        <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" />
+                    </button>
+                </t>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ActionpadWidget">
+        <t t-jquery="button[t-attf-class*='button set-customer']" t-operation="replace">
+            <t t-if="widget.pos.config.allow_customer">
+                <button t-attf-class='button set-customer #{ ( widget.pos.get_client() and widget.pos.get_client().name.length > 10) ? "decentered" : "" }' >
+                    <i class='fa fa-user' />
+                    <t t-if="widget.pos.get_client()">
+                        <t t-esc="widget.pos.get_client().name" />
+
+                    </t>
+                    <t t-if="!widget.pos.get_client()">
+                        Customer
+
+                    </t>
+                </button>
+            </t>
+            <t t-if="!widget.pos.config.allow_customer">
+                <button t-attf-class='button set-customer #{ ( widget.pos.get_client() and widget.pos.get_client().name.length > 10) ? "decentered" : "" }'  style="display:none">
+                    <i class='fa fa-user' />
+                    <t t-if="widget.pos.get_client()">
+                        <t t-esc="widget.pos.get_client().name" />
+                        <div>[Credit] <t class="" t-esc="widget.pos.get_balance(widget.pos.get_client())" /></div>
+                        <div>[Wallet] <t class="" t-esc="widget.pos.get_wallet(widget.pos.get_client())" /></div>
+
+                    </t>
+                    <t t-if="!widget.pos.get_client()">
+                        Customer
+
+                    </t>
+                </button>
+            </t>
+        </t>
+        <t t-jquery="button[class*='pay']" t-operation="replace">
+            <t t-if="widget.pos.config.allow_payment">
+                <button class='button pay'>
+                    <div class='pay-circle'>
+                        <i class='fa fa-chevron-right' />
+                    </div>
+                    Payment
+
+                </button>
+            </t>
+            <t t-if="!widget.pos.config.allow_payment">
+                <button class='button pay' style="display:none">
+                    <div class='pay-circle'>
+                        <i class='fa fa-chevron-right' />
+                    </div>
+                    Payment
+
+                </button>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery="li[class*='info']:first" t-operation="append">
+            <ul class="bus-info">
+                <t t-if="line.get_sale_person()">
+                    <span style="float: right; padding-right: 10px; padding-left: 10px;">
+                        <i t-attf-class="oe_link_icon fa fa-user add_sale_person oe_icon oe_green"/>
+                        <t t-esc="line.get_sale_person().display_name"/>
+                    </span>
+                </t>
+                <t t-if="!line.get_sale_person()">
+                    <span style="float: right; padding-right: 10px; padding-left: 10px;">
+                        <i t-attf-class="oe_link_icon fa fa-user-plus add_sale_person oe_icon oe_red"/>
+                    </span>
+                </t>
+                <t t-if="line.product.multi_uom">
+                    <span style="font-size:22px; float: right; padding-right: 10px; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-balance-scale change_unit oe_icon oe_green"/>
+                    </span>
+                </t>
+                <t t-if="line.product.is_combo">
+                    <span style="font-size:22px; float: right; padding-right: 10px; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-sitemap change_combo oe_icon oe_green"/>
+                    </span>
+                </t>
+                <t t-if="line.product.cross_selling">
+                    <span style="font-size:22px; float: right; padding-right: 10px; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-gift change_cross_selling oe_icon oe_green"/>
+                    </span>
+                </t>
+                <t t-if="line.product.suggestion_sale">
+                    <span style="font-size:22px; float: right; padding-right: 10px; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-gift change_suggestion_sale oe_icon oe_green"/>
+                    </span>
+                </t>
+                <span style="font-size:16px; float: right">
+                    <i class="oe_link_icon fa fa-comment change_line_note oe_icon oe_green"/>
+                </span>
+                <t t-if="widget.pos.tags and widget.pos.tags.length > 0">
+                    <span style="font-size:22px; float: right; padding-right: 10px; color: black; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-edit change_tags oe_icon"/>
+                    </span>
+                </t>
+                <t t-if="widget.pos.discounts and widget.pos.discounts.length > 0 and widget.pos.config.discount_each_line">
+                    <span style="font-size:22px; float: right; padding-right: 10px; color: black; padding-left: 10px;">
+                        <i class="oe_link_icon fa fa-heart add_discount oe_icon"/>
+                    </span>
+                </t>
+            </ul>
+        </t>
+        <t t-jquery="span[class*='product-name']" t-operation="before">
+            <t t-if="widget.pos.config.display_image_orderline">
+                <span>
+                    <img class='orderline_image' t-att-src="line.get_line_image()"/>
+                </span>
+            </t>
+        </t>
+        <t t-jquery="ul[class*='info-list']" t-operation="append">
+            <t t-if="widget.pos.config.display_tax_orderline and line.get_tax() > 0">
+                <ul class="bus-info">
+                    <li class="info">
+                        <i class="fa fa-caret-right"/>Tax: <t t-esc="widget.format_currency(line.get_tax())"/>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="widget.pos.config.display_amount_discount and line.get_discount_str() !== '0'">
+                <ul class="bus-info">
+                    <li class="info">
+                        Discount amount: <t t-esc="widget.format_currency(line.get_price_discount())"/>
+                    </li>
+                </ul>
+            </t>
+            <!-- combo items -->
+            <t t-if="line.combo_items">
+                <t t-foreach="line.combo_items" t-as="combo_item">
+                    <ul class="bus-info">
+                        <li class="info">
+                            <i class="fa fa-caret-right"/>
+                            <t t-esc="combo_item.product_id[1]" />
+                            with quantity :
+                            <t t-esc="combo_item.quantity * line['quantity']" />
+                            <t t-if="combo_item.lot_number">
+                                ,Lot/Serial Number : <t t-esc="combo_item.lot_number" />
+                            </t>
+                            <t t-if="combo_item.use_date">
+                                Expired date of lot: <t t-esc="combo_item.use_date" />
+                            </t>
+                        </li>
+                    </ul>
+                </t>
+            </t>
+            <t t-if="line.is_return">
+                <ul class="bus-info">
+                    <li class="return_line">
+                        <i class="fa fa-bug"/>
+                        Return line
+                    </li>
+                </ul>
+            </t>
+            <t t-foreach="line.variants" t-as="variant">
+                <ul class="bus-info">
+                    <li class="info">
+                        <i class="fa fa-caret-right"/>
+                        <t t-esc="variant.value_id[1]" />
+                        <span class='price'>
+                            <i class='fa fa-plus-circle'/>
+                            <t t-esc="widget.format_currency(variant.price_extra, 'Price extra')" />
+                        </span>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="line.promotion">
+                <ul class="bus-info">
+                    <li class="info">
+                        <i class="fa fa-gift"/>
+                        <t t-esc="line.promotion_reason"/>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="line.pack_lot_lines and line.pack_lot_lines.models">
+                <t t-foreach="line.pack_lot_lines.models" t-as="lot_model">
+                    <t t-if="lot_model['changed']['lot_name']">
+                        <ul class="bus-info">
+                            <li class="info">
+                                <i class="fa fa-barcode"/>
+                                <t t-esc="lot_model['changed']['lot_name']"/>
+                            </li>
+                            <t t-if="lot_model['attributes']['lot']">
+                                <t t-if="lot_model['attributes']['lot']['barcode']">
+                                    <li class="info">
+                                        <i class="fa fa-barcode"/>
+                                        Barcode: <t t-esc="lot_model['attributes']['lot']['barcode']"/>
+                                    </li>
+                                </t>
+                                <t t-if="lot_model['attributes']['lot']['life_date']">
+                                    <li class="info">
+                                        <i class="fa fa-caret-right"/>
+                                        <Expired></Expired> date: <t t-esc="lot_model['attributes']['lot']['life_date']"/>
+                                    </li>
+                                </t>
+                            </t>
+                        </ul>
+                    </t>
+                </t>
+            </t>
+            <!-- sync -->
+            <t t-if="widget.pos.config.display_person_add_line">
+                <t t-if="line.session_info and line.session_info.user and line.session_info.date">
+                    <ul class="bus-info">
+                        <li class="info">
+                            <i class="fa fa-caret-right"/>
+                            <t t-esc="line.session_info.user.name"/> added at <t t-esc="line.session_info.date"/>
+                        </li>
+                    </ul>
+                </t>
+            </t>
+            <!-- line note -->
+            <t t-if="line.get_line_note()">
+                <ul class="bus-info">
+                    <li class="info">
+                        <i class="fa fa-caret-right"/>
+                        <t t-esc="line.get_line_note()" />
+                    </li>
+                </ul>
+            </t>
+            <!-- display tags line -->
+            <t t-if="line.tags">
+                <ul class="bus-info">
+                    <t t-foreach="line.tags" t-as="tag">
+                        <li class='info' t-att-data-id="tag.id">
+                            <i class="fa fa-caret-right"/><t t-esc="tag.name"/>
+                        </li>
+                    </t>
+                </ul>
+            </t>
+            <!-- discount reason -->
+            <t t-if="line.discount_reason">
+                <ul class="bus-info">
+                    <li class="info">
+                        <i class="fa fa-heart"/>
+                        <t t-esc="line.discount_reason"/>
+                    </li>
+                </ul>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="OrderWidget">
+        <t t-jquery="div[class*='order-scroller touch-scrollable']" t-operation="before">
+            <div class="searchbox search_products">
+                <input placeholder="Fast add products" class="ui-autocomplete-input" autocomplete="off" style="
+                    width: 100%;
+                    font-size: 14px;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-radius: 1px;
+                    border-bottom: none;
+                    height: 30px;"/>
+                <span class="search-clear"></span>
+            </div>
+        </t>
+        <t t-jquery=".summary" t-operation="append">
+            <t t-if="widget.pos.loyalties.length and widget.pos.get_order() and widget.pos.get_order().get_client()">
+                <div class="loyalty">
+                    <div class="loyalty_plus_point">
+                        Plus: <span class='value plus_point'></span>
+                    </div>
+                    <div class="loyalty_redeem_point">
+                        Redeem: <span class='value redeem_point'></span>
+                    </div>
+                    <div class='loyalty_remaining_point'>
+                        Remaining: <span class='value remaining_point'></span>
+                    </div>
+                    <div class='loyalty_next_point'>
+                        Next point: <span class='value next_point'></span>
+                    </div>
+                </div>
+            </t>
+            <t t-if="widget.pos.get_order().delivery_address or widget.pos.get_order().delivery_date">
+                <div class="shipping_information">
+                    <t t-if="widget.pos.get_order()">
+                        <t t-if="widget.pos.get_order().delivery_address">
+                            <div class="label">
+                                Shipping to: <span class='value delivery_address'></span>
+                            </div>
+                        </t>
+                        <t t-if="widget.pos.get_order().delivery_date">
+                            <div class="label">
+                                Shipping date: <span class='value delivery_date'></span>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+        <t t-jquery=".summary" t-operation="after">
+            <t t-if="widget.pos.config.promotion and widget.pos.promotions.length">
+                <ul class="bus-info">
+                    <li class="info">
+                        <span>Promotion amount:  <span class="value promotion_amount"></span></span>
+                    </li>
+                    <li class="info">
+                        <span>Promotion Active:  </span>
+                        <div class="promotion_recommend_customer"/>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_note()">
+                <ul class="bus-info">
+                    <li class="info">
+                        <span>Order note:</span>
+                        <span class="order-note"/>
+                        <i class='fa fa-edit note_order'/>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_signature()">
+                <ul class="bus-info">
+                    <li class="info">
+                        <span>Order signature:</span>
+                        <img class="product-img signature"
+                             src=""
+                             style="max-height:150px;max-width:200px"
+                        />
+                    </li>
+                </ul>
+            </t>
+        </t>
+    </t>
+
+</templates>

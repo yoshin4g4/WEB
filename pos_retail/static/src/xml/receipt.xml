@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="XmlReceipt">
+        <t t-jquery="line[size*='double-height']:eq(1)" t-operation="replace">
+            <t t-if="receipt.change">
+                <line size='double-height'>
+                    <left><pre>        CHANGE</pre></left>
+                    <right><value t-att-value-decimals='pos.currency.decimals'><t t-esc='receipt.change' /></value></right>
+                </line>
+            </t>
+            <t t-if="receipt.change == 0">
+                <line size='double-height'>
+                    <left><pre>        CHANGE</pre></left>
+                    <right><value t-att-value-decimals='pos.currency.decimals'>0</value></right>
+                </line>
+            </t>
+        </t>
+        <t t-jquery="t[t-if*='receipt.cashier']" t-operation="before">
+            <t t-if="widget.pos.config.booking_orders_display_shipping_receipt">
+                <t t-if="receipt.delivery_address">
+                    <line>
+                        <left>Shipping address:</left>
+                    </line>
+                    <line>
+                        <left>Address:</left>
+                        <right><t t-esc='receipt.delivery_address' /></right>
+                    </line>
+                    <t t-if="order.delivery_date">
+                        <line>
+                            <left>Date:</left>
+                            <right><t t-esc='receipt.delivery_date' /></right>
+                        </line>
+                    </t>
+                    <t t-if="receipt.delivery_phone">
+                        <line>
+                            <left>Phone:</left>
+                            <right><t t-esc='receipt.delivery_phone' /></right>
+                        </line>
+                    </t>
+                </t>
+            </t>
+            <t t-set="client" t-value="order.get_client()"/>
+            <t t-if="receipt['guest']">
+                <line>
+                    <left>Guest:</left>
+                    <right><t t-esc="receipt['guest']" /></right>
+                </line>
+            </t>
+            <t t-if="receipt['guest_number']">
+                <line>
+                    <left>Guest number:</left>
+                    <right><t t-esc="receipt['guest_number']" /></right>
+                </line>
+            </t>
+            <t t-if="client and widget.pos.config.receipt_customer_vat">
+                <t t-set="client" t-value="order.get_client()"/>
+                <line>
+                    <left>Customer information:</left>
+                </line>
+                <line>
+                    <left>Name:</left>
+                    <right><t t-esc='client.name' /></right>
+                </line>
+                <t t-if="client['street']">
+                    <line>
+                        <left>Street:</left>
+                        <right><t t-esc='client.street' /></right>
+                    </line>
+                </t>
+                <t t-if="client['vat']">
+                    <line>
+                        <left>Tin:</left>
+                        <right><t t-esc='client.vat' /></right>
+                    </line>
+                </t>
+                <t t-if="client['email']">
+                    <line>
+                        <left>Email:</left>
+                        <right><t t-esc='client.email' /></right>
+                    </line>
+                </t>
+                <t t-if="client['phone'] or client['mobile']">
+                    <line>
+                        <left>Phone (mobile):</left>
+                        <right><t t-esc='client.phone || client.mobile' /></right>
+                    </line>
+                </t>
+            </t>
+            <t t-if="order.invoice_number">
+                <line>
+                    <left>Invoice: </left>
+                    <right><t t-esc='order.invoice_number' /></right>
+                </line>
+            </t>
+            <t t-if="widget.pos.config.display_fiscal_position_receipt and order.fiscal_position">
+                <line>
+                    <left>Fiscal position:</left>
+                    <right><t t-esc='order.fiscal_position.name' /></right>
+                </line>
+            </t>
+        </t>
+        <t t-jquery="div[class='after-footer']" t-operation="before">
+            <t t-if="receipt.plus_point">
+                <line>
+                    <right><value><t t-esc='receipt.plus_point' /></value> (plus)</right>
+                </line>
+            </t>
+            <t t-if="receipt.redeem_point">
+                <line>
+                    <right><value><t t-esc='receipt.redeem_point' /></value> (redeem)</right>
+                </line>
+            </t>
+            <t t-if="receipt.note"> <!-- Order note -->
+                <div>Note: </div>
+                <div><t t-esc='receipt.note' /></div>
+            </t>
+            <t t-if="receipt.signature"> <!-- Signature customer -->
+                <div>Signature: </div>
+                <div>
+                    <img class="product-img signature"
+                         t-att-src="widget.pos.get_order().get_signature() || ''"
+                         style="max-height:400px;max-width:100px"
+                    />
+                </div>
+            </t>
+        </t>
+        <t t-jquery="div[class*='orderlines']" t-operation="replace">
+            <t t-if="widget.pos.config.category_wise_receipt">
+                <t t-set='index' t-value="1"/>
+                <t t-foreach="receipt['categories']" t-as="category">
+                    <t t-set='orderlines' t-value="receipt['orderlines_by_category_name'][category]" />
+                    <line>
+                        <left><t t-esc="index"/>. <t t-esc='category' /></left>
+                        <right>
+                            <t t-if="orderlines.length == 1">
+                                (1) item
+                            </t>
+                            <t t-if="orderlines.length > 1">
+                                (<t t-esc='orderlines.length' />) items
+                            </t>
+                        </right>
+                    </line>
+                    <t t-set='index' t-value="index + 1"/>
+                    <div class='orderlines' line-ratio='0.6'>
+                        <t t-foreach="orderlines" t-as="line">
+                            <line indent='1'>
+                                <left><t t-esc='line.product.display_name' /></left>
+                            </line>
+                            <t t-if='line.discount !== 0'>
+                                <line indent='1'>
+                                    <left>Discount: <t t-esc='line.discount' />%</left>
+                                </line>
+                            </t>
+                            <line indent='1'>
+                                <left>
+                                    <value t-att-value-decimals='pos.dp["Product Unit of Measure"]' value-autoint='on'>
+                                        <t t-esc='line.quantity' />
+                                    </value>
+                                    <t t-esc='line.unit_name' />
+                                    x
+                                    <value t-att-value-decimals='pos.dp["Product Price"]'>
+                                        <t t-esc='line.get_price_without_quantity()' />
+                                    </value>
+                                </left>
+                                <right><value t-att-value-decimals='pos.currency.decimals'><t t-esc='line.get_price_with_tax()' /></value></right>
+                            </line>
+                            <t t-if="widget.pos.config.display_tax_receipt and line.tax_amount !== 0">
+                                <line font='b' line-ratio='0.4' indent='1'>
+                                    <left> Tax: <t t-esc='line.tax_amount' /></left>
+                                </line>
+                            </t>
+                            <t t-if='line.discount !== 0'>
+                                <line font='b' line-ratio='0.4' indent='1'>
+                                    <left> Discount: <t t-esc='line.discount' />%</left>
+                                </line>
+                            </t>
+                            <t t-if='line.note'>
+                                <line font='b' line-ratio='0.4' indent='1'>
+                                    <left> <t t-esc='line.note' /></left>
+                                </line>
+                            </t>
+                            <t t-if='line.tags.length > 0'>
+                                <t t-foreach="line.tags" t-as="tag">
+                                    <line font='b' line-ratio='0.4' indent='1'>
+                                        <left> <t t-esc='tag.name' /></left>
+                                    </line>
+                                </t>
+                            </t>
+                            <t t-if='line.variants.length > 0'>
+                                <t t-foreach="line.variants" t-as="variant">
+                                    <line font='b' line-ratio='0.4' indent='1'>
+                                        <left>
+                                             <t t-esc='variant.value_id[1]' /> with: <t t-esc='variant.price_extra' />
+                                        </left>
+                                    </line>
+                                </t>
+                            </t>
+                            <t t-if='line.combo_items.length > 0'>
+                                <t t-foreach="line.combo_items" t-as="combo_item">
+                                    <line font='b' indent='1'>
+                                        <left> <t t-esc='combo_item.product_id[1]' /> with: <t t-esc="combo_item.quantity * line['quantity']" /></left>
+                                    </line>
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+                    <br />
+                </t>
+            </t>
+            <t t-if="!widget.pos.config.category_wise_receipt">
+                <div class='orderlines' line-ratio='0.6'>
+                    <t t-foreach='receipt.orderlines' t-as='line'>
+                        <line><left><t t-esc='line.product_name_wrapped[0]' /></left></line>
+                        <t t-call="XmlReceiptWrappedProductNameLines"/>
+                        <line indent='1'>
+                            <left>
+                                <value t-att-value-decimals='pos.dp["Product Unit of Measure"]' value-autoint='on'>
+                                    <t t-esc='line.quantity' />
+                                </value>
+                                <t t-if='line.unit_name !== "Unit(s)"'>
+                                    <t t-esc='line.unit_name' />
+                                </t>
+                                x
+                                <value t-att-value-decimals='pos.dp["Product Price"]'>
+                                    <t t-esc='line.price' />
+                                </value>
+                            </left>
+                            <right>
+                                <value t-att-value-decimals='pos.currency.decimals'>
+                                    <t t-esc='line.price_display' />
+                                </value>
+                            </right>
+                        </line>
+                        <t t-if="widget.pos.config.display_tax_receipt and line.tax_amount !== 0">
+                            <line font='b' line-ratio='0.4' indent='1'>
+                                <left> Tax: <t t-esc='line.tax_amount' /></left>
+                            </line>
+                        </t>
+                        <t t-if='line.discount !== 0'>
+                            <line font='b' line-ratio='0.4' indent='1'>
+                                <left> Discount: <t t-esc='line.discount' />%</left>
+                            </line>
+                        </t>
+                        <t t-if='line.note'>
+                            <line font='b' line-ratio='0.4' indent='1'>
+                                <left> <t t-esc='line.note' /></left>
+                            </line>
+                        </t>
+                        <t t-if='line.tags.length > 0'>
+                            <t t-foreach="line.tags" t-as="tag">
+                                <line font='b' line-ratio='0.4' indent='1'>
+                                    <left> <t t-esc='tag.name' /></left>
+                                </line>
+                            </t>
+                        </t>
+                        <t t-if='line.variants.length > 0'>
+                            <t t-foreach="line.variants" t-as="variant">
+                                <line font='b' line-ratio='0.4' indent='1'>
+                                    <left>
+                                         <t t-esc='variant.value_id[1]' /> with: <t t-esc='variant.price_extra' />
+                                    </left>
+                                </line>
+                            </t>
+                        </t>
+                        <t t-if='line.combo_items.length > 0'>
+                            <t t-foreach="line.combo_items" t-as="combo_item">
+                                <line font='b' indent='1'>
+                                    <left> <t t-esc='combo_item.product_id[1]' /> with: <t t-esc="combo_item.quantity" /></left>
+                                </line>
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="line[class*='total']" t-operation="before">
+            <t t-if="pos.config.promotion == true and receipt.promotion_amount">
+                <line class='total' size='double-height'>
+                    <left><pre>        PROMOTIONS</pre></left>
+                    <right><value><t t-esc='receipt.promotion_amount || 0.00' /></value></right>
+                </line>
+                <br/>
+                <line><right>--------</right></line>
+            </t>
+            <t t-if="receipt.total_paid">
+                <line class='total' size='double-height'>
+                    <left><pre>        PAID</pre></left>
+                    <right><value t-att-value-decimals='pos.currency.decimals'><t t-esc='receipt.total_paid' /></value></right>
+                </line>
+            </t>
+            <t t-if="receipt.amount_debit">
+                <line class='total' size='double-height'>
+                    <left><pre>        (DEBIT)</pre></left>
+                    <right><value t-att-value-decimals='pos.currency.decimals'><t t-esc='receipt.amount_debit' /></value></right>
+                </line>
+            </t>
+        </t>
+        <t t-jquery="div[font*='b']:eq(1)" t-operation="after">
+            <t t-if="widget.pos.config.display_return_days_receipt">
+                <div class='pos-expire-date' font="b">
+                    Period times return: <t t-esc="widget.pos.config.pos_order_period_return_days"/> days
+                </div>
+            </t>
+            <t t-if="order.ean13">
+                <barcode encoding="ean13"><t t-esc='order.ean13'/></barcode>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="xml_receipt_not_show_price">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.company.logo'>
+                <img t-att-src='receipt.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!receipt.company.logo'>
+                <h1><t t-esc='receipt.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='receipt.company.contact_address'>
+                    <div><t t-esc='receipt.company.contact_address' /></div>
+                </t>
+                <t t-if='receipt.company.phone'>
+                    <div>Tel:<t t-esc='receipt.company.phone' /></div>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.email'>
+                    <div><t t-esc='receipt.company.email' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if='receipt.header_xml'>
+                    <t t-raw='receipt.header_xml' />
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc='receipt.cashier' /></div>
+                    </div>
+                </t>
+            </div>
+            <br /><br />
+
+            <div class='orderlines' line-ratio='0.6'>
+                <t t-foreach='receipt.orderlines' t-as='line'>
+                    <line>
+                        <left><t t-esc='line.product_name_wrapped[0]' /></left>
+                        <right>
+                            <value t-att-value-decimals='pos.dp["Product Unit of Measure"]' value-autoint='on'>
+                                <t t-esc='line.quantity' />
+                            </value>
+                        </right>
+                    </line>
+                    <t t-call="XmlReceiptWrappedProductNameLines"/>
+                </t>
+            </div>
+            <t t-if='receipt.footer_xml'>
+                <t t-raw='receipt.footer_xml' />
+            </t>
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+                <br/>
+            </t>
+            <div class='after-footer' />
+            <br/>
+            <div font='b'>
+                <div><t t-esc='receipt.date.localestring' /></div>
+            </div>
+        </receipt>
+    </t>
+
+    <t t-extend="OrderChangeReceipt">
+        <t t-jquery="t[t-if*='changes.cancelled.length > 0']" t-operation="before">
+            <t t-if="widget.pos.get_order().guest">
+                <div><span>Guest: <t t-esc="widget.pos.get_order().guest" /></span> / <span bold='on' size='double'><t t-esc="widget.pos.get_order().guest_number"/></span></div>
+                <br />
+                <br />
+            </t>
+        </t>
+        <t t-jquery="t[t-foreach*='changes.cancelled']" t-operation="replace">
+            <t t-foreach="changes.cancelled" t-as="change">
+                <line>
+                    <left><value><t t-esc="change.qty" /></value> : <t t-esc="change.name_wrapped[0]" /></left>
+                </line>
+                <t t-call="NameWrapped"/>
+                <t t-if="change.note">
+                    <line>
+                        <left>NOTE</left>
+                        <right>...</right>
+                    </line>
+                    <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                    <line></line>
+                </t>
+            </t>
+        </t>
+        <t t-jquery="t[t-foreach*='changes.new']" t-operation="replace">
+            <t t-foreach="changes.new" t-as="change">
+                <line>
+                    <left><value><t t-esc="change.qty" /></value> : <t t-esc="change.name_wrapped[0]" /></left>
+                </line>
+                <t t-call="NameWrapped"/>
+                <t t-if="change.note">
+                    <line>
+                        <left>NOTE</left>
+                        <right>...</right>
+                    </line>
+                    <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                    <line></line>
+                </t>
+            </t>
+        </t>
+    </t>
+
+</templates>

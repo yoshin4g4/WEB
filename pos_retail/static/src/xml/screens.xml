@@ -1,0 +1,1737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- customer screen -->
+    <t t-name="customer_screen">
+        <div class="swiper-container gallery-top">
+            <div class="swiper-wrapper">
+                <t t-foreach="images" t-as="image">
+                    <div class="swiper-slide" t-att-style="image.image_url">
+                        <li><t t-esc="image.name"/></li>
+                        <li><t t-esc="image.description"/></li>
+                    </div>
+                </t>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-scrollbar"></div>
+        </div>
+        <div class="swiper-container gallery-thumbs">
+            <div class="swiper-wrapper">
+                <t t-foreach="images" t-as="image">
+                    <div class="swiper-slide" t-att-style="image.image_url">
+                        <li><t t-esc="image.name"/></li>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+
+    <!-- invoices screen -->
+    <t t-name="invoices_screen">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <span class='searchbox search-invoice'>
+                        <input placeholder='Search Invoice' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                    <span class='button button_right highlight invoices_open'>
+                        Only Open
+                        <i class='fa fa-info'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix invoice-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y' style="max-height:800px">
+                                    <table class='touch-scrollable scrollable-y client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Number</th>
+                                                <th>Partner </th>
+                                                <th>Payment term</th>
+                                                <th>Date Invoice </th>
+                                                <th>Due </th>
+                                                <th>Sale person</th>
+                                                <th>Tax</th>
+                                                <th>Total</th>
+                                                <th>Amount due</th>
+                                                <th>State</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents invoice-list'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="invoice_detail">
+        <section class='touch-scrollable scrollable-y client-details' style="max-height: 400px">
+            <t t-if='invoice.partner_id'>
+                <div class='client-picture'>
+                    <img t-att-src='widget.partner_icon_url(invoice.partner_id[0])' />
+                </div>
+            </t>
+            <div class='client-name'>
+                <t t-if="invoice.number">
+                    <t t-esc="invoice.number"/>
+                </t>
+                <t t-if="!invoice.number">
+                    N/A
+                </t>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail'>
+                        <span class='label'>Partner</span>
+                        <t t-if='invoice.partner_id'>
+                            <span class='detail client-address'><t t-esc='invoice.partner_id[1]' /></span>
+                        </t>
+                        <t t-if='!invoice.partner_id'>
+                            <span class='detail client-address empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Date Invoice</span>
+                        <t t-if='invoice.date_invoice'>
+                            <span class='detail client-phone'><t t-esc='invoice.date_invoice' /></span>
+                        </t>
+                        <t t-if='!invoice.date_invoice'>
+                            <span class='detail client-phone empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Invoice Lines</span>
+                        <div class='invoice_lines_detail'/>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail invoice-action inv-print-invoice'>
+                        <span class='label'>Invoice</span>
+                        <span class="btn btn-primary"><i class='fa fa-print' /></span>
+                    </div>
+                    <t t-if="invoice.residual > 0">
+                        <div class='client-detail invoice-action inv-print-invoice-without-payment'>
+                            <span class='label'>Invoice without payment</span>
+                            <span class="btn btn-rose"><i class='fa fa-print' /></span>
+                        </div>
+                    </t>
+                    <t t-if="invoice['state'] == 'draft'">
+                        <div class='client-detail invoice-action inv-action_invoice_open'>
+                            <span class='label'>Validate</span>
+                            <span class="btn btn-rose"><i class='fa fa-check' /></span>
+                        </div>
+                    </t>
+                    <t t-if="invoice['state'] == 'open'">
+                        <div class='client-detail invoice-action inv-register-payment'>
+                            <span class='label'>Register Payment</span>
+                            <span class="btn btn-rose"><i class='fa fa-pencil-square' /></span>
+                        </div>
+                    </t>
+                    <t t-if="(invoice['type'] == 'out_invoice' || invoice['type'] == 'in_invoice') and (invoice['state']  == 'open' || invoice['state'] == 'paid')">
+                        <t t-if="invoice.amount_total > 0">
+                            <div class='client-detail invoice-action inv-add-credit-note'>
+                                <span class='label'>Add credit note</span>
+                                <span class="btn btn-rose"><i class='fa fa-pencil-square' /></span>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="invoice['state'] == 'cancel'">
+                        <div class='client-detail invoice-action inv-cancel'>
+                            <span class='label'>Set to Draft</span>
+                            <span class="btn btn-rose"><i class='fa fa-cancel' /></span>
+                        </div>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Open Invoice</span>
+                        <a class='so_link' target='_blank' t-att-href="invoice.link">(Click here)</a>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>State</span>
+                        <t t-esc='invoice.state'/>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Payment term</span>
+                        <t t-if='invoice.payment_term_id'>
+                            <span class='detail client-email'><t t-esc='invoice.payment_term_id[1]' /></span>
+                        </t>
+                        <t t-if='!invoice.payment_term_id'>
+                            <span class='detail client-email empty'>N/A</span>
+                        </t>
+                    </div>
+
+                    <div class='client-detail state'>
+                        <span class='label'>Tax</span>
+                        <t t-esc='widget.format_currency(invoice.amount_tax)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Total</span>
+                        <t t-esc='widget.format_currency(invoice.amount_total)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Due</span>
+                        <t t-esc='widget.format_currency(invoice.residual)'/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-name="account_invoice_lines">
+        <table class='client-list'>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Sub total</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody class='client-list-contents'>
+                <t t-foreach='account_invoice_lines' t-as='line'>
+                    <tr class='client-line state' t-att-data-id='line.id'>
+                        <td><t t-esc='line.product_id[1]'/></td>
+                        <td><t t-esc='line.quantity'/></td>
+                        <td><t t-esc='line.price_unit'/></td>
+                        <td><t t-esc='line.discount'/></td>
+                        <td><t t-esc='line.price_subtotal'/></td>
+                        <td><t t-esc='line.price_total'/></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+
+    <t t-name="invoice_row">
+        <tr t-attf-class='invoice-line #{invoice.state}' t-att-data-id='invoice.id'>
+            <td>
+                <t t-if="invoice.number">
+                    <t t-esc='invoice.number'/>
+                </t>
+                <t t-if="!invoice.number">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.partner_id">
+                    <t t-esc='invoice.partner_id[1]'/>
+                </t>
+                <t t-if="!invoice.partner_id">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.payment_term_id">
+                    <t t-esc='invoice.payment_term_id[1]'/>
+                </t>
+                <t t-if="!invoice.payment_term_id">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.date_invoice">
+                    <t t-esc='invoice.date_invoice'/>
+                </t>
+                <t t-if="!invoice.date_invoice">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.date_due">
+                    <t t-esc='invoice.date_due'/>
+                </t>
+                <t t-if="!invoice.date_due">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.user_id">
+                    <t t-esc='invoice.user_id[1]'/>
+                </t>
+                <t t-if="!invoice.user_id">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-esc='widget.format_currency_no_symbol(invoice.amount_tax)'/>
+            </td>
+            <td>
+                <t t-esc='widget.format_currency_no_symbol(invoice.amount_total)'/>
+            </td>
+            <td>
+                <t t-esc='widget.format_currency_no_symbol(invoice.residual)'/>
+            </td>
+            <td>
+                <t t-esc='invoice.state'/>
+            </td>
+        </tr>
+    </t>
+
+    <!-- return products screen -->
+    <t t-name="return_products">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="full-content" style="top:0px">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y' style="max-height:800px">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <div class="row">
+                                            </div>
+                                            <div class="card-footer text-center" style="border-top: none">
+                                                <div class="btn btn-warning back"  style="float:left">
+                                                    <i class="fa fa-angle-left"/> Back
+                                                </div>
+                                                <span class='searchbox search_return_products'>
+                                                    <input placeholder='Search Products' />
+                                                    <span class='search-clear'></span>
+                                                </span>
+                                                <span class='searchbox'></span>
+                                                <div class="btn btn-success confirm_return" style="float:right">
+                                                    <i class="fa fa-check"/> Confirm
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center"></th>
+                                                            <th>Internal Ref</th>
+                                                            <th>Name</th>
+                                                            <th>Price</th>
+                                                            <th>Quantity</th>
+                                                            <td></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="product_return_row">
+        <tr class='product_row' t-att-data-id='product.id'>
+            <td>
+                <div class="img-container image-row">
+                    <img t-att-src='widget.product_icon_url(product.id)' />
+                </div>
+            </td>
+            <td>
+                <t t-if="product.default_code">
+                    <t t-esc='product.default_code'/>
+                </t>
+            </td>
+            <td>
+                <t t-esc='product.display_name'/>
+            </td>
+            <td>
+                <t t-if="!product['price_return']">
+                    - <t t-esc='widget.format_currency(product["list_price"])'/>
+                </t>
+                <t t-if="product['price_return']">
+                    - <t t-esc='widget.format_currency(product["price_return"])'/>
+                </t>
+            </td>
+            <td>
+                <t t-esc='product.quantity_return || 1'/>
+            </td>
+            <td class="td-actions text-right">
+                <button type="button" rel="tooltip" class="btn btn-info btn-round quantity">
+                    <i class="material-icons">person</i>
+                </button>
+                <button type="button" rel="tooltip" class="btn btn-success btn-round edit_amount">
+                    <i class="material-icons">edit</i>
+                </button>
+                <button type="button" rel="tooltip" class="btn btn-danger btn-round remove">
+                    <i class="material-icons">close</i>
+                </button>
+            </td>
+        </tr>
+    </t>
+
+    <!-- daily report sale -->
+    <t t-name="daily_report">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <span class='searchbox search_user'>
+                        <input placeholder='Search User' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                    <section>
+                                        <div class='client-details-box clearfix' stype="top:100px">
+                                            <div class='client-detail'>
+                                                <span class='label'>Start date</span>
+                                                <input class='form-control start_date datetimepicker'></input>
+                                            </div>
+                                            <div class='client-detail'>
+                                                <span class='label'>End Date</span>
+                                                <input class='form-control end_date datetimepicker'></input>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="centered-content touch-scrollable" style="left: 25%; right: 25%; top: 100px">
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <!-- kitchen receipt -->
+    <t t-name="kitchen_receipt_screen">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                </div>
+                <div class="centered-content touch-scrollable">
+                    <div class="button print-kitchen-receipt">
+                        <i class='fa fa-print'></i> Print Web
+                    </div>
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="kitchen_receipt">
+        <div class="pos-sale-ticket">
+            <table class='receipt-orderlines'>
+                <t t-if="table and floor">
+                    <div bold='on' size='double'><span bold='off' size='double-height'><t t-esc='floor' />:<t t-esc='table' /></span> </div>
+                </t>
+                <colgroup>
+                    <col width='50%' />
+                    <col width='25%' />
+                    <col width='25%' />
+                </colgroup>
+                <tr t-foreach="new_items" t-as="line">
+                    <td>
+                        <t t-esc="line['name']"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="line['qty']"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="line['note']"/>
+                    </td>
+                </tr>
+                <tr t-foreach="cancelled_items" t-as="line">
+                    <td>
+                        <t t-esc="line['name']"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="line['qty']"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="line['note']"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+
+    <t t-name="kitchen_receipt_xml">
+        <receipt
+            align='center'
+            width='40'
+            size='double-height'
+            line-ratio='0.4'
+            value-decimals='3'
+            value-thousands-separator=''
+            value-autoint='on'
+        >
+            <t t-if="table and floor">
+                <div bold='on' size='double'><span bold='off' size='double-height'><t t-esc='floor' />:<t t-esc='table' /></span> </div>
+            </t>
+            <t t-if="cancelled_items.length > 0">
+                <div color='red'>
+                    <div bold='on' size='double'>CANCELLED <span bold='off' size='double-height'><t t-esc='time.hours' />:<t t-esc='time.minutes' /></span> </div>
+                    <br />
+                    <t t-foreach="cancelled_items" t-as="change">
+                        <line>
+                            <left><t t-esc="change.name" /></left>
+                            <right><value><t t-esc="change.qty" /></value></right>
+                        </line>
+                        <t t-if="change.note">
+                            <line>
+                                <left>NOTE</left>
+                                <right>...</right>
+                            </line>
+                            <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                            <line></line>
+                        </t>
+                    </t>
+                    <br />
+                    <br />
+                </div>
+            </t>
+            <t t-if="new_items.length > 0">
+                <div color='red'>
+                    <div bold='on' size='double'>NEW <span bold='off' size='double-height'><t t-esc='time.hours' />:<t t-esc='time.minutes' /></span> </div>
+                    <br />
+                    <br />
+                    <t t-foreach="new_items" t-as="change">
+                        <line>
+                            <left><t t-esc="change.name" /></left>
+                            <right><value><t t-esc="change.qty" /></value></right>
+                        </line>
+                        <t t-if="change.note">
+                            <line>
+                                <left>NOTE</left>
+                                <right>...</right>
+                            </line>
+                            <div><span font='b' bold='off' line-ratio='0.4' indent='1' width='30'>--- <t t-esc="change.note" /></span></div>
+                            <line></line>
+                        </t>
+                    </t>
+                    <br />
+                    <br />
+                </div>
+            </t>
+        </receipt>
+    </t>
+
+    <!-- login and lock screen -->
+    <t t-name="login_page">
+        <div class="form">
+            <div class="login-form">
+                <img alt="Scan" src="/pos_retail/static/src/imgs/barcode.gif" class="product-img" style="
+                    width: 350px;
+                "/>
+                <input type="password" placeholder="POS Security Pin / Scan your barcode" class="form-control pos_security_pin"/>
+                <div class="btn btn-warning confirm-login">login to pos</div>
+                <div class="btn btn-danger confirm-logout">log out</div>
+            </div>
+        </div>
+    </t>
+
+    <!-- pos orders screen -->
+    <t t-name="pos_orders_screen">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'/>
+                        Back
+                    </span>
+                    <span class='searchbox search-pos-order'>
+                        <input placeholder='Find POS Order' />
+                        <span class='search-clear'/>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix pos_detail'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Barcode</th>
+                                                <th>Partner</th>
+                                                <th>Amount total</th>
+                                                <th>Amount paid</th>
+                                                <th>Amount tax</th>
+                                                <th>Debit</th>
+                                                <th>State</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents pos_order_list'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="pos_order_lines">
+        <section class='subwindow'>
+            <div class='subwindow-container'>
+                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                    <table class='client-list'>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Sub total</th>
+                            </tr>
+                        </thead>
+                        <tbody class='client-list-contents'>
+                            <t t-foreach='lines' t-as='line'>
+                                <tr class='client-line' t-att-data-id='line.id'>
+                                    <td><t t-esc='line.product_id[1]'/></td>
+                                    <td><t t-esc='line.qty'/></td>
+                                    <td><t t-esc='widget.format_currency(line.price_unit)'/></td>
+                                    <td><t t-esc='widget.format_currency(line.price_subtotal_incl)'/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-name="pos_order_row">
+        <tr class='client-line pos_order_row' t-att-data-id='order.id'>
+            <td><t t-esc='order.name'/></td>
+            <td><t t-esc='order.ean13'/></td>
+            <td>
+                <t t-if="order.partner">
+                    <t t-esc='order.partner.name'/>
+                </t>
+                <t t-if="!order.partner">
+                    N/A
+                </t>
+            </td>
+            <td><t t-esc='widget.format_currency(order.amount_total)'/></td>
+            <td><t t-esc='widget.format_currency(order.amount_paid)'/></td>
+            <td><t t-esc='widget.format_currency(order.amount_tax)'/></td>
+            <td><t t-esc='widget.format_currency(order.amount_total - order.amount_paid)'/></td>
+            <td><t t-esc='order.state'/></td>
+        </tr>
+    </t>
+
+    <t t-name="pos_order_detail">
+        <section class='touch-scrollable scrollable-y client-details' style="height: 400px">
+            <t t-if="order.partner_id">
+                <div class='client-picture'>
+                    <img t-att-src='widget.partner_icon_url(order.partner_id[0])' />
+                </div>
+            </t>
+            <div class='client-name'>
+                <t t-if="order.name">
+                    <t t-esc="order.name"/>
+                </t>
+                <t t-if="!order.name">
+                    N/A
+                </t>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <t t-if="order.partner">
+                        <div class='client-detail'>
+                            <span class='label'>Customer</span>
+                            <t t-esc="order.partner.name"/>
+                        </div>
+                        <t t-if="order.partner.email">
+                            <div class='client-detail'>
+                                <span class='label'>Email</span>
+                                <t t-esc="order.partner.email"/>
+                            </div>
+                        </t>
+                        <t t-if="order.partner.phone || order.partner.mobile">
+                            <div class='client-detail'>
+                                <span class='label'>Phone/Mobile</span>
+                                <t t-esc="order.partner.phone || order.partner.mobile"/>
+                            </div>
+                        </t>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Ean13</span>
+                        <t t-esc='order.ean13'/>
+                    </div>
+                    <t t-if="widget.pos.server_version == 11">
+                        <div class='client-detail'>
+                            <span class='label'>Date</span>
+                            <t t-esc='widget.pos.format_date(order.date_order)'/>
+                        </div>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Order Lines</span>
+                        <div class='lines_detail'/>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <t t-if="order.state == 'draft'">
+                            <span class='label'>Register Amount</span>
+                            <button style="height: 40px; width: 120px" type="button" class="btn btn-danger register_amount">
+                                <i class="fa fa-plus"/>
+                            </button>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <t t-if="order.state == 'paid' and order.partner">
+                            <span class='label'>Create Invoice</span>
+                            <button style="height: 40px; width: 120px" type="button" class="btn btn-info create_invoice">
+                                <i class="fa fa-money"/>
+                            </button>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Print Receipt</span>
+                        <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success reprint_order">
+                            <i class="fa fa-print"/>
+                        </button>
+                    </div>
+                    <div class='client-detail'>
+                        <t t-if="order.state != 'draft'">
+                            <span class='label'>Return Order</span>
+                            <button style="height: 40px; width: 120px" type="button" class="btn btn-danger return_order">
+                                <i class="fa fa-angle-double-left"/>
+                            </button>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Open Order</span>
+                        <a class='so_link' target='_blank' t-att-href="order.link">(Click here)</a>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>State</span>
+                        <t t-esc='order.state'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Total</span>
+                        <t t-esc='widget.format_currency(order.amount_total)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Tax</span>
+                        <t t-esc='widget.format_currency(order.amount_tax)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Paid</span>
+                        <t t-esc='widget.format_currency(order.amount_paid)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Debit</span>
+                        <t t-esc='widget.format_currency(order.amount_total - order.amount_paid)'/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <!-- sale orders screen -->
+    <t t-name="sale_orders">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'/>
+                        Back
+                    </span>
+                    <span class='searchbox search-pos-order'>
+                        <input placeholder='Search Order' />
+                        <span class='search-clear'/>
+                    </span>
+                    <span class='button button_left highlight booked_order_button'>
+                        Booked order
+                        <i class='fa fa-info'></i>
+                    </span>
+                    <span class='button button_right highlight sale_lock_button'>
+                        Sale/Locked
+                        <i class='fa fa-info'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix sale_order_detail'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Origin</th>
+                                                <th>Partner</th>
+                                                <th>Date order</th>
+                                                <th>Partial paid</th>
+                                                <th>Amount tax</th>
+                                                <th>Amount total</th>
+                                                <th>State</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents sale_orders_table'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="sale_order_lines">
+        <table class='client-list'>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Delivered</th>
+                    <th>Price</th>
+                    <th>Sub total</th>
+                </tr>
+            </thead>
+            <tbody class='client-list-contents'>
+                <t t-foreach='lines' t-as='line'>
+                    <tr class='client-line' t-att-data-id='line.id'>
+                        <td><t t-esc='line.name'/></td>
+                        <td><t t-esc='line.product_uom_qty'/></td>
+                        <td><t t-esc='line.qty_delivered'/></td>
+                        <td><t t-esc='line.price_unit'/></td>
+                        <td><t t-esc='line.price_total'/></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+
+    <t t-name="sale_row">
+        <tr class='client-line sale_row' t-att-data-id='sale.id'>
+            <td><t t-esc='sale.name'/></td>
+            <td>
+                <t t-if="sale.origin">
+                    <t t-esc='sale.origin'/>
+                </t>
+                <t t-if="!sale.origin">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="sale.partner">
+                    <t t-esc='sale.partner.name'/>
+                </t>
+                <t t-if="!sale.partner">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="sale.date_order">
+                    <t t-esc='sale.date_order'/>
+                </t>
+                <t t-if="!sale.date_order">
+                    N/A
+                </t>
+            </td>
+            <td>
+                <t t-if="sale.payment_partial_amount">
+                    <t t-esc='sale.payment_partial_amount'/>
+                </t>
+                <t t-if="!sale.payment_partial_amount">
+                    N/A
+                </t>
+            </td>
+            <td><t t-esc='widget.format_currency(sale.amount_tax)'/></td>
+            <td><t t-esc='widget.format_currency(sale.amount_total)'/></td>
+            <td><t t-esc='sale.state'/></td>
+        </tr>
+    </t>
+
+    <t t-name="sale_order_detail">
+        <section class='touch-scrollable scrollable-y client-details' style="max-height: 400px">
+            <t t-if="sale.partner">
+                <div class='client-picture'>
+                    <img t-att-src='widget.partner_icon_url(sale.partner.id)' />
+                </div>
+            </t>
+            <div class='client-name'>
+                <t t-if="sale.name">
+                    <t t-esc="sale.name"/>
+                </t>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail state'>
+                        <span class='label'>State</span>
+                        <t t-esc='sale.state'/>
+                    </div>
+                    <t t-if="sale.origin">
+                        <div class='client-detail'>
+                            <span class='label'>Source Document</span>
+                            <t t-esc='sale.origin'/>
+                        </div>
+                    </t>
+                    <t t-if="sale.partner">
+                        <div class='client-detail'>
+                            <span class='label'>Customer</span>
+                            <t t-esc="sale.partner.name"/>
+                        </div>
+                        <t t-if="sale.partner.email">
+                            <div class='client-detail'>
+                                <span class='label'>Email</span>
+                                <t t-esc="sale.partner.email"/>
+                            </div>
+                        </t>
+                        <t t-if="sale.partner.phone || sale.partner.mobile">
+                            <div class='client-detail'>
+                                <span class='label'>Phone/Mobile</span>
+                                <t t-esc="sale.partner.phone || sale.partner.mobile"/>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="sale.client_order_ref">
+                        <div class='client-detail'>
+                            <span class='label'>Client ref</span>
+                            <t t-esc='sale.client_order_ref'/>
+                        </div>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Date order</span>
+                        <t t-esc='sale.date_order'/>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Order Lines</span>
+                        <div class='lines_detail'/>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <t t-if="sale.note">
+                        <div class='client-detail state'>
+                            <span class='label'>Note</span>
+                            <t t-if="sale.note">
+                                <t t-esc='sale.note'/>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-if="sale.payment_term_id">
+                        <div class='client-detail state'>
+                            <span class='label'>Payment term</span>
+                            <t t-if="sale.payment_term_id">
+                                <t t-esc='sale.payment_term_id[1]'/>
+                            </t>
+                        </div>
+                    </t>
+                    <div class='client-detail state'>
+                        <span class='label'>Partial paid</span>
+                        <t t-esc='widget.format_currency(sale.payment_partial_amount)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Amount tax</span>
+                        <t t-esc='widget.format_currency(sale.amount_tax)'/>
+                    </div>
+                    <div class='client-detail state'>
+                        <span class='label'>Amount total</span>
+                        <t t-esc='widget.format_currency(sale.amount_total)'/>
+                    </div>
+                    <t t-if="widget.pos.session.session_info == '11.0' or widget.pos.session.session_info == '11.0+e'">
+                        <div class='client-detail'>
+                            <span class='label'>Print Quotation</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success print_quotation">
+                                <i class="fa fa-print"/>
+                            </button>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>PRO-FORMA Invoice</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success action_report_pro_forma_invoice">
+                                <i class="fa fa-print"/>
+                            </button>
+                        </div>
+                    </t>
+                    <t t-if="sale.state == 'draft' or sale.state == 'sent'">
+                        <div class='client-detail'>
+                            <span class='label'>Confirm Sale</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success action_confirm">
+                                <i class="fa fa-check"/>
+                            </button>
+                        </div>
+                    </t>
+                    <t t-if="sale.state == 'sale'">
+                        <div class='client-detail'>
+                            <span class='label'>Lock/Done</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success action_done">
+                                <i class="fa fa-check"/>
+                            </button>
+                        </div>
+                    </t>
+                    <t t-if="sale.picking_ids and sale.picking_ids.length == 1">
+                        <div class='client-detail'>
+                            <span class='label'>Return products</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-danger action_return">
+                                <i class="fa fa-angle-left"/>
+                            </button>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.session.session_info == '11.0' or widget.pos.session.session_info == '11.0+e'">
+                        <t t-if="sale.state == 'sale' or sale.state == 'done'">
+                            <div class='client-detail'>
+                                <span class='label'>Validate Delivery</span>
+                                <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-success action_validate_picking">
+                                    <i class="fa fa-certificate"/>
+                                </button>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="sale.state == 'draft' or sale.state == 'sent'">
+                        <div class='client-detail'>
+                            <span class='label'>Print receipt</span>
+                            <button style="height: 40px; width: 120px" type="button" rel="tooltip" class="btn btn-danger delivery_order">
+                                <i class="fa fa-print"/>
+                            </button>
+                        </div>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Open Order</span>
+                        <a class='so_link' target='_blank' t-att-href="sale.link">(Click here)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-name="product_label_xml">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t>
+                <left>
+                    <t t-esc="product.display_name"/>
+                </left>
+                <cennter>
+                    <t t-esc="product.default_code"/>
+                </cennter>
+                <right>
+                    <barcode encoding="ean13"><t t-esc='product.barcode'/></barcode>
+                </right>
+            </t>
+        </receipt>
+    </t>
+
+    <t t-name="user_card_xml">
+        <receipt align='center' width='100' value-thousands-separator='' >
+            <t>
+                <left>
+                    <t t-esc="user.name"/>
+                </left>
+                <cennter>
+                    <t t-esc="user.email"/>
+                </cennter>
+                <right>
+                    <barcode encoding="ean13"><t t-esc='user.barcode'/></barcode>
+                </right>
+            </t>
+        </receipt>
+    </t>
+
+    <!-- products operation screen -->
+    <t t-name="products_screen">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    <span class='searchbox search-product'>
+                        <input placeholder='Search Products' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                    <span class='button new-product'>
+                        <i class='fa fa-plus'></i>
+                    </span>
+                    <span class='button next oe_hidden highlight'>
+                        Select Products
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y' style="max-height:8000px">
+                                    <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Internal reference</th>
+                                                <th>Barcode</th>
+                                                <th>Name</th>
+                                                <th>List Price</th>
+                                                <th>Type</th>
+                                                <th>Qty on hand</th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="product_row">
+        <tr class='product_row' t-att-data-id='product.id'>
+            <td>
+                <t t-if="product.default_code"><t t-esc='product.default_code' /></t>
+                <t t-if="!product.default_code">N/A</t>
+            </td>
+            <td>
+                <t t-if="product.barcode"><t t-esc='product.barcode' /></t>
+                <t t-if="!product.barcode">N/A</t>
+            </td>
+            <td><t t-esc='product.display_name' /></td>
+            <td><t t-esc='product.list_price' /></td>
+            <td><t t-esc='product.type' /></td>
+            <td><t t-esc='product.qty_available' /></td>
+            <td><t t-if="product.pos_categ_id"><t t-esc='product.pos_categ_id[1]' /></t> </td>
+        </tr>
+    </t>
+
+    <t t-name="product_edit">
+        <section class='touch-scrollable scrollable-y client-details'>
+            <div class='client-picture'>
+                <t t-if='!product.id'>
+                    <i class='fa fa-camera'></i>
+                </t>
+                <t t-if='product.id'>
+                    <img t-att-src='widget.product_icon_url(product.id)' />
+                </t>
+                <input type='file' class='image-uploader'></input>
+            </div>
+            <div class='client-name'>
+                <input class='form-control detail' name='name' t-att-value='product.display_name' placeholder='Name'></input>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail' hidden="hidden" disabled="disabled">
+                        <span class='label'>ID</span>
+                        <input class="form-control detail" type="number" t-att-value="product.id" name="id" hidden="hidden" disabled="disabled"/>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Internal</span>
+                        <input class='form-control client-default_code detail' name='default_code' t-att-value='product.default_code || ""' placeholder='Internal reference'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>List price</span>
+                        <input class='form-control client-list_price detail' name='list_price' t-att-value='product.list_price || ""' placeholder='List Price'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Type</span>
+                        <select class='form-control detail' name='type' t-att-value="product['type']">
+                             <option value='consu' t-att-selected="product['type'] ? ((product['type'] === 'consu') ? true : undefined) : undefined">Consumable</option>
+                             <option value='service' t-att-selected="product['type'] ? ((product['type'] === 'service') ? true : undefined) : undefined">Service</option>
+                             <option value='product' t-att-selected="product['type'] ? ((product['type'] === 'product') ? true : undefined) : undefined">StockAble Product</option>
+                        </select>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Category</span>
+                        <t t-if="product.pos_categ_id">
+                            <select class='form-control client-pos_categ_id detail' name='pos_categ_id' t-att-value='product.pos_categ_id[0]'>
+                                <option value=''>None</option>
+                                <t t-foreach='widget.pos.categories' t-as='category'>
+                                    <option t-att-value='category.id' t-att-selected="category.id ? ((product.pos_categ_id[0] === category['id']) ? true : undefined) : undefined">
+                                        <t t-esc='category.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+                        <t t-if="!product.pos_categ_id">
+                            <select class='form-control client-pos_categ_id detail' name='pos_categ_id'>
+                                <option value=''>None</option>
+                                <t t-foreach='widget.pos.categories' t-as='category'>
+                                    <option t-att-value='category.id'>
+                                        <t t-esc='category.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label state'>Barcode</span>
+                        <input class='form-control detail' name='barcode' t-att-value="product.barcode ||  ''" placeholder='Barcode'></input>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class="client-detail">
+                        <span class='label state'>Save</span>
+                        <button class="btn btn-warning save" style="height: 40px; width: 120px"><i class="fa fa-save"/></button>
+                    </div>
+                    <div class="client-detail state">
+                        <span class='label'>Print Label</span>
+                        <button class="btn print_label" style="height: 40px; width: 120px"><i class="fa fa-print"/></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+
+    <!-- voucher -->
+    <t t-name="vouchers_screen">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        Back
+                        <i class='fa fa-angle-double-left'></i>
+                    </span>
+                </div>
+                <div class="centered-content touch-scrollable">
+                    <div class="button print">
+                        <i class='fa fa-print'></i>Print
+                    </div>
+                    <div class="pos-receipt-container" style="font-size:12px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="voucher_ticket_xml">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <div><h2>Voucher Card</h2></div>
+            <t t-if='datas.company.logo'>
+                <img t-att-src='datas.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!datas.company.logo'>
+                <h1><t t-esc='datas.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='datas.company.contact_address'>
+                    <div><t t-esc='datas.company.contact_address' /></div>
+                </t>
+                <t t-if='datas.company.phone'>
+                    <div>Tel:<t t-esc='datas.company.phone' /></div>
+                </t>
+                <t t-if='datas.company.vat'>
+                    <div>VAT:<t t-esc='datas.company.vat' /></div>
+                </t>
+                <t t-if='datas.company.email'>
+                    <div><t t-esc='datas.company.email' /></div>
+                </t>
+                <t t-if='datas.company.website'>
+                    <div><t t-esc='datas.company.website' /></div>
+                </t>
+                <t t-if='datas.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Created by: <t t-esc='datas.cashier' /></div>
+                    </div>
+                </t>
+                <t t-if='voucher.partner_name'>
+                    <div class='cashier'>
+                        <div><h3><t t-esc='voucher.partner_name' /></h3></div>
+                    </div>
+                </t>
+                <t>
+                    <div class='cashier'>
+                        <div>Please keep Your Secret Voucher Code Safe</div>
+                    </div>
+                </t>
+                <barcode encoding="ean13" t-att-data-id="voucher.id" t-att-data-value="voucher.code">
+                    <t t-esc='voucher.code'/>
+                </barcode>
+                <t t-if="voucher.apply_type">
+                    <div class='cashier'>
+                        <div>Apply type : <t t-esc='voucher.apply_type' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.method">
+                    <div class='cashier'>
+                        <div>Method : <t t-esc='voucher.method' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.value">
+                    <div class='cashier'>
+                        <div>With value: <t t-esc='voucher.value' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.end_date">
+                    <div class='cashier'>
+                        <div>Expiry date of voucher:  <t t-esc='voucher.end_date' /></div>
+                    </div>
+                </t>
+                <div class='cashier'>
+                    <h3><div>Thanks you.</div></h3>
+                </div>
+            </div>
+            <br />
+        </receipt>
+    </t>
+
+    <t t-name="voucher_ticket_html">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <div><h2>Voucher Card</h2></div>
+            <t t-if='datas.company.logo'>
+                <img t-att-src='datas.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!datas.company.logo'>
+                <h1><t t-esc='datas.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='datas.company.contact_address'>
+                    <div><t t-esc='datas.company.contact_address' /></div>
+                </t>
+                <t t-if='datas.company.phone'>
+                    <div>Tel:<t t-esc='datas.company.phone' /></div>
+                </t>
+                <t t-if='datas.company.vat'>
+                    <div>VAT:<t t-esc='datas.company.vat' /></div>
+                </t>
+                <t t-if='datas.company.email'>
+                    <div><t t-esc='datas.company.email' /></div>
+                </t>
+                <t t-if='datas.company.website'>
+                    <div><t t-esc='datas.company.website' /></div>
+                </t>
+                <t t-if='datas.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Created by: <t t-esc='datas.cashier' /></div>
+                    </div>
+                </t>
+                <t t-if='voucher.partner_name'>
+                    <div class='cashier'>
+                        <div><h3><t t-esc='voucher.partner_name' /></h3></div>
+                    </div>
+                </t>
+                <t>
+                    <div class='cashier'>
+                        <div>Please keep Your Secret Voucher Code Safe</div>
+                    </div>
+                </t>
+                <img t-if="voucher.code" t-att-src="voucher.url_barcode" style="width:200px;height:80px;"/>
+                <t t-if="voucher.apply_type">
+                    <div class='cashier'>
+                        <div>Apply type : <t t-esc='voucher.apply_type' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.method">
+                    <div class='cashier'>
+                        <div>Method : <t t-esc='voucher.method' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.value">
+                    <div class='cashier'>
+                        <div>With value: <t t-esc='voucher.value' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.end_date">
+                    <div class='cashier'>
+                        <div>Expiry date of voucher:  <t t-esc='voucher.end_date' /></div>
+                    </div>
+                </t>
+                <div class='cashier'>
+                    <h3><div>Thanks you.</div></h3>
+                </div>
+            </div>
+            <br />
+        </receipt>
+    </t>
+
+    <!-- receipt review, review receipt screen -->
+    <t t-name="receipt_review">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        Back
+                        <i class='fa fa-angle-double-left'></i>
+                    </span>
+                </div>
+                <div class="centered-content touch-scrollable">
+                    <div class="button print">
+                        <i class='fa fa-print'></i> Print Receipt
+                    </div>
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="pos_ticket_review">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/></div>
+            <br />
+            <t t-esc="widget.pos.company.name"/><br />
+            <div class="receipt-phone">
+                Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+            </div>
+            <div class="receipt-user">
+                User: <t t-esc="widget.pos.get_cashier().name"/><br />
+            </div>
+            <br />
+            <t t-if="receipt.header">
+                <div style='text-align:center'>
+                    <t t-esc="receipt.header" />
+                </div>
+                <br />
+            </t>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='70%' />
+                    <col width='30%' />
+                </colgroup>
+                <tr t-foreach="orderlines" t-as="orderline">
+                    <td>
+                        <t t-esc="orderline.get_product().display_name"/>
+                         <t t-if="orderline.get_discount() > 0">
+                            <div class="pos-disc-font">
+                                With a <t t-esc="orderline.get_discount()"/>% discount
+                            </div>
+                        </t>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <t t-if="receipt.footer">
+                <br />
+                <div style='text-align:center'>
+                    <t t-esc="receipt.footer" />
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <!-- medical insurance screen -->
+    <t t-name="medical_insurance_screen">
+        <div class="clientlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <span class='searchbox search-product'>
+                        <input placeholder='Find medical insurance' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                    <span class='button next highlight'>
+                        <i class='fa fa-plus'></i>
+                        New insurance
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow collapsed'>
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix client-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow' style="padding-top: 30px">
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='client-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Insurance Company</th>
+                                                <th>Subscriber</th>
+                                                <th>Patient name</th>
+                                                <th>Patient number</th>
+                                                <th>Medical number</th>
+                                                <th>Employee</th>
+                                                <th>Tell</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class='client-list-contents medical_insurances'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="medical_insurance_row">
+        <tr class='medical_insurance' t-att-data-id='insurance.id'>
+            <td>
+                <t t-esc='insurance.insurance_company_id[1]' />
+            </td>
+            <td>
+                <t t-if="insurance.subscriber_id"><t t-esc='insurance.subscriber_id[1]' /></t>
+            </td>
+            <td><t t-esc='insurance.patient_name' /></td>
+            <td><t t-esc='insurance.patient_number' /></td>
+            <td><t t-esc='insurance.medical_number' /></td>
+            <td><t t-esc='insurance.employee' /></td>
+            <td>
+                <t t-if="insurance.phone"><t t-esc='insurance.phone' /></t>
+            </td>
+        </tr>
+    </t>
+
+    <t t-name="medical_insurance_edit">
+        <section class='touch-scrollable scrollable-y client-details'>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <t t-if="insurance">
+                        <div class='client-detail' hidden="hidden" disabled="disabled">
+                            <span class='label'>ID</span>
+                            <input class="form-control detail" type="number" t-att-value="insurance.id" name="id" hidden="hidden" disabled="disabled"/>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Insurance company <span class="voucher-form-required"> (*)</span></span>
+                            <t t-if="insurance and insurance.insurance_company_id">
+                                <select class='form-control detail' name='insurance_company_id'>
+                                    <t t-foreach='widget.insurance_companies' t-as='insurance_company'>
+                                        <option t-att-value='insurance_company.id' t-att-selected="insurance_company.id ? ((insurance.insurance_company_id[0] === insurance_company['id']) ? true : undefined) : undefined">
+                                            <t t-esc='insurance_company.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                            <t t-if="!insurance or !insurance.insurance_company_id">
+                                <select class='form-control detail' name='insurance_company_id'>
+                                    <t t-foreach='widget.insurance_companies' t-as='insurance_company'>
+                                        <option t-att-value='insurance_company.id'>
+                                            <t t-esc='insurance_company.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Subscriber</span>
+                            <t t-if="insurance and insurance.subscriber_id">
+                                <select class='form-control detail' name='subscriber_id'>
+                                    <t t-foreach='widget.pos.partners' t-as='partner'>
+                                        <option t-att-value='partner.id' t-att-selected="partner.id ? ((insurance.subscriber_id[0] === partner['id']) ? true : undefined) : undefined">
+                                            <t t-esc='partner.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                            <t t-if="!insurance or !insurance.subscriber_id">
+                                <select class='form-control detail' name='subscriber_id'>
+                                    <t t-foreach='widget.pos.partners' t-as='partner'>
+                                        <option t-att-value='partner.id'>
+                                            <t t-esc='partner.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </t>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Patient name <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='patient_name' t-att-value='insurance.patient_name || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Patient number <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='patient_number' t-att-value='insurance.patient_number || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Medical number <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='medical_number' t-att-value='insurance.medical_number || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Employee</span>
+                            <input class='form-control detail' name='employee' t-att-value='insurance.employee || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Tell number</span>
+                            <input class='form-control detail' name='phone' t-att-value='insurance.phone || ""'></input>
+                        </div>
+                    </t>
+                    <t t-if="!insurance">
+                        <div class='client-detail'>
+                            <span class='label'>Insurance company <span class="voucher-form-required"> (*)</span></span>
+                            <select class='form-control detail' name='insurance_company_id'>
+                                <t t-foreach='widget.insurance_companies' t-as='insurance_company'>
+                                    <option t-att-value='insurance_company.id'>
+                                        <t t-esc='insurance_company.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Name <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='name'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Subscriber</span>
+                            <select class='form-control detail' name='subscriber_id'>
+                                <t t-foreach='widget.pos.partners' t-as='partner'>
+                                    <option t-att-value='partner.id'>
+                                        <t t-esc='partner.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Patient name <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='patient_name'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Patient number <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='patient_number'></input>
+                        </div>
+                    </t>
+                </div>
+                <div class='client-details-right'>
+                    <t t-if="!insurance">
+                        <div class='client-detail'>
+                            <span class='label'>Medical number <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' name='medical_number'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Employee</span>
+                            <input class='form-control detail' name='employee'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Tell number</span>
+                            <input class='form-control detail' name='phone'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Rate <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' type='number' name='rate'></input>
+                        </div>
+                    </t>
+                    <t t-if="insurance">
+                        <div class='client-detail'>
+                            <span class='label'>Rate <span class="voucher-form-required"> (*)</span></span>
+                            <input class='form-control detail' type='number' name='rate' t-att-value='insurance.rate || ""'></input>
+                        </div>
+                    </t>
+                    <div class="client-detail">
+                        <span class='label state'>Save</span>
+                        <button class="btn btn-default save" style="height: 40px; width: 120px"><i class="fa fa-save"/></button>
+                    </div>
+                    <t t-if="insurance">
+                        <div class="client-detail state">
+                            <span class='label'>Print card</span>
+                            <button class="btn print_medical_insure_card" style="height: 40px; width: 120px"><i class="fa fa-print"/></button>
+                        </div>
+                        <div class="client-detail state">
+                            <span class='label'>Select insurance</span>
+                            <button class="btn btn-success select_insurance" style="height: 40px; width: 120px"><i class="fa fa-check"/></button>
+                        </div>
+                        <div class="client-detail state">
+                            <span class='label'>Deselected insurance</span>
+                            <button class="btn btn-warning deselected_insurance" style="height: 40px; width: 120px"><i class="fa fa-trash"/></button>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-name="medical_insurance_card">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <div><h2>Medical Insurance Card</h2></div>
+            <br/>
+            <line>
+                <left>Insurance company: </left>
+                <right><t t-esc='insurance.insurance_company_id[1]' /></right>
+            </line>
+            <line>
+                <left>Patient number: </left>
+                <right><t t-esc='insurance.patient_number' /></right>
+            </line>
+            <line>
+                <left>Patient name: </left>
+                <right><t t-esc='insurance.patient_name' /></right>
+            </line>
+            <line>
+                <left>Rate: </left>
+                <right><t t-esc='insurance.rate' /> % </right>
+            </line>
+            <line>
+                <left>Patient name: </left>
+                <right><t t-esc='insurance.patient_name' /></right>
+            </line>
+            <line>
+                <left>Medical number: </left>
+                <right><t t-esc='insurance.medical_number' /></right>
+            </line>
+            <line>
+                <left>Employee: </left>
+                <right><t t-esc='insurance.employee' /></right>
+            </line>
+            <line>
+                <left>Tell number: </left>
+                <right><t t-esc='insurance.phone' /></right>
+            </line>
+            <right>
+                <barcode encoding="ean13"><t t-esc='insurance.code'/></barcode>
+            </right>
+        </receipt>
+    </t>
+
+</templates>

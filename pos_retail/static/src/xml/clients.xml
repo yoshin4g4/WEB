@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ClientListScreenWidget">
+        <t t-jquery="span[class*='new-customer']" t-operation="after">
+            <span class='button only_customer not_highlight' style="left:120px">
+                Customer
+                <i class='fa fa-angle-left'></i>
+            </span>
+            <span class='button only_supplier not_highlight' style="right:200px">
+                Supplier
+                <i class='fa fa-angle-right'></i>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery="select[name*='property_product_pricelist']" t-operation="replace">
+            <select class='detail client-address-country needsclick' name='property_product_pricelist'>
+                <option value=''>None</option>
+                <t t-foreach='widget.pos.pricelists' t-as='pricelist'>
+                    <option t-att-value='pricelist.id' t-att-selected="pricelist.id ? ( partner.property_product_pricelist and (pricelist.id === partner.property_product_pricelist[0]) ? true : undefined) : undefined">
+                        <t t-esc='pricelist.name'/>
+                    </option>
+                </t>
+            </select>
+        </t>
+        <t t-jquery=".client-details-left" t-operation="append">
+            <div class='client-detail'>
+                <div class='client-detail'>
+                    <span class='label'>Internal notes</span>
+                    <input class='detail client-comment'   name='comment'         t-att-value='partner.comment || ""' placeholder='Internal note'></input>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetails">
+            <t t-jquery="div[class*='client-details-left']" t-operation="append">
+            <t t-if="partner.comment">
+                <div class='client-detail'>
+                    <span class='label'>TIN</span>
+                    <span class='detail'><t t-esc='partner.vat'/></span>
+                </div>
+            </t>
+            <t t-if="partner.comment">
+                <div class='client-detail'>
+                    <span class='label'>Internal notes</span>
+                    <span class='detail'><t t-esc='partner.comment'/></span>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="div[class*='client-details-right']" t-operation="append">
+            <t t-if="partner.property_account_position_id">
+                <div class='client-detail'>
+                    <span class='label'>Fiscal Position</span>
+                    <span class='detail'><t t-esc='partner.property_account_position_id[1]'/></span>
+                </div>
+            </t>
+            <t t-if="partner.pos_loyalty_point != 0">
+                <div class='client-detail'>
+                    <span class='label'>Point</span>
+                    <span class='detail'><t t-esc='widget.format_currency_no_symbol(partner.pos_loyalty_point)'/></span>
+                </div>
+            </t>
+            <t t-if="partner.wallet != 0">
+                <div class='client-detail'>
+                    <span class='label'>Wallet card</span>
+                    <span class='detail'><t t-esc='widget.format_currency(partner.wallet)'/></span>
+                </div>
+            </t>
+            <t t-if="partner.balance != 0">
+                <div class='client-detail'>
+                    <span class='label'>Credit card</span>
+                    <span class='detail'><t t-esc='widget.format_currency(partner.balance)'/></span>
+                </div>
+            </t>
+        </t>
+    </t>
+
+</templates>

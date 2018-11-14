@@ -1,0 +1,1547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ConfirmPopupWidget">
+        <t t-jquery="div[class*='modal-dialog']" t-operation="replace">
+            <div class="swal2-container swal2-fade swal2-in" style="overflow-y: auto;">
+                <div class="swal2-modal swal2-show"
+                     style="display: block; width: 500px; padding: 20px; background: rgb(255, 255, 255); min-height: 340px;"
+                     tabindex="-1">
+                    <ul class="swal2-progresssteps" style="display: none;"></ul>
+                    <div class="swal2-icon swal2-error" style="display: none;">
+                        <span class="x-mark">
+                            <span class="line left"></span>
+                            <span class="line right"></span>
+                        </span>
+                    </div>
+                    <div class="swal2-icon swal2-question" style="display: none;">?</div>
+                    <div class="swal2-icon swal2-warning pulse-warning" style="display: block;">!</div>
+                    <div class="swal2-icon swal2-info" style="display: none;">i</div>
+                    <div class="swal2-icon swal2-success" style="display: none;">
+                        <span class="line tip"></span>
+                        <span class="line long"></span>
+                        <div class="placeholder"></div>
+                        <div class="fix"></div>
+                    </div>
+                    <img class="swal2-image" style="display: none;"/>
+                    <h2><t t-esc=" widget.options.title || 'Confirm ?' " /></h2>
+                    <div class="swal2-content" style="display: block;"><t t-esc="  widget.options.body || '' "/>
+                    </div>
+                    <input class="swal2-input" style="display: none;"/>
+                    <input type="file" class="swal2-file" style="display: none;"/>
+                    <div class="swal2-range" style="display: none;">
+                        <output></output>
+                        <input type="range"/>
+                    </div>
+                    <select class="swal2-select" style="display: none;"></select>
+                    <div class="swal2-radio" style="display: none;"></div>
+                    <label for="swal2-checkbox" class="swal2-checkbox" style="display: none;">
+                        <input type="checkbox"/>
+                    </label>
+                    <textarea class="swal2-textarea" style="display: none;"></textarea>
+                    <div class="swal2-validationerror" style="display: none;"></div>
+                    <hr class="swal2-spacer" style="display: block;"/>
+                    <div class="footer">
+                        <span type="button" class="swal2-confirm btn btn-success button confirm">Yes</span>
+                        <span type="button" class="swal2-cancel btn btn-danger button cancel">Close</span>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="alert_input">
+        <div class="swal2-container swal2-fade swal2-in" style="overflow-y: auto;">
+            <div class="swal2-modal swal2-show"
+                 style="display: block; width: 500px; padding: 20px; background: rgb(255, 255, 255); min-height: 340px;"
+                 tabindex="-1">
+                <div class="swal2-icon swal2-question">?</div>
+                <h2><t t-esc=" widget.options.title || 'Confirm ?' " /></h2>
+                <div class="swal2-content" style="display: block;"><t t-esc="  widget.options.body || '' "/>
+                </div>
+                <div class="row" style="padding-bottom: 40px">
+                    <div class="form-group label-floating is-empty">
+                        <input type="text" class="input_form"/>
+                    </div>
+                </div>
+                <div class="footer">
+                    <span type="button" class="swal2-confirm btn btn-success button confirm">Yes</span>
+                    <span type="button" class="swal2-cancel btn btn-danger button cancel">Close</span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="notify_popup">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class="title"><t t-esc="widget.options.title"/></p>
+                <div>
+                    <t t-raw="widget.message"/>
+                </div>
+                <div class="button cancel">
+                    Close
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_internal_transfer"> <!-- internal transfer -->
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            Create internal transfer
+                        </h4>
+                        <div class='row'>
+                            <span class='label voucher-label'>Picking type <span class="voucher-form-required"> (*)</span></span>
+                            <select class='form-control voucher-select internal_transfer_field' id="picking_type_id">
+                                <t t-if="widget.pos.stock_picking_types">
+                                    <t t-foreach='widget.pos.stock_picking_types' t-as='stock_picking_type'>
+                                        <option t-att-value='stock_picking_type.id'>
+                                            <t t-esc='stock_picking_type.name'/>
+                                        </option>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='row'>
+                            <span class='label voucher-label'>Source location <span class="voucher-form-required"> (*)</span></span>
+                            <select class='form-control voucher-select internal_transfer_field' id="location_id">
+                                <t t-if="widget.pos.stock_locations">
+                                    <t t-foreach='widget.pos.stock_locations' t-as='stock_location'>
+                                        <option t-att-value='stock_location.id'>
+                                            <t t-esc='stock_location.name'/>
+                                        </option>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='row'>
+                            <span class='label voucher-label'>Destination location <span class="voucher-form-required"> (*)</span></span>
+                            <select class='form-control voucher-select internal_transfer_field' id="location_dest_id">
+                                <t t-if="widget.pos.stock_locations">
+                                    <t t-foreach='widget.pos.stock_locations' t-as='stock_location'>
+                                        <option t-att-value='stock_location.id'  t-att-selected="stock_location['id'] ? ((widget.pos.config.stock_location_id and stock_location.id === widget.pos.config.stock_location_id[0]) ? true : undefined) : undefined">
+                                            <t t-esc='stock_location.name'/>
+                                        </option>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='row'>
+                            <span class='label voucher-label'>Shipping policy <span class="voucher-form-required"> (*)</span></span>
+                            <select class='form-control voucher-select internal_transfer_field' id="move_type">
+                                <option value='direct'>As soon as possible</option>
+                                <option value='one'>When all products are ready</option>
+                            </select>
+                        </div>
+                        <div class='row'>
+                            <span class='label voucher-label'>Priority of internal transfer</span>
+                            <select class='form-control voucher-select internal_transfer_field' id="priority">
+                                <option value='0'>Not ugent</option>
+                                <option value='1'>Normal</option>
+                                <option value='2'>Ugent</option>
+                                <option value='3'>Very Ugent</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Scheduled date</span>
+                            <div class="col-sm-10">
+                                <div class="form-group label-floating is-empty">
+                                    <input type="text" class="form-control datetimepicker internal_transfer_field" id="scheduled_date"/>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <span class='label voucher-label'>Note description</span>
+                            <input type="text" class="popup-lot internal_transfer_field" id="note" placeholder="Note"/>
+                        </div>
+                    </div>
+                     <div class="card-footer text-center">
+                        <div class="btn btn-success pull-right confirm">
+                            <i class="fa fa-check"/> Create
+                        </div>
+                        <div class="btn btn-danger pull-left cancel">
+                            <i class="fa fa-close"/> Close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_account_invoice_refund">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="col-md-6">
+                    <div class="card">
+                        <t t-if="widget.options.invoice">
+                            <h4 class="card-title">
+                                <t t-if="widget.options.invoice.number">
+                                    <t t-esc="widget.options.invoice.number"/>
+                                </t>
+                            </h4>
+                        </t>
+                        <div class="card-content">
+                            <t t-if="widget.options.invoice">
+                                <div class="row">
+                                    <label class="label voucher-label">Refund method</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <select class='form-control voucher-select detail' id='filter_refund'>
+                                                <option value='refund'>
+                                                    Create a draft credit note
+                                                </option>
+                                                <option value='cancel'>
+                                                    Cancel: create credit note and reconcile
+                                                </option>
+                                                <option value='modify'>
+                                                    Modify: create credit note, reconcile and create a new draft invoice
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Reason</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type="text" class="form-control" id="description"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Credit note date</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type="text" class="form-control datepicker" id="date_invoice"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Accounting date</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type="text" class="form-control datepicker" id="date"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="control-button btn btn-fill btn-success confirm">Add Credit Note</button>
+                                <button class="control-button btn btn-fill  cancel">Cancel</button>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_invoice_register_payment">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 150px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                Register amount: <t t-esc="widget.options.invoice.number"/>
+                            </t>
+                        </h4>
+                        <t t-if="widget.options.invoice">
+                            <div class="row">
+                                <label class="label voucher-label">Residual</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type="number" class="form-control" t-att-value="widget.options.invoice.residual" id="residual"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success confirm">
+                                    <i class="fa fa-check"/> Register
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"/> Close
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- create booking order  -->
+    <t t-name="popup_create_booking_order">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <t t-if="widget.options.order and widget.options.client">
+                            <div class="form-group" style="background-color: white; height:500px">
+                                <div class="row">
+                                    <span class="label voucher-label">Amount total</span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input class='form-control' t-att-value="widget.format_currency(widget.options.order.get_total_with_tax())" name="id" hidden="hidden" disabled="disabled"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Phone contact for delivery <span class="voucher-form-required"> (*)</span></span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input class='form-control booking_field' t-att-value='widget.options.client.mobile || widget.options.client.phone' name="delivery_phone" type="number"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class='label voucher-label'>Delivery Address <span class="voucher-form-required"> (*) </span></span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type="text" class="form-control booking_field" name="delivery_address" t-att-value="widget.options.order.delivery_address || widget.options.client.address"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class='label voucher-label'>Delivery date</span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type="text" class="form-control datetimepicker booking_field" name="delivery_date" t-att-value="widget.options.order.delivery_date || new Date()"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Notes</span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input class='form-control booking_field' name="note" t-att-value="widget.options.order.note"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <t t-if="widget.pos.config.booking_orders_required_cashier_signature">
+                                    <div class="row">
+                                        <span class="label voucher-label">POS client signature <span class="voucher-form-required"> (*) </span></span>
+                                        <div class="col-sm-10">
+                                            <div class="pos_signature"/>
+                                        </div>
+                                    </div>
+                                </t>
+                                <div class="row">
+                                    <span class="label voucher-label">PriceList <span class="voucher-form-required"> (*)</span></span>
+                                    <div class="col-sm-10">
+                                         <select class='form-control voucher-select' id='pricelist_id'>
+                                            <t t-if="widget.pos.pricelists">
+                                                <t t-foreach='widget.pos.pricelists' t-as='pricelist'>
+                                                    <option t-att-value='pricelist.id' t-att-selected="pricelist['id'] ? ((widget.options.pricelist and pricelist.id === widget.options.pricelist['id']) ? true : undefined) : undefined">
+                                                        <t t-esc='pricelist.name'/>
+                                                    </option>
+                                                </t>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Payment partial amount</span>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <input type='number' class='form-control booking_field' name="payment_partial_amount"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Payment Journal</span>
+                                    <div class="col-sm-10">
+                                         <select class='form-control voucher-select' id='payment_partial_journal_id'>
+                                            <t t-if="widget.pos.cashregisters">
+                                                <t t-foreach='widget.pos.cashregisters' t-as='cashregister'>
+                                                    <option t-att-value='cashregister.journal_id[0]'>
+                                                        <t t-esc='cashregister.journal_id[1]'/>
+                                                    </option>
+                                                </t>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Payment Method</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <select class='form-control voucher-select' id='payment_method_id'>
+                                                <t t-if="widget.pos.payment_methods">
+                                                    <t t-foreach='widget.pos.payment_methods' t-as='method'>
+                                                        <option t-att-value='method.id'>
+                                                            <t t-esc='method.name'/>
+                                                        </option>
+                                                    </t>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer text-right">
+                                    <div class="pull-right">
+                                        <div class="btn btn-success confirm">
+                                            <i class="fa fa-check"/> Accept
+                                        </div>
+                                    </div>
+                                    <div class="pull-left">
+                                        <div class="btn btn-danger cancel">
+                                            <i class="fa fa-close"/> Close
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- create sale order  -->
+    <t t-name="popup_create_sale_order">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <t t-if="widget.order_selected and widget.order_selected.get_client()">
+                            <div class="row">
+                                <span class="label voucher-label">Amount total</span>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input class='form-control' t-att-value="widget.format_currency(widget.options.order.get_total_with_tax())" hidden="hidden" disabled="disabled"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <t t-if="widget.pos.config.booking_orders_required_cashier_signature">
+                                <div class="row">
+                                    <span class="label voucher-label">Signature <span class="voucher-form-required"> (*) </span></span>
+                                    <div class="col-sm-10">
+                                        <div class="pos_signature"/>
+                                    </div>
+                                </div>
+                            </t>
+                            <div class="row">
+                                <span class="label voucher-label">Notes</span>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input class='form-control sale_order_field note' id="note" t-att-value="widget.options.order.note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="label voucher-label">Payment term</label>
+                                <div class="col-sm-7">
+                                    <t t-if="widget.pos.payments_term">
+                                        <select class='form-control voucher-select sale_order_field payment_term_id' id="payment_term_id">
+                                            <t t-foreach='widget.pos.payments_term' t-as='term'>
+                                                <option t-att-value='term.id' t-att-selected="widget.client['property_payment_term_id'] ? ((widget.client['property_payment_term_id'] and widget.client['property_payment_term_id'][0] === term.id) ? true : undefined) : undefined">
+                                                    <t t-esc='term.name'/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="card-footer text-center">
+                            <t t-if="widget.order_selected and widget.order_selected.get_client()">
+                                <div class="btn btn-success confirm">
+                                    <i class="fa fa-check"/> Create
+                                </div>
+                            </t>
+                            <div class="btn btn-danger cancel">
+                                <i class="fa fa-close"/> Close
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- create purchase order -->
+    <t t-name="popup_create_purchase_order">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <div class="row">
+                            <label class="label voucher-label">Currency <span class="voucher-form-required"> (*)</span></label>
+                            <div class="col-sm-7">
+                                 <select class='form-control voucher-select detail' id='po_currency_id'>
+                                    <t t-if="widget.pos.currencies">
+                                        <t t-foreach='widget.pos.currencies' t-as='currency'>
+                                            <option t-att-value='currency.id' t-att-selected="currency['id'] ? ((currency['id'] === widget.pos.currency.id) ? true : undefined) : undefined">
+                                                <t t-esc='currency.name'/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="label voucher-label">Note</label>
+                            <div class="col-sm-10">
+                                <div class="form-group voucher-select detail">
+                                    <input class='form-control detail' id="purchase_order_note"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class='label voucher-label'>Scheduled date</label>
+                            <div class="col-sm-7">
+                                <div class="form-group voucher-select detail">
+                                    <input class="form-control detail datetimepicker" id="date_planned"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row select_box">
+                            <label class="label voucher-label">Bill Journal</label>
+                            <div class="col-sm-7">
+                                <t t-if="widget.options.cashregisters">
+                                    <select class='form-control voucher-select' id='journal_id'>
+                                        <t t-foreach='widget.options.cashregisters' t-as='cashregister'>
+                                            <option t-att-value='cashregister.journal_id[0]'>
+                                                <t t-esc='cashregister.journal_id[1]'/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </t>
+                            </div>
+                        </div>
+                        <t t-if="widget.pos.config.create_purchase_order_required_signature">
+                            <br/>
+                            <div class="row">
+                                <label class="label voucher-label">Signature <span class="voucher-form-required"></span></label>
+                                <div class="col-sm-10">
+                                    <div class="pos_signature"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="btn btn-success pull-right create-purchase-order">
+                            <i class="fa fa-check"/> Create
+                        </div>
+                        <div class="btn btn-danger pull-left cancel">
+                            <i class="fa fa-close"/> Close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+    <t t-name="popup_add_order_line_note">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 400px">
+                <div class="col-md-6">
+                    <div class="card">
+                         <div class="card-content">
+                            <div class="row">
+                                <label class="label voucher-label">Note</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type='text' t-att-value="widget.options.value || ''"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <t t-if="widget.options.notes">
+                                <div class="table-responsive">
+                                    <div class="col-sm-10">
+                                        <div class="form-group label-floating is-empty">
+                                            <t t-foreach="widget.options.notes" t-as="note">
+                                                <span class='btn btn-info note' t-att-data-id="note.id">
+                                                    <t t-esc="note.name"/>
+                                                </span>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <button class="control-button btn btn-fill btn-success confirm"><i class="fa fa-save">Add note</i></button>
+                            <button class="control-button btn btn-fill  cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_order_signature">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 300px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <div class="form-group">
+                            <div class='row'>
+                                <div class="pos_signature"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="btn btn-success confirm">
+                            <i class="fa fa-edit"></i> Signature
+                        </div>
+                        <div class="btn btn-danger cancel">
+                            <i class="fa fa-close"></i> Cancel
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_print_receipt">
+        <div class="modal-dialog">
+            <div class="popup">
+                <div class="xml">
+
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- multi variant -->
+    <t t-name="popup_selection_variants">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <div class="table-responsive">
+                            <div class='body'>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success confirm-variant">
+                                    <i class="fa fa-check"></i> Confirm
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"></i> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="variant_items">
+        <t t-if="variants" >
+            <t t-foreach="variants" t-as="variant">
+                <t t-if="variant.selected">
+                    <span class='product variant item-selected' t-att-data-id="variant.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + variant.product_tmpl_id[0]' />
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="variant.value_id[1]"/>
+                        </div>
+                        <span class="price-tag">
+                            <i class='fa fa-plus'/><t t-esc="widget.format_currency(variant.price_extra, 'Price Extra')"/>
+                        </span>
+                    </span>
+                </t>
+                <t t-if="!variant.selected">
+                    <span class='product variant' t-att-data-id="variant.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + variant.product_tmpl_id[0]' />
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="variant.value_id[1]"/>
+                        </div>
+                        <span class="price-tag">
+                            <i class='fa fa-plus'/><t t-esc="widget.format_currency(variant.price_extra, 'Price Extra')"/>
+                        </span>
+                    </span>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="popup_selection_tags">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <div class="table-responsive">
+                            <div class='body'>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-danger close">
+                                    <i class="fa fa-close"></i> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- line tags -->
+    <t t-name="tags_list">
+        <t t-if="tags" >
+            <t t-foreach="tags" t-as="tag">
+                <t t-if="tag.selected">
+                    <span class='product tag item-selected' t-att-data-id="tag.id">
+                        <i class="fa fa-tag">
+                            <t t-esc="tag.name"/>
+                        </i>
+                    </span>
+                </t>
+                <t t-if="!tag.selected">
+                    <span class='product tag' t-att-data-id="tag.id">
+                        <i class="fa fa-tag">
+                            <t t-esc="tag.name"/>
+                        </i>
+                    </span>
+                </t>
+            </t>
+        </t>
+    </t>
+
+
+    <t t-name="popup_lock_session"> <!-- popup lock session -->
+        <div class="swal2-container swal2-fade swal2-in" style="overflow-y: auto;">
+            <div class="swal2-modal swal2-show"
+                 style="display: block; width: 500px; padding: 20px; background: rgb(255, 255, 255); min-height: 340px;"
+                 tabindex="-1">
+                <div class="swal2-icon swal2-warning pulse-warning" style="display: block;">!</div>
+                <h2><t t-esc=" widget.options.title || 'Confirm ?' " /></h2>
+                <div class="swal2-content" style="display: block;"><t t-esc="  widget.options.body || '' "/>
+                </div>
+                <div class="row" style="padding-bottom: 40px">
+                    <div class="form-group label-floating is-empty">
+                        <input type="password" class="input_form"/>
+                    </div>
+                </div>
+                <div class="footer">
+                    <span type="button" class="swal2-confirm btn btn-success button confirm">Unlock</span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_print_vouchers"> <!-- print create voucher -->
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <span class='label voucher-label'>Period days</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control period_days"
+                                           type="number"
+                                           t-att-value="widget.options.period_days"
+                                           required="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Quantity will create</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control quantity_create"
+                                           type="number"
+                                           />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Amount or Percent</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control voucher_amount"
+                                           type="number"
+                                           id="voucher_amount"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Type of Voucher</span>
+                            <div class="col-sm-7">
+                                <select class='form-control voucher-select apply_type'>
+                                    <option value="fixed_amount">Fixed amount</option>
+                                    <option value="percent">Percent (%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Apply to</span>
+                            <div class="col-sm-7">
+                                <select class='form-control voucher-select method'>
+                                    <option value="general">All Customers</option>
+                                    <option value="special_customer">Special Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="btn btn-success pull-right print-voucher">
+                            <i class="fa fa-check"/> Print
+                        </div>
+                        <div class="btn btn-danger pull-left cancel">
+                            <i class="fa fa-close"/> Close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+    <t t-name="popup_add_lot_to_combo_items">
+        <div class="modal-dialog">
+            <div class="popup popup-text">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <div class='packlot-lines'>
+                    <t t-if="widget.options.combo_items">
+                        <t t-foreach='widget.options.combo_items' t-as='item'>
+                             <div class='row'>
+                                <span class='label label-lot'><t t-esc="item.product_id['1']"/> </span>
+                                <input type="text" t-att-id="item.id"
+                                    t-att-value="item.lot_number || ''"
+                                    class="popup-lot packlot-line-input"
+                                    placeholder="Serial/Lot Number"/>
+                                <i class="oe_link_icon remove-lot fa fa-trash-o"></i>
+                            </div>
+
+                        </t>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- popup: combo items -->
+    <t t-name="popup_selection_combos">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <div class='body'>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"></i> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="combo_items">
+        <t t-if="combo_items" >
+            <t t-foreach="combo_items" t-as="combo_item">
+                <t t-if="combo_item.selected">
+                    <span class='product combo-item item-selected' t-att-data-id="combo_item.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + combo_item.product_id[0]' />
+                            <span class="qty_available">
+                                <t t-esc="combo_item.quantity"/>
+                            </span>
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="combo_item.product_id[1]"/>
+                        </div>
+                    </span>
+                </t>
+                <t t-if="!combo_item.selected">
+                    <span class='product combo-item' t-att-data-id="combo_item.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + combo_item.product_id[0]' />
+                            <span class="qty_available">
+                                <t t-esc="combo_item.quantity"/>
+                            </span>
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="combo_item.product_id[1]"/>
+                        </div>
+                    </span>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <!-- cross selling -->
+    <t t-name="popup_cross_selling">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <div class='body'>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success add_cross_selling">
+                                    <i class="fa fa-check"/> Add
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"></i> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="cross_item">
+        <t t-if="cross_items" >
+            <t t-foreach="cross_items" t-as="cross_item">
+                <t t-if="cross_item.selected">
+                    <span class='product combo-item item-selected' t-att-data-id="cross_item.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + cross_item.product_id[0]' />
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="cross_item.product_id[1]"/>
+                        </div>
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(cross_item.list_price)"/>
+                        </span>
+                        <span class="price-tag-left">
+                            <t t-esc="cross_item.discount"/> %
+                        </span>
+                        <span class="price-tag-bottom-right">
+                            <t t-esc="cross_item.quantity"/>
+                        </span>
+                    </span>
+                </t>
+                <t t-if="!cross_item.selected">
+                    <span class='product combo-item' t-att-data-id="cross_item.id">
+                        <div class="product-img">
+                            <img t-att-src='image_url + cross_item.product_id[0]' />
+                        </div>
+                        <div class="product-name">
+                            <t t-esc="cross_item.product_id[1]"/>
+                        </div>
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(cross_item.list_price)"/>
+                        </span>
+                        <span class="price-tag-left">
+                            <t t-esc="cross_item.discount"/> %
+                        </span>
+                        <span class="price-tag-bottom-right">
+                            <t t-esc="cross_item.quantity"/>
+                        </span>
+                    </span>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <!-- register payment for pos order not full -->
+    <t t-name="popup_register_payment">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.order">
+                                Register payment: <t t-esc="widget.options.order.name"/>
+                            </t>
+                        </h4>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <label class="label voucher-label">Debit</label>
+                                        <div class="col-sm-7">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input class="form-control"
+                                                       type="text"
+                                                       name="amount"
+                                                       id="amount"
+                                                       t-att-value="widget.options.amount_debit"
+                                                       required="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="label voucher-label">Payment Reference</label>
+                                        <div class="col-sm-7">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input class="form-control"
+                                                       type="text"
+                                                       name="payment_reference"
+                                                       id="payment_reference"
+                                                       required="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="label voucher-label">Payment Mode</label>
+                                        <div class="col-sm-7">
+                                            <t t-if="widget.options.cashregisters">
+                                                <select class='form-control voucher-select' id='journal_id'>
+                                                    <t t-foreach='widget.options.cashregisters' t-as='cashregister'>
+                                                        <option t-att-value='cashregister.journal_id[0]'>
+                                                            <t t-esc='cashregister.journal_id[1]'/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <div class="btn  confirm">
+                                        <i class="fa fa-check"/> Payment
+                                    </div>
+                                    <div class="btn btn-success payment-full">
+                                        Payment Full
+                                    </div>
+                                    <div class="btn btn-danger cancel">
+                                        <i class="fa fa-close"/> Close
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- popup return pos order lines -->
+    <t t-name="popup_return_pos_order_lines">
+        <div class="modal-dialog">
+            <div class="swal2-content list-line">
+                <div class="card">
+                    <div class="card-content">
+                        <t t-if="widget.options.order">
+                        <h4 class="card-title">
+                            Return : <t t-esc="widget.options.order.name"/>
+                        </h4>
+                        </t>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer>
+                        <div class="card-footer text-center">
+                            <div class="btn btn-success confirm-return-order">
+                                <i class="fa fa-check"/> Confirm return
+                            </div>
+                            <div class="btn btn-success create_voucher">
+                                <i class="fa fa-gift"/> Covert to voucher
+                            </div>
+                            <div class="btn btn-danger cancel">
+                                <i class="fa fa-close"/> Close
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="return_pos_order_line">
+        <t t-set="count" t-value="1"/>
+        <t t-foreach="order_lines || []" t-as="line">
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input class="line-select" type="checkbox" name="optionsCheckboxes" checked="true" t-att-data-id="line.id">
+                                <span class="checkbox-material"><span class="check"></span></span>
+                            </input>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center"><t t-esc="count"/></td>
+                <td class="text-right"><t t-esc="line.product_id[1]"/> </td>
+                <td class="text-right">Price unit: <t t-esc="widget.format_currency(line.price_unit)"/></td>
+                <td class="text-right qty">Qty: <t t-esc="line.qty"/></td>
+                <t t-if="line.qty > 1">
+                    <td class="text-right">
+                        <i class="fa fa-minus-square-o" t-att-data-id="line.id"/> Down
+                    </td>
+                </t>
+                <td class="text-right">
+                    <i class="fa fa-plus-square-o" t-att-data-id="line.id"/> Up
+                </td>
+                <td class="text-right">
+                    Sub total: <t t-esc="widget.format_currency(line.price_subtotal_incl)"/>
+                </td>
+            </tr>
+            `
+        </t>
+    </t>
+
+    <!-- popup stock picking return products -->
+    <t t-name="popup_stock_return_picking">
+        <div class="modal-dialog">
+            <div class="swal2-content list-line">
+                <div class="card">
+                    <div class="card-content">
+                        <t t-if="widget.options.sale">
+                        <h4 class="card-title">
+                            Return order: <t t-esc="widget.options.sale.name"/>
+                        </h4>
+                        </t>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer>
+                        <div class="card-footer text-center">
+                            <div class="btn btn-success confirm">
+                                <i class="fa fa-check"/> Return
+                            </div>
+                            <div class="btn btn-danger cancel">
+                                <i class="fa fa-close"/> Close
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="stock_move_line">
+        <t t-set="count" t-value="1"/>
+        <t t-foreach="sale_lines || []" t-as="line">
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input class="line-select" type="checkbox" name="optionsCheckboxes" checked="true" t-att-data-id="line.id">
+                                <span class="checkbox-material"><span class="check"></span></span>
+                            </input>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center"><t t-esc="count"/></td>
+                <td class="text-right"><t t-esc="line.name"/> </td>
+                <td class="text-right">with price: <t t-esc="widget.format_currency(line.price_unit)"/></td>
+                <td class="text-right qty">with qty: <t t-esc="line.product_uom_qty"/></td>
+                <t t-if="line.qty &gt; 1">
+                    <td class="text-right">
+                        <div class="btn btn-success up_quantity" t-att-data-id="line.id">
+                            <i class="fa fa-minus-square-o"></i> Up
+                        </div>
+                    </td>
+                </t>
+                <td class="text-right">
+                    <div class="btn btn-success down_quantity" t-att-data-id="line.id">
+                        <i class="fa fa-plus-square-o"></i> Down
+                    </div>
+                </td>
+            </tr>
+            `
+        </t>
+    </t>
+
+    <t t-name="popup_create_customer">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card create_partner">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Create Partner</h4>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="form-group label-floating">
+                                                <div class='client-picture'>
+                                                    <t><i class='fa fa-camera'></i></t>
+                                                    <input type='file' class='image-uploader'></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Name<span class="voucher-form-required"> (*)</span></span>
+                                            <input class="form-control partner_input" name="name" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Street</span>
+                                            <input class="form-control partner_input" name="street" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>City</span>
+                                            <input class="form-control partner_input" name="city" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Postcode</span>
+                                            <input class="form-control partner_input" name="zip" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Email</span>
+                                            <input class="form-control partner_input" name="email" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Phone</span>
+                                            <input class="form-control partner_input" name="phone" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Barcode</span>
+                                            <input class="form-control partner_input" name="barcode" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Tax ID</span>
+                                            <input class="form-control partner_input" name="vat" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Partner Type</span>
+                                            <select class='form-control voucher-select partner_input' name='partner_type'>
+                                                <option value='customer'>is Customer</option>
+                                                <option value='vendor'>is Vendor</option>
+                                                <option value='customer_and_vendor'>is Customer and Vendor</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Pricelist</span>
+                                            <select class='form-control voucher-select partner_input' name='property_product_pricelist'>
+                                                 <t t-foreach='widget.pos.pricelists' t-as='pricelist'>
+                                                    <option t-att-value='pricelist.id'>
+                                                        <t t-esc='pricelist.display_name'/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Country</span>
+                                            <select class='form-control voucher-select partner_input' name='country_id'>
+                                                <option value=''>None</option>
+                                                <t t-foreach='widget.pos.countries' t-as='country'>
+                                                    <option t-att-value='country.id'>
+                                                        <t t-esc='country.name'/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="form-footer text-right">
+                                            <div class="checkbox pull-right">
+                                                <span class="control-button btn  cancel">Close</span>
+                                                <span class="control-button btn btn-rose btn-fill confirm"><i class="fa fa-plus"/>Create</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_create_product">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <p class="title"><t t-esc="widget.title"/></p>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card create_product">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Create Product</h4>
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="form-group label-floating">
+                                                <div class='client-picture'>
+                                                    <t><i class='fa fa-camera'></i></t>
+                                                    <input type='file' class='image-uploader'></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Name<span class="voucher-form-required"> (*)</span></span>
+                                            <input class="form-control product_input" name="name" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Internal ref</span>
+                                            <input class="form-control product_input" name="default_code" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Barcode</span>
+                                            <input class="form-control product_input" name="barcode" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Cost Price</span>
+                                            <input class="form-control product_input" name="cost_price" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>List Price</span>
+                                            <input class="form-control product_input" name="list_price" required="true" />
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Type</span>
+                                            <select class='form-control voucher-select product_input' name='type'>
+                                                 <option value='consu'>Consumable</option>
+                                                 <option value='service'>Service</option>
+                                                 <option value='product'>StockAble Product</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <span class='label voucher-label'>Category</span>
+                                            <select class='form-control voucher-select product_input' name='pos_categ_id'>
+                                                <option value=''>None</option>
+                                                <t t-foreach='widget.pos.categories' t-as='category'>
+                                                    <option t-att-value='category.id'>
+                                                        <t t-esc='category.name'/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="form-footer text-right">
+                                            <div class="checkbox pull-right">
+                                                <span class="control-button btn  cancel">Close</span>
+                                                <span class="control-button btn btn-rose btn-fill confirm"><i class="fa fa-plus"/>Create</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_set_guest">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <span class='label voucher-label'>Guest name</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <t t-if="widget.pos.get_order()">
+                                        <input class="form-control guest_field"
+                                               type="text"
+                                               t-att-value="widget.pos.get_order().guest"
+                                               name="guest"
+                                               required="true" />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Guest number</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <t t-if="widget.pos.get_order()">
+                                        <input class="form-control guest_field"
+                                               type="number"
+                                               t-att-value="widget.pos.get_order().guest_number"
+                                               name="guest_number"
+                                               />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="btn btn-success pull-right confirm">
+                            <i class="fa fa-check"/> Add
+                        </div>
+                        <div class="btn btn-danger pull-left cancel">
+                            <i class="fa fa-close"/> Close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_select_tax">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y" style="height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <t t-if="widget.options.title">
+                                <t t-esc="widget.options.title"/>
+                            </t>
+                        </h4>
+                        <div class="table-responsive">
+                            <div class='body'>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success confirm add_taxes">
+                                    <i class="fa chevron-circle-left"/> Apply choice
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"></i> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="tax_item">
+        <t t-if="taxes" >
+            <t t-foreach="taxes" t-as="tax">
+                <t t-if="tax.selected">
+                    <span class='product tax-item item-selected' t-att-data-id="tax.id">
+                        <div class="product-name">
+                            <t t-esc="tax.name"/>
+                        </div>
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(tax.amount)"/>
+                        </span>
+                    </span>
+                </t>
+                <t t-if="!tax.selected">
+                    <span class='product tax-item' t-att-data-id="tax.id">
+                        <div class="product-name">
+                            <t t-esc="tax.name"/>
+                        </div>
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(tax.amount)"/>
+                        </span>
+                    </span>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="popup_cash_in">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="max-height:150px">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <label class="label voucher-label">Reason</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type="text" class="form-control" id="cash_in_reason"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="label voucher-label">Amount</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type="text" class="form-control" id="cash_in_amount"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success confirm">
+                                    <i class="fa fa-check"/> Put money in
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"/> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="popup_cash_out">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="max-height:150px">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <label class="label voucher-label">Reason</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type="text" class="form-control" id="cash_out_reason"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="label voucher-label">Amount</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group label-floating is-empty">
+                                        <input type="text" class="form-control" id="cash_out_amount"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="btn btn-success confirm">
+                                    <i class="fa fa-check"/> Take money out
+                                </div>
+                                <div class="btn btn-danger cancel">
+                                    <i class="fa fa-close"/> Close
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
