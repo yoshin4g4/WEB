@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_bus_tree" model="ir.ui.view">
+            <field name="name">pos.bus.tree</field>
+            <field name="model">pos.bus</field>
+            <field name="arch" type="xml">
+                <tree string="Bus Location">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_bus_form" model="ir.ui.view">
+            <field name="name">pos.bus.form</field>
+            <field name="model">pos.bus</field>
+            <field name="arch" type="xml">
+                <form string="Bus Location">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="user_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="log_ids" nolabel="1" readonly="1">
+                                <tree string="Logs">
+                                    <field name="user_id"/>
+                                    <field name="action"/>
+                                    <field name="order_uid"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_bus">
+            <field name="name">Shop Locations</field>
+            <field name="res_model">pos.bus</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_bus"
+                  parent="menu_retail"
+                  action="action_pos_bus"
+        />
+
+    </data>
+</odoo>

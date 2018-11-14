@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_voucher_form" model="ir.ui.view">
+            <field name="name">pos.voucher.form</field>
+            <field name="model">pos.voucher</field>
+            <field name="arch" type="xml">
+                <form string="Voucher">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="start_date"/>
+                                <field name="method"/>
+                                <field name="customer_id" attrs="{'invisible': [('method', '=', 'general')], 'required': [('method', '!=', 'general')]}"/>
+                                <field name="use_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                                <field name="apply_type"/>
+                                <field name="value"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_voucher_tree" model="ir.ui.view">
+            <field name="name">pos.voucher.tree</field>
+            <field name="model">pos.voucher</field>
+            <field name="arch" type="xml">
+                <tree string="Vouchers">
+                    <field name="code"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="apply_type"/>
+                    <field name="method"/>
+                    <field name="use_date"/>
+                    <field name="value"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_voucher_search" model="ir.ui.view">
+            <field name="name">pos.voucher.search</field>
+            <field name="model">pos.voucher</field>
+            <field name="arch" type="xml">
+                <search string="Vouchers">
+                    <field name="code"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="apply_type"/>
+                    <field name="method"/>
+                    <field name="use_date"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="pos_voucher_action">
+            <field name="name">Vouchers</field>
+            <field name="res_model">pos.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_pos_voucher_menu"
+            action="pos_voucher_action"
+            parent="menu_retail"
+            />
+
+    </data>
+</odoo>

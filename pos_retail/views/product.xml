@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_template_supplier_barcode" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="supplier_barcode"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_pos_retail" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="after">
+                    <div name="combo" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="is_combo"/>
+                            <label for="is_combo" string="Combo/pack"/>
+                        </div>
+                        <div>
+                            <field name="is_credit"/>
+                            <label for="is_credit" string="Is credit service"/>
+                        </div>
+                    </div>
+                    <div name="multi_unit_of_measure" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="multi_uom"/>
+                            <label for="multi_uom" string="Multi unit of measure"/>
+                        </div>
+                    </div>
+                    <div name="multi_category" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="multi_category"/>
+                            <label for="multi_category" string="Multi Category"/>
+                        </div>
+                    </div>
+                    <div name="multi_variant" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="multi_variant"/>
+                            <label for="multi_variant" string="Multi variant"/>
+                        </div>
+                    </div>
+                    <div name="manufacturing_out_of_stock" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="manufacturing_out_of_stock"/>
+                            <label for="manufacturing_out_of_stock" string="Auto manufacturing"/>
+                        </div>
+                    </div>
+                    <div name="cross_selling" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="cross_selling"/>
+                            <label for="cross_selling" string="Cross selling"/>
+                        </div>
+                    </div>
+                    <div name="suggestion_sale" groups="point_of_sale.group_pos_manager">
+                        <div>
+                            <field name="suggestion_sale"/>
+                            <label for="suggestion_sale" string="Suggestion sale"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//page[1]" position="after">
+                    <page string="POS Retail">
+                        <div class="Quantities Pack">
+                            <field name="pack_ids" nolabel="1">
+                                <tree string="Pack Quantities" editable="1">
+                                    <field name="public_price"/>
+                                    <field name="quantity"/>
+                                    <field name="barcode"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="mrp" attrs="{'invisible': [('manufacturing_out_of_stock', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <group>
+                                <field name="manufacturing_state"
+                                       attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)], 'required': [('manufacturing_out_of_stock', '=', True), ('available_in_pos', '=', True)]}"/>
+                                <field name="pos_min_qty"
+                                       attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)], 'required': [('manufacturing_out_of_stock', '=', True), ('available_in_pos', '=', True)]}"/>
+                                <field name="pos_manufacturing_quantity"
+                                       attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)], 'required': [('manufacturing_out_of_stock', '=', True), ('available_in_pos', '=', True)]}"/>
+                                <field name="bom_id" context="{'default_product_tmpl_id': active_id}"
+                                       attrs="{'invisible': ['|', ('manufacturing_out_of_stock', '=', False), ('available_in_pos', '=', False)]}"/>
+                            </group>
+                        </div>
+                        <div name="combo" attrs="{'invisible': [('is_combo', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <group>
+                                <field name="combo_limit" required="1"/>
+                            </group>
+                            <separator string="Combo items"/>
+                            <field name="pos_combo_item_ids" nolabel="1"
+                                   attrs="{'required': [('is_combo', '=', True)]}">
+                                <tree string="Combo items" editable="1">
+                                    <field name="product_id" options="{'no_create_edit': True}"/>
+                                    <field name="quantity" options="{'no_create_edit': True}"/>
+                                    <field name="uom_id"/>
+                                    <field name="default" options="{'no_create_edit': True}"/>
+                                    <field name="tracking"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="pos_multi_category" attrs="{'invisible': [('multi_category', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <separator string="POS multi category"/>
+                            <field name="pos_categ_ids" widget="many2many_tags"
+                                   attrs="{'required': [('multi_category', '=', True)]}"/>
+                        </div>
+                        <div name="pos_multi_unit_of_measure" attrs="{'invisible': [('multi_uom', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <separator string="POS multi unit measure"/>
+                            <field name="price_uom_ids">
+                                <tree string="Unit of measure and price" editable="1">
+                                    <field name="uom_id"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="pos_product_multi_variant" attrs="{'invisible': [('multi_variant', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <separator string="POS product variants"/>
+                            <field name="pos_variant_ids">
+                                <tree string="Variants" editable="1">
+                                    <field name="value_id"/>
+                                    <field name="price_extra"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="cross_selling" attrs="{'invisible': [('cross_selling', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <separator string="Cross Selling"/>
+                            <field name="cross_ids">
+                                <tree string="Cross Items" editable="1">
+                                    <field name="product_id"/>
+                                    <field name="list_price"/>
+                                    <field name="quantity"/>
+                                    <field name="discount_type"/>
+                                    <field name="discount"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="suggestion_sale" attrs="{'invisible': [('suggestion_sale', '=', False)]}"
+                             groups="point_of_sale.group_pos_manager">
+                            <separator string="Suggestion sale"/>
+                            <field name="suggestion_ids" nolabel="1">
+                                <tree string="Suggestion products" editable="1">
+                                    <field name="product_id"/>
+                                    <field name="list_price"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div name="barcode">
+                            <separator string="Multi barcode"/>
+                            <field name="barcode_ids" nolabel="1">
+                                <tree string="Barcode" editable="1">
+                                    <field name="barcode"/>
+                                    <field name="quantity"/>
+                                    <field name="list_price"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

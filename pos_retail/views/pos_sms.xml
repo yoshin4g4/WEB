@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="menu_pos_sms"
+                  name="SMS"
+                  parent="point_of_sale.menu_point_root"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <record id="pos_sms_server_from" model="ir.ui.view">
+            <field name="name">pos.sms.server.form</field>
+            <field name="model">pos.sms.server</field>
+            <field name="arch" type="xml">
+                <form string="SMS server">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="your_number"/>
+                                <field name="account"/>
+                                <field name="token"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_sms_server_tree" model="ir.ui.view">
+            <field name="name">pos.sms.server.tree</field>
+            <field name="model">pos.sms.server</field>
+            <field name="arch" type="xml">
+                <tree string="SMS server">
+                    <field name="your_number"/>
+                    <field name="account"/>
+                    <field name="token"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_sms_server_search" model="ir.ui.view">
+            <field name="name">pos.sms.server.filter</field>
+            <field name="model">pos.sms.server</field>
+            <field name="arch" type="xml">
+                <search string="SMS server filter">
+                    <field name="your_number"/>
+                    <field name="account"/>
+                    <field name="token"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_sms_server">
+            <field name="name">SMS server</field>
+            <field name="res_model">pos.sms.server</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_sms_server"
+                  action="action_pos_sms_server"
+                  parent="menu_pos_sms"
+                  sequence="1"
+        />
+
+
+        <!-- template -->
+        <record id="pos_sms_template_from" model="ir.ui.view">
+            <field name="name">pos.sms.template.form</field>
+            <field name="model">pos.sms.template</field>
+            <field name="arch" type="xml">
+                <form string="SMS template">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="model_id"/>
+                                <field name="server_id"/>
+                                <field name="body"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_sms_template_tree" model="ir.ui.view">
+            <field name="name">pos.sms.template.tree</field>
+            <field name="model">pos.sms.template</field>
+            <field name="arch" type="xml">
+                <tree string="SMS template">
+                    <field name="name"/>
+                    <field name="model_id"/>
+                    <field name="server_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_sms_template_search" model="ir.ui.view">
+            <field name="name">pos.sms.template.filter</field>
+            <field name="model">pos.sms.template</field>
+            <field name="arch" type="xml">
+                <search string="SMS template filter">
+                    <field name="name"/>
+                    <field name="model_id"/>
+                    <field name="server_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_sms_template">
+            <field name="name">SMS template</field>
+            <field name="res_model">pos.sms.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_sms_template"
+                  action="action_pos_sms_template"
+                  parent="menu_pos_sms"
+                  sequence="2"
+        />
+
+
+        <!-- message -->
+        <record id="pos_sms_message_from" model="ir.ui.view">
+            <field name="name">pos.sms.message.form</field>
+            <field name="model">pos.sms.message</field>
+            <field name="arch" type="xml">
+                <form string="SMS message">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="True"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="phone"/>
+                                <field name="partner_id"/>
+                                <field name="server_id"/>
+                                <field name="body"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_sms_message_tree" model="ir.ui.view">
+            <field name="name">pos.sms.message.tree</field>
+            <field name="model">pos.sms.message</field>
+            <field name="arch" type="xml">
+                <tree string="SMS message">
+                    <field name="phone"/>
+                    <field name="partner_id"/>
+                    <field name="server_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_sms_message_search" model="ir.ui.view">
+            <field name="name">pos.sms.message.filter</field>
+            <field name="model">pos.sms.message</field>
+            <field name="arch" type="xml">
+                <search string="SMS message filter">
+                    <field name="phone"/>
+                    <field name="partner_id"/>
+                    <field name="server_id"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_sms_message">
+            <field name="name">SMS message</field>
+            <field name="res_model">pos.sms.message</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_sms_message"
+                  action="action_pos_sms_message"
+                  parent="menu_pos_sms"
+                  sequence="3"
+        />
+
+    </data>
+</odoo>
