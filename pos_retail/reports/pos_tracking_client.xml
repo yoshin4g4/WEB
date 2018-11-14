@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_tracking_client_tree" model="ir.ui.view">
+            <field name="name">pos.tracking.client.tree</field>
+            <field name="model">pos.tracking.client</field>
+            <field name="arch" type="xml">
+                <tree string="Logs history">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="action"/>
+                    <field name="number"/>
+                    <field name="bus_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_tracking_client_graph" model="ir.ui.view">
+            <field name="name">pos.tracking.client.graph</field>
+            <field name="model">pos.tracking.client</field>
+            <field name="arch" type="xml">
+                <graph string="Logs history">
+                    <field name="user_id" type="col"/>
+                    <field name="action" type="col"/>
+                    <field name="number" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="pos_tracking_client_pivot" model="ir.ui.view">
+            <field name="name">pos.tracking.client.pivot</field>
+            <field name="model">pos.tracking.client</field>
+            <field name="arch" type="xml">
+                <pivot string="Canceled Lines">
+                    <field name="user_id" type="col"/>
+                    <field name="action" type="row"/>
+                    <field name="number" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="pos_tracking_client_form" model="ir.ui.view">
+            <field name="name">pos.tracking.client.form</field>
+            <field name="model">pos.tracking.client</field>
+            <field name="arch" type="xml">
+                <form string="Log">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="action"/>
+                            <field name="number"/>
+                            <field name="bus_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_pos_tracking_client">
+            <field name="name">Tracking POS clients</field>
+            <field name="res_model">pos.tracking.client</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,pivot,tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_tracking_client"
+                  parent="point_of_sale.menu_point_rep"
+                  sequence="10"
+                  action="action_pos_tracking_client"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="pos_example_01" model="pos.bus">
+            <field name="name">Bus 1</field>
+        </record>
+
+        <record id="pos_example_02" model="pos.bus">
+            <field name="name">Bus 2</field>
+        </record>
+
+    </data>
+</odoo>

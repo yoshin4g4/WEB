@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_backend_index" name="index pos ui" inherit_id="point_of_sale.index">
+        <xpath expr="//head" position="inside">
+            <link rel="stylesheet" href="/pos_retail/static/src/libs/swiper/css/swiper.css"/>
+            <link rel="stylesheet" href="/pos_retail/static/src/libs/css/material-dashboard.css"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/swiper/js/swiper.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jquery-barcode-last.min.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jquery.validate.min.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/bootstrap-notify.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/bootstrap-datetimepicker.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jquery.validate.min.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/sweetalert2.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jquery.datatables.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/hotkeys.min.js"/>
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/flashcanvas.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jSignature.min.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/libs/js/jSignature.min.noconflict.js"/>
+        </xpath>
+    </template>
+
+    <template id="assets_backend" name="pos_auto_invoice assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/pos_retail/static/src/libs/fontawesome/css/font-awesome.css"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/rpc.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/parameter.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/big_data.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/buttons.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/chromes.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/database.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/model.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/order.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/payment_line.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/popups.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/screens.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/sync_backend.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/sync_session.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/widgets.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/rounding.js"/>
+            <script type="text/javascript" src="/pos_retail/static/src/js/packlot.js"/>
+            <link rel="stylesheet" href="/pos_retail/static/src/css/core.css"/>
+            <link t-if="lang_direction == 'rtl'" rel="stylesheet" href="/pos_retail/static/src/css/rtl.css"/>
+            <link rel="stylesheet" href="/pos_retail/static/src/css/synchronization.css"/>
+            <!-- chat -->
+            <link rel="stylesheet" href="/pos_retail/static/src/css/chat.css" />
+            <script type="text/javascript" src="/pos_retail/static/src/js/chat.js"/>
+            <link rel="stylesheet" href="/pos_retail/static/src/less/chat.less" type="text/less"/>
+            <link rel="stylesheet" href="/pos_retail/static/src/css/dock.css" />
+            <link rel="stylesheet" type="text/less" href="/web/static/lib/bootstrap/less/variables.less"/>
+            <link rel="stylesheet" type="text/less" href="/web/static/lib/bootstrap/less/mixins/vendor-prefixes.less"/>
+            <link rel="stylesheet" type="text/less" href="/web/static/lib/bootstrap/less/mixins/buttons.less"/>
+            <link rel="stylesheet" type="text/less" href="/web/static/lib/bootstrap/less/mixins/clearfix.less"/>
+            <link rel="stylesheet" type="text/less" href="/web/static/lib/bootstrap/less/mixins/size.less"/>
+
+            <link rel="stylesheet" href="/web/static/src/less/variables.less"/>
+            <link rel="stylesheet" href="/web/static/src/less/utils.less"/>
+            <link rel="stylesheet" href="/web/static/src/less/mimetypes.less"/>
+
+            <link rel="stylesheet" href="/mail/static/src/less/chat_window.less" type="text/less"/>
+            <link rel="stylesheet" href="/mail/static/src/less/extended_chat_window.less" type="text/less"/>
+            <link rel="stylesheet" href="/mail/static/src/less/thread.less" type="text/less"/>
+            <link rel="stylesheet" href="/mail/static/src/less/composer.less" type="text/less"/>
+            <link rel="stylesheet" href="/mail/static/src/less/client_action.less" type="text/less"/>
+        </xpath>
+    </template>
+</odoo>
